@@ -1,0 +1,60 @@
+{
+    "name": "artdecor/app",
+    "type": "project",
+    "description": "ArtDecor - catalog and fitting tool for glass kitchen backsplashes",
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^11.0",
+        "filament/filament": "^3.2",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
+        "filament/spatie-laravel-permission-plugin": "^3.2",
+        "spatie/laravel-medialibrary": "^11.0",
+        "spatie/laravel-permission": "^6.0",
+        "laravel/sanctum": "^4.0",
+        "laravel/horizon": "^5.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "laravel/sail": "^1.0",
+        "laravel/telescope": "^5.0",
+        "fakerphp/faker": "^1.23",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

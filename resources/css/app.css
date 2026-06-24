@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════
+   Design Tokens — основаны на DESIGN1.md и canvas-дизайне
+   Primary: #E1323D  |  Secondary: #242E38
+   Fonts: Montserrat (heading) + PT Sans (body)
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+    /* Colors */
+    --k-color-primary: #E1323D;
+    --k-color-primary-hover: #C82832;
+    --k-color-secondary: #242E38;
+    --k-color-bg-page: #FFFFFF;
+    --k-color-bg-surface: #F9F9F9;
+    --k-color-bg-surface-hover: #F0F0F0;
+    --k-color-text-primary: #3C3D41;
+    --k-color-text-secondary: #808285;
+    --k-color-text-muted: #A5A161;
+    --k-color-border: #EFEFEF;
+    --k-color-border-hover: #DEDEDE;
+    --k-color-accent: #6EC1E4;
+    --k-color-success: #008000;
+    --k-color-warning: #FFA500;
+    --k-color-error: #FF0000;
+
+    /* Typography */
+    --k-font-family-heading: 'Montserrat', sans-serif;
+    --k-font-family-body: 'PT Sans', sans-serif;
+
+    /* Spacing */
+    --k-spacing-xs: 4px;
+    --k-spacing-sm: 8px;
+    --k-spacing-md: 16px;
+    --k-spacing-lg: 24px;
+    --k-spacing-xl: 32px;
+    --k-spacing-2xl: 48px;
+    --k-spacing-3xl: 64px;
+
+    /* Radius */
+    --k-radius-sm: 2px;
+    --k-radius-md: 4px;
+    --k-radius-lg: 8px;
+    --k-radius-xl: 12px;
+    --k-radius-full: 9999px;
+
+    /* Shadows */
+    --k-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --k-shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --k-shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+/* ═══ Base ═════════════════════════════════════════════════ */
+
+@layer base {
+    .font-heading {
+        font-family: var(--k-font-family-heading);
+    }
+    .font-body {
+        font-family: var(--k-font-family-body);
+    }
+}
+
+/* ═══ Components ════════════════════════════════════════════ */
+
+@layer components {
+    /* Primary button */
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-radius: var(--k-radius-lg);
+        font-weight: 700;
+        font-size: 14px;
+        color: white;
+        background-color: var(--k-color-primary);
+        transition: background-color 0.3s ease;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn-primary:hover {
+        background-color: var(--k-color-primary-hover);
+    }
+
+    /* Secondary button */
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-radius: var(--k-radius-lg);
+        font-weight: 700;
+        font-size: 14px;
+        color: white;
+        background-color: var(--k-color-secondary);
+        transition: opacity 0.3s ease;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn-secondary:hover {
+        opacity: 0.9;
+    }
+
+    /* Card */
+    .card {
+        background: white;
+        border-radius: var(--k-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--k-shadow-sm);
+        transition: box-shadow 0.3s ease;
+    }
+    .card:hover {
+        box-shadow: var(--k-shadow-md);
+    }
+
+    /* Work card overlay */
+    .work-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--k-radius-lg);
+    }
+    .work-card .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent 50%, rgba(0,0,0,0.7));
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    .work-card:hover .overlay {
+        opacity: 1;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--k-color-bg-surface);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--k-color-text-secondary);
+        border-radius: var(--k-radius-full);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--k-color-text-primary);
+    }
+}
+
+/* ═══ Animations ═══════════════════════════════════════════ */
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Lazy blur transition */
+img[data-src] {
+    filter: blur(10px);
+    transition: filter 0.3s;
+}
+img[data-src].loaded {
+    filter: blur(0);
+}
