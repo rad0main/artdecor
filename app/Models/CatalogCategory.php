@@ -21,6 +21,6 @@ class CatalogCategory extends Model
 
     public function images(): HasMany
     {
-        return $this->hasMany(CatalogImage::class);
+        return $this->hasMany(CatalogImage::class, 'category_id');
     }
 }
