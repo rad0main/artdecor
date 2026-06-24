@@ -37,10 +37,10 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('ArtDecor')
             ->breadcrumbs(true)
             ->navigationGroups([
-                NavigationGroup::make('Каталог')->icon('heroicon-o-photo'),
-                NavigationGroup::make('Портфолио')->icon('heroicon-o-briefcase'),
-                NavigationGroup::make('Заказы')->icon('heroicon-o-shopping-cart'),
-                NavigationGroup::make('Настройки')->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make('Каталог'),
+                NavigationGroup::make('Портфолио'),
+                NavigationGroup::make('Заказы'),
+                NavigationGroup::make('Настройки'),
             ])
             ->userMenuItems([
                 MenuItem::make()
