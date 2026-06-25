@@ -82,6 +82,6 @@ fi
 echo ""
 echo "═══════════════════════════════════════════════════════"
 echo "  Деплой завершён!"
-echo "  Проверьте сайт: https://artdecor.ru"
-echo "  Админка:        https://artdecor.ru/admin"
+echo "  Проверьте сайт: https://yourlead.ru"
+echo "  Админка:        https://yourlead.ru/admin"
 echo "═══════════════════════════════════════════════════════"
