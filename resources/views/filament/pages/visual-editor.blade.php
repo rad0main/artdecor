@@ -52,7 +52,7 @@
                 </optgroup>
             @endforeach
         </select>
-        <button @click="addBlock()"
+        <button type="button" @click="addBlock()"
                 class="px-3 py-1.5 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">+ Добавить</button>
         <span class="text-gray-300 text-sm ml-auto">Блоков: <span x-text="blockCount">{{ count($content) }}</span></span>
         <a href="{{ $this->record->slug ? url('/page/' . $this->record->slug) : '#' }}" target="_blank"
@@ -72,11 +72,11 @@
                 <div class="ve-block-label">{{ $builder->getWidgetTitle($block['type']) ?? $block['type'] }}</div>
 
                 <div class="ve-overlay" style="justify-content: flex-end;">
-                    <button class="ve-btn" @click.stop="editSettings({{ $index }})" title="Настройки">⚙</button>
-                    <button class="ve-btn" @click.stop="moveUp({{ $index }})" title="Вверх">↑</button>
-                    <button class="ve-btn" @click.stop="moveDown({{ $index }})" title="Вниз">↓</button>
-                    <button class="ve-btn" @click.stop="duplicate({{ $index }})" title="Дублировать">⧉</button>
-                    <button class="ve-btn danger" @click.stop="remove({{ $index }})" title="Удалить">✕</button>
+                    <button type="button" class="ve-btn" @click.stop="editSettings({{ $index }})" title="Настройки">⚙</button>
+                    <button type="button" class="ve-btn" @click.stop="moveUp({{ $index }})" title="Вверх">↑</button>
+                    <button type="button" class="ve-btn" @click.stop="moveDown({{ $index }})" title="Вниз">↓</button>
+                    <button type="button" class="ve-btn" @click.stop="duplicate({{ $index }})" title="Дублировать">⧉</button>
+                    <button type="button" class="ve-btn danger" @click.stop="remove({{ $index }})" title="Удалить">✕</button>
                 </div>
 
                 <div style="pointer-events: none; user-select: none;">
@@ -99,7 +99,7 @@
         <div class="ve-modal-content" x-show="open" x-cloak>
             <div class="ve-modal-header">
                 <h3 x-text="'Настройки: ' + blockTitle"></h3>
-                <button class="ve-modal-close" @click="close()">✕</button>
+                <button type="button" class="ve-modal-close" @click="close()">✕</button>
             </div>
 
             <div class="space-y-4">
@@ -135,8 +135,8 @@
             </div>
 
             <div class="flex justify-end gap-2 mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded text-sm hover:bg-gray-300" @click="close()">Отмена</button>
-                <button class="px-4 py-2 bg-blue-500 text-white rounded text-sm hover:bg-blue-600" @click="save()">Применить</button>
+                <button type="button" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded text-sm hover:bg-gray-300" @click="close()">Отмена</button>
+                <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded text-sm hover:bg-blue-600" @click="save()">Применить</button>
             </div>
         </div>
     </div>
@@ -208,17 +208,25 @@
                 },
 
                 edit(index, type) {
+                    console.log('VE: edit', index, type);
                     const wf = widgetFields[type];
-                    if (!wf) { alert('Неизвестный тип блока: ' + type); return; }
+                    if (!wf) {
+                        console.error('VE: unknown widget type', type);
+                        alert('Неизвестный тип блока: ' + type);
+                        return;
+                    }
 
                     this.blockIndex = index;
                     this.blockTitle = wf.title;
                     this.defaults = wf.defaults || {};
                     this.fields = wf.fields || [];
 
+                    console.log('VE: fields', this.fields.length, this.fields);
+
                     // Read current settings from data-settings attribute
                     const el = document.querySelector(`[data-index="${index}"]`);
                     const currentSettings = parseSettings(el);
+                    console.log('VE: settings', currentSettings);
 
                     // Merge: use current if exists, otherwise default
                     this.formData = {};
@@ -226,6 +234,7 @@
                         this.formData[key] = (currentSettings[key] !== undefined) ? currentSettings[key] : this.defaults[key];
                     });
 
+                    console.log('VE: formData', this.formData);
                     this.open = true;
                 },
 
