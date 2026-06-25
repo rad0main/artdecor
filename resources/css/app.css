@@ -366,8 +366,9 @@
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: var(--k-font-family-heading);
     color: var(--k-color-text-primary);
     text-decoration: none;
     transition: color 0.2s ease;
@@ -382,7 +383,9 @@
 .dropdown-link {
     display: block;
     padding: 8px 16px;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--k-font-family-heading);
     color: #555;
     text-decoration: none;
     transition: background 0.2s, color 0.2s;
