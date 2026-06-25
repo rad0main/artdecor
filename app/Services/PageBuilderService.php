@@ -177,6 +177,12 @@ class PageBuilderService
         $service->register(\App\PageBuilder\Widgets\ColumnsWidget::class);
         $service->register(\App\PageBuilder\Widgets\CtaWidget::class);
         $service->register(\App\PageBuilder\Widgets\HtmlWidget::class);
+        $service->register(\App\PageBuilder\Widgets\AccordionWidget::class);
+        $service->register(\App\PageBuilder\Widgets\TabsWidget::class);
+        $service->register(\App\PageBuilder\Widgets\PricesWidget::class);
+        $service->register(\App\PageBuilder\Widgets\TestimonialsWidget::class);
+        $service->register(\App\PageBuilder\Widgets\VideoWidget::class);
+        $service->register(\App\PageBuilder\Widgets\StatsWidget::class);
 
         return $service;
     }
