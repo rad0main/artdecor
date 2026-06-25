@@ -9,40 +9,44 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                heading: ['Montserrat', 'sans-serif'],
-                body: ['PT Sans', 'sans-serif'],
+                heading: ['Montserrat', 'Arial', 'sans-serif'],
+                body: ['PT Sans', 'Arial', 'sans-serif'],
             },
             colors: {
                 brand: {
-                    primary: '#E1323D',
-                    'primary-hover': '#C82832',
-                    secondary: '#242E38',
-                    accent: '#6EC1E4',
+                    primary: '#D32F2F',
+                    'primary-hover': '#B71C1C',
+                    secondary: '#2C2C2C',
+                    accent: '#5BC0DE',
                 },
                 surface: {
-                    DEFAULT: '#F9F9F9',
-                    hover: '#F0F0F0',
+                    DEFAULT: '#F5F5F5',
+                    hover: '#ECECEC',
                 },
                 text: {
-                    primary: '#3C3D41',
-                    secondary: '#808285',
-                    muted: '#A5A161',
+                    primary: '#333333',
+                    secondary: '#777777',
+                    muted: '#999999',
                 },
                 border: {
-                    DEFAULT: '#EFEFEF',
-                    hover: '#DEDEDE',
+                    DEFAULT: '#E0E0E0',
+                    hover: '#CCCCCC',
+                },
+                footer: {
+                    bg: '#2C2C2C',
+                    text: '#AAAAAA',
                 },
             },
-            spacing: {
-                '4.5': '1.125rem',
-                '18': '4.5rem',
-                '88': '22rem',
-                '120': '30rem',
-            },
             maxWidth: {
-                'page': '1200px',
+                page: '1200px',
             },
         },
     },
-    plugins: [],
+    plugins: [
+        function ({ addUtilities }) {
+            addUtilities({
+                '.x-cloak': { display: 'none !important' },
+            });
+        },
+    ],
 };
