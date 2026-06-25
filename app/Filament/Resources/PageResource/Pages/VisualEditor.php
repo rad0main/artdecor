@@ -17,13 +17,13 @@ class VisualEditor extends BasePage
 
     protected static string $view = 'filament.pages.visual-editor';
 
-    public Page $record;
+    public ?Page $record = null;
 
     public string $pageContent = '';
 
-    public function mount(int|string $record): void
+    public function mount(Page $record): void
     {
-        $this->record = Page::findOrFail($record);
+        $this->record = $record;
         $this->pageContent = $this->record->renderContent();
     }
 
