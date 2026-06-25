@@ -27,11 +27,18 @@ class Login extends BaseLogin
             ->statePath('data');
     }
 
-    protected function getCredentials(array $data): array
+    protected function getCredentialsFromFormData(array $data): array
     {
         return [
             'login' => $data['login'],
             'password' => $data['password'],
         ];
+    }
+
+    protected function throwFailureValidationException(): never
+    {
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            'data.login' => __('filament-panels::pages/auth/login.messages.failed'),
+        ]);
     }
 }
