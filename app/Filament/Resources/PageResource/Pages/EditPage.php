@@ -18,7 +18,7 @@ class EditPage extends EditRecord
             Actions\Action::make('visual-editor')
                 ->label('Визуальный редактор')
                 ->icon('heroicon-o-eye')
-                ->url(fn () => Pages\VisualEditor::getUrl(['record' => $this->record]))
+                ->url(fn () => VisualEditor::getUrl(['record' => $this->record]))
                 ->openUrlInNewTab()
                 ->color('warning'),
             Actions\Action::make('view')
