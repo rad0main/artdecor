@@ -365,8 +365,8 @@
 .header-nav-link-light {
     display: inline-flex;
     align-items: center;
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 4px 10px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--k-color-text-primary);
     text-decoration: none;
