@@ -25,18 +25,9 @@ class PageResource extends Resource
 
     public static function form(Form $form): Form
     {
+        /** @var \App\Services\PageBuilderService $builder */
         $builder = app(PageBuilderService::class);
-        $widgets = $builder->getWidgetsGrouped();
-
-        $sectionBlocks = [];
-        foreach ($widgets as $category => $items) {
-            foreach ($items as $widget) {
-                $sectionBlocks[] = Forms\Components\Builder\Block::make($widget['name'])
-                    ->label($widget['title'])
-                    ->icon($widget['icon'])
-                    ->schema($widget['schema']);
-            }
-        }
+        $blocks = $builder->getWidgetBlocks();
 
         return $form->schema([
             Forms\Components\Group::make()
@@ -74,7 +65,7 @@ class PageResource extends Resource
                         ->schema([
                             Forms\Components\Builder::make('content')
                                 ->label('')
-                                ->blocks($sectionBlocks)
+                                ->blocks($blocks)
                                 ->collapsible()
                                 ->blockNumbers(false)
                                 ->addActionLabel('Добавить блок')

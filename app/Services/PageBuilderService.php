@@ -19,8 +19,7 @@ class PageBuilderService
      */
     public function register(string $widgetClass): void
     {
-        $widget = new $widgetClass;
-        if (! $widget instanceof BaseWidget) {
+        if (! is_subclass_of($widgetClass, BaseWidget::class)) {
             throw new \InvalidArgumentException("{$widgetClass} must extend " . BaseWidget::class);
         }
         $this->widgets[$widgetClass::name()] = $widgetClass;
@@ -43,6 +42,19 @@ class PageBuilderService
         }
 
         return collect($groups);
+    }
+
+    /** Get widget metadata for Filament Builder blocks (lazy-loaded) */
+    public function getWidgetBlocks(): array
+    {
+        $blocks = [];
+        foreach ($this->widgets as $name => $class) {
+            $blocks[] = \Filament\Forms\Components\Builder\Block::make($name)
+                ->label($class::title())
+                ->icon($class::icon())
+                ->schema($class::schema());
+        }
+        return $blocks;
     }
 
     /** Get widget class by name */
@@ -110,7 +122,7 @@ class PageBuilderService
     /** Initialize with all built-in widgets */
     public static function boot(): self
     {
-        $service = app(self::class);
+        $service = new static();
 
         $service->register(\App\PageBuilder\Widgets\HeroWidget::class);
         $service->register(\App\PageBuilder\Widgets\TextWidget::class);
