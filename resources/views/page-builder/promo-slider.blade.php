@@ -1,6 +1,13 @@
 @php
     $slides = $slides ?? [];
     $hasMultiple = count($slides) > 1;
+    // Fallback: use global title/text if no slides have content
+    if (empty($slides) || (empty($slides[0]['image']) && empty($slides[0]['title']))) {
+        $globalFallback = [['image' => '', 'title' => $title ?? 'Промо', 'text' => $text ?? 'Описание']];
+        if (!empty($slides)) {
+            $slides = $globalFallback;
+        }
+    }
 @endphp
 
 <section class="relative w-full overflow-hidden bg-[var(--k-color-secondary)]"

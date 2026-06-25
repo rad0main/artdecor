@@ -8,7 +8,6 @@ use App\PageBuilder\BaseWidget;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Textarea;
 use Illuminate\Contracts\View\View;
 
 class PromoSliderWidget extends BaseWidget
@@ -21,19 +20,35 @@ class PromoSliderWidget extends BaseWidget
     public static function defaults(): array
     {
         return [
+            'title' => '',
+            'text' => '',
             'slides' => [
-                [
-                    'image' => '',
-                    'title' => 'Ваш заголовок',
-                    'text' => 'Ваш текст описания',
-                ],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания'],
             ],
+        ];
+    }
+
+    /**
+     * Fields for the inline visual editor settings modal.
+     * The Repeater (slides) cannot be rendered inline, so we expose
+     * simple fields that affect rendering. For full slide management
+     * (add/remove images), use the admin page form.
+     */
+    public static function config(): array
+    {
+        return [
+            ['key' => 'title', 'label' => 'Глобальный заголовок', 'type' => 'text'],
+            ['key' => 'text', 'label' => 'Глобальный текст', 'type' => 'textarea'],
         ];
     }
 
     public static function schema(): array
     {
         return [
+            TextInput::make('title')
+                ->label('Глобальный заголовок (опционально)'),
+            TextInput::make('text')
+                ->label('Глобальный текст (опционально)'),
             Repeater::make('slides')
                 ->label('Слайды')
                 ->schema([
