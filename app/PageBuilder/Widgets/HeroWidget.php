@@ -32,6 +32,18 @@ class HeroWidget extends BaseWidget
         ];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'title', 'label' => 'Заголовок', 'type' => 'text', 'placeholder' => 'Главный заголовок'],
+            ['key' => 'subtitle', 'label' => 'Подзаголовок', 'type' => 'text'],
+            ['key' => 'btn_text', 'label' => 'Текст кнопки', 'type' => 'text'],
+            ['key' => 'btn_url', 'label' => 'Ссылка кнопки', 'type' => 'url'],
+            ['key' => 'height', 'label' => 'Высота', 'type' => 'select', 'options' => ['small' => '300px', 'medium' => '500px', 'large' => '700px', 'fullscreen' => 'На весь экран']],
+            ['key' => 'overlay', 'label' => 'Затемнение', 'type' => 'boolean', 'help' => 'Затемнять фон'],
+        ];
+    }
+
     public static function schema(): array
     {
         return [

@@ -38,10 +38,18 @@ class PageBuilderService
                 'schema' => $class::schema(),
                 'defaults' => $class::defaults(),
                 'isContainer' => $class::isContainer(),
+                'config' => $class::config(),
             ];
         }
 
         return collect($groups);
+    }
+
+    /** Get widget display title by type */
+    public function getWidgetTitle(string $type): ?string
+    {
+        $class = $this->getWidgetClass($type);
+        return $class ? $class::title() : null;
     }
 
     /** Get widget metadata for Filament Builder blocks (lazy-loaded) */

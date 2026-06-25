@@ -32,19 +32,6 @@ class VisualEditor extends BasePage
         return "Редактор: {$this->record->title}";
     }
 
-    public function updateBlock(string $type, int $index, array $settings): void
-    {
-        $content = $this->record->content ?? [];
-
-        if (isset($content[$index])) {
-            $content[$index]['settings'] = $settings;
-            $this->record->content = $content;
-            $this->record->save();
-        }
-
-        $this->pageContent = $this->record->renderContent();
-    }
-
     public function deleteBlock(int $index): void
     {
         $content = $this->record->content ?? [];
@@ -89,6 +76,23 @@ class VisualEditor extends BasePage
             $this->record->save();
         }
 
+        $this->pageContent = $this->record->renderContent();
+    }
+
+    public function getBlockSettings(int $index): array
+    {
+        $content = $this->record->content ?? [];
+        return $content[$index]['settings'] ?? [];
+    }
+
+    public function updateBlockSettings(int $index, array $settings): void
+    {
+        $content = $this->record->content ?? [];
+        if (isset($content[$index])) {
+            $content[$index]['settings'] = $settings;
+            $this->record->content = $content;
+            $this->record->save();
+        }
         $this->pageContent = $this->record->renderContent();
     }
 

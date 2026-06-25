@@ -26,6 +26,15 @@ class TextWidget extends BaseWidget
         ];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'content', 'label' => 'Содержимое', 'type' => 'html', 'placeholder' => 'HTML-контент'],
+            ['key' => 'alignment', 'label' => 'Выравнивание', 'type' => 'select', 'options' => ['left' => 'Слева', 'center' => 'По центру', 'right' => 'Справа']],
+            ['key' => 'max_width', 'label' => 'Ширина', 'type' => 'select', 'options' => ['page' => 'Как у страницы', 'full' => 'На всю ширину', 'narrow' => 'Узкий']],
+        ];
+    }
+
     public static function schema(): array
     {
         return [

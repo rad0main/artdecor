@@ -32,6 +32,16 @@ abstract class BaseWidget
         return 'basic';
     }
 
+    /**
+     * Config metadata for inline visual editor.
+     * Returns array of field definitions: [{ key, label, type, options?, placeholder? }]
+     * Supported types: text, textarea, number, select, color, boolean, url, html
+     */
+    public static function config(): array
+    {
+        return [];
+    }
+
     /** Whether this widget accepts nested widgets (like Columns) */
     public static function isContainer(): bool
     {

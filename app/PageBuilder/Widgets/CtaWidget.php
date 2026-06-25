@@ -30,6 +30,18 @@ class CtaWidget extends BaseWidget
         ];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'title', 'label' => 'Заголовок', 'type' => 'text'],
+            ['key' => 'description', 'label' => 'Описание', 'type' => 'html', 'placeholder' => 'Текст описания'],
+            ['key' => 'btn_text', 'label' => 'Текст кнопки', 'type' => 'text'],
+            ['key' => 'btn_url', 'label' => 'Ссылка', 'type' => 'url'],
+            ['key' => 'background_color', 'label' => 'Цвет фона', 'type' => 'color'],
+            ['key' => 'text_color', 'label' => 'Цвет текста', 'type' => 'color'],
+        ];
+    }
+
     public static function schema(): array
     {
         return [

@@ -20,6 +20,13 @@ class HtmlWidget extends BaseWidget
         return ['html' => '<div>Ваш HTML-код</div>'];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'html', 'label' => 'HTML-код', 'type' => 'html', 'placeholder' => '<div>Код без экранирования</div>'],
+        ];
+    }
+
     public static function schema(): array
     {
         return [

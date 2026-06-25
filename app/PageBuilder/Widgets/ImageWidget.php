@@ -29,6 +29,15 @@ class ImageWidget extends BaseWidget
         ];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'alt', 'label' => 'Alt-текст (SEO)', 'type' => 'text'],
+            ['key' => 'caption', 'label' => 'Подпись', 'type' => 'text'],
+            ['key' => 'width', 'label' => 'Ширина', 'type' => 'select', 'options' => ['full' => 'На всю ширину', 'page' => 'Как у страницы', 'contain' => 'По размеру']],
+        ];
+    }
+
     public static function schema(): array
     {
         return [
