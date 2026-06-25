@@ -24,6 +24,13 @@ class VisualEditor extends BasePage
     public function mount(Page $record): void
     {
         $this->record = $record;
+
+        // Normalize old content (data key → settings key)
+        $raw = $this->record->content ?? [];
+        $builder = app(\App\Services\PageBuilderService::class);
+        $normalized = array_map(fn($b) => $builder->normalizeBlock($b), $raw);
+        $this->record->content = $normalized;
+
         $this->pageContent = $this->record->renderContent();
     }
 

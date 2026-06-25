@@ -1,6 +1,8 @@
 @php
     $builder = app(\App\Services\PageBuilderService::class);
-    $content = $this->record->content ?? [];
+    $rawContent = $this->record->content ?? [];
+    // Normalize old data key to settings
+    $content = array_map(fn($b) => $builder->normalizeBlock($b), $rawContent);
 @endphp
 
 <x-filament-panels::page>
@@ -65,7 +67,8 @@
                  :class="selectedIndex === {{ $index }} ? 'selected' : ''"
                  data-index="{{ $index }}"
                  data-type="{{ $block['type'] }}"
-                 data-settings="{{ base64_encode(json_encode($block['settings'] ?? [])) }}">
+                 data-settings="{{ base64_encode(json_encode($block['settings'] ?? [])) }}"
+                 data-settings-json="{{ htmlspecialchars(json_encode($block['settings'] ?? []), ENT_QUOTES, 'UTF-8') }}">
 
                 <div class="ve-block-label">{{ $builder->getWidgetTitle($block['type']) ?? $block['type'] }}</div>
 
@@ -156,15 +159,12 @@
                 @endforeach
             };
 
-            // Helper: parse base64-encoded JSON from data-settings
+            // Helper: parse JSON from data-settings-json attribute
             function parseSettings(el) {
-                const raw = el?.dataset?.settings;
+                const raw = el?.dataset?.settingsJson;
                 if (!raw) return {};
-                try {
-                    return JSON.parse(atob(raw));
-                } catch(e) {
-                    return {};
-                }
+                try { return JSON.parse(raw); }
+                catch(e) { return {}; }
             }
 
             Alpine.data('toolbar', () => ({

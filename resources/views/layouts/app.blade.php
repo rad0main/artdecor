@@ -31,6 +31,24 @@
 
     {{ $footer ?? '' }}
 
+    {{-- Callback Modal --}}
+    <x-modal name="callback" title="Заказать звонок">
+        <form @submit.prevent="submitCallback" class="space-y-4"
+              x-data="{ phone: '', name: '' }"
+              x-init="$data.submitCallback = async function() {
+                  await axios.post('/api/order', { name, phone, source: 'callback' });
+                  name = ''; phone = '';
+                  $dispatch('close-modal');
+                  alert('Спасибо! Мы перезвоним вам.');
+              }">
+            <input type="text" x-model="name" placeholder="Ваше имя" required
+                   class="w-full px-4 py-3 border rounded-lg text-sm outline-none focus:border-[var(--k-color-primary)] focus:ring-1 focus:ring-[var(--k-color-primary)]">
+            <input type="tel" x-model="phone" placeholder="+7 (999) 123-45-67" required
+                   class="w-full px-4 py-3 border rounded-lg text-sm outline-none focus:border-[var(--k-color-primary)] focus:ring-1 focus:ring-[var(--k-color-primary)]">
+            <button type="submit" class="btn-primary w-full text-center">Заказать звонок</button>
+        </form>
+    </x-modal>
+
     {{-- Jivosite --}}
     @php $jivositeId = \App\Models\Setting::get('integrations.jivosite_id'); @endphp
     @if($jivositeId)

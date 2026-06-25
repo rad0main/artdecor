@@ -79,6 +79,7 @@ class PageBuilderService
         $html = '';
 
         foreach ($content as $section) {
+            $section = $this->normalizeBlock($section);
             $sectionType = $section['type'] ?? '';
             $settings = $section['settings'] ?? [];
             $children = $section['children'] ?? [];
@@ -107,10 +108,24 @@ class PageBuilderService
     }
 
     /**
+     * Normalize block data. Filament Builder stores settings under "data" key,
+     * our widgets expect "settings". Support both for backward compatibility.
+     */
+    public function normalizeBlock(array $block): array
+    {
+        if (! isset($block['settings']) && isset($block['data'])) {
+            $block['settings'] = $block['data'];
+            unset($block['data']);
+        }
+        return $block;
+    }
+
+    /**
      * Render a single block (for visual editor preview).
      */
     public function renderBlock(array $block): string
     {
+        $block = $this->normalizeBlock($block);
         $type = $block['type'] ?? '';
         $settings = $block['settings'] ?? [];
         $class = $this->getWidgetClass($type);
