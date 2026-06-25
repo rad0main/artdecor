@@ -121,8 +121,14 @@ class VisualEditor extends BasePage
         return [
             Action::make('save')
                 ->label('Сохранить')
-                ->action(fn () => $this->record->save())
-                ->success(),
+                ->color('success')
+                ->action(function () {
+                    $this->record->save();
+                    \Filament\Notifications\Notification::make()
+                        ->title('Сохранено')
+                        ->success()
+                        ->send();
+                }),
         ];
     }
 }
