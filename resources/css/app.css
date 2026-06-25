@@ -361,6 +361,20 @@
 .stars { display: inline-flex; gap: 2px; color: #FFC107; }
 .stars svg { width: 18px; height: 18px; fill: currentColor; }
 
+/* Main Content Area */
+main {
+    max-width: calc(100% - 25vw);   /* 1/8 left + 1/8 right = 25% total margins */
+    margin: 0 auto;
+    width: 100%;
+}
+@media (max-width: 768px) {
+    main {
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
 /* Header navigation (light theme) */
 .header-nav-link-light {
     display: inline-flex;
