@@ -21,3 +21,6 @@ Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
 // SEO
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/robots.txt', [RobotsController::class, 'index'])->name('robots');
+
+// Dynamic pages from Page Builder (must be last to not conflict with other routes)
+Route::get('/page/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->name('page.show');

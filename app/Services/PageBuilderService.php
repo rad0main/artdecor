@@ -1,0 +1,125 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\PageBuilder\BaseWidget;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
+
+class PageBuilderService
+{
+    /** @var array<string, class-string<BaseWidget>> */
+    protected array $widgets = [];
+
+    /**
+     * Register a widget class.
+     * @param class-string<BaseWidget> $widgetClass
+     */
+    public function register(string $widgetClass): void
+    {
+        $widget = new $widgetClass;
+        if (! $widget instanceof BaseWidget) {
+            throw new \InvalidArgumentException("{$widgetClass} must extend " . BaseWidget::class);
+        }
+        $this->widgets[$widgetClass::name()] = $widgetClass;
+    }
+
+    /** Get all registered widgets grouped by category */
+    public function getWidgetsGrouped(): Collection
+    {
+        $groups = [];
+        foreach ($this->widgets as $name => $class) {
+            $category = $class::category();
+            $groups[$category][] = [
+                'name' => $name,
+                'title' => $class::title(),
+                'icon' => $class::icon(),
+                'schema' => $class::schema(),
+                'defaults' => $class::defaults(),
+                'isContainer' => $class::isContainer(),
+            ];
+        }
+
+        return collect($groups);
+    }
+
+    /** Get widget class by name */
+    public function getWidgetClass(string $name): ?string
+    {
+        return $this->widgets[$name] ?? null;
+    }
+
+    /**
+     * Render page content (array of sections) to HTML string.
+     */
+    public function render(array $content): string
+    {
+        $html = '';
+
+        foreach ($content as $section) {
+            $sectionType = $section['type'] ?? '';
+            $settings = $section['settings'] ?? [];
+            $children = $section['children'] ?? [];
+
+            $widgetClass = $this->getWidgetClass($sectionType);
+
+            if ($widgetClass) {
+                /** @var BaseWidget $widget */
+                $widget = app($widgetClass);
+
+                if ($widgetClass::isContainer() && ! empty($children)) {
+                    $settings['_children'] = $this->renderChildren($children);
+                }
+
+                $rendered = $widget->render($settings);
+
+                if ($rendered instanceof \Illuminate\Contracts\View\View) {
+                    $rendered = $rendered->render();
+                }
+
+                $html .= $rendered;
+            }
+        }
+
+        return $html;
+    }
+
+    /** Render nested widgets inside a container */
+    protected function renderChildren(array $children): string
+    {
+        $html = '';
+        foreach ($children as $child) {
+            $type = $child['type'] ?? '';
+            $settings = $child['settings'] ?? [];
+
+            $widgetClass = $this->getWidgetClass($type);
+            if ($widgetClass) {
+                $widget = app($widgetClass);
+                $rendered = $widget->render($settings);
+                if ($rendered instanceof \Illuminate\Contracts\View\View) {
+                    $rendered = $rendered->render();
+                }
+                $html .= $rendered;
+            }
+        }
+        return $html;
+    }
+
+    /** Initialize with all built-in widgets */
+    public static function boot(): self
+    {
+        $service = app(self::class);
+
+        $service->register(\App\PageBuilder\Widgets\HeroWidget::class);
+        $service->register(\App\PageBuilder\Widgets\TextWidget::class);
+        $service->register(\App\PageBuilder\Widgets\ImageWidget::class);
+        $service->register(\App\PageBuilder\Widgets\GalleryWidget::class);
+        $service->register(\App\PageBuilder\Widgets\ColumnsWidget::class);
+        $service->register(\App\PageBuilder\Widgets\CtaWidget::class);
+        $service->register(\App\PageBuilder\Widgets\HtmlWidget::class);
+
+        return $service;
+    }
+}
