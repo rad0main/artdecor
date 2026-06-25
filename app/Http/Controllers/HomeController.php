@@ -24,15 +24,18 @@ class HomeController extends Controller
         }
 
         // Fallback: if no homepage page exists, create one with default content
-        $homepage = Page::create([
-            'title' => 'Главная',
-            'slug' => '/',
-            'meta_description' => 'Производство и продажа скинали, стеклянных фартуков для кухни, панно, перегородок',
-            'content' => self::getDefaultHomepageContent(),
-            'layout' => 'default',
-            'is_published' => true,
-            'is_homepage' => true,
-        ]);
+        // Use updateOrCreate to avoid unique constraint violations on slug
+        $homepage = Page::updateOrCreate(
+            ['slug' => '/'],
+            [
+                'title' => 'Главная',
+                'meta_description' => 'Производство и продажа скинали, стеклянных фартуков для кухни, панно, перегородок',
+                'content' => self::getDefaultHomepageContent(),
+                'layout' => 'default',
+                'is_published' => true,
+                'is_homepage' => true,
+            ]
+        );
 
         $content = $homepage->renderContent();
         return view('pages.dynamic', [
