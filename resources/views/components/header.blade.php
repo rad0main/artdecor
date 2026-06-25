@@ -5,12 +5,12 @@
             {{-- Левая часть --}}
                 <div class="flex items-center gap-2 sm:gap-3">
                     <button type="button"
-                            class="font-bold text-xs text-[var(--k-color-primary)] hover:underline transition-colors whitespace-nowrap font-heading"
+                            class="text-xs text-[var(--k-color-primary)] hover:underline transition-colors whitespace-nowrap font-heading"
                         x-data @click.prevent="$dispatch('open-modal', 'callback')">
                     Заказать обратный звонок
                 </button>
                 <a href="tel:{{ \App\Models\Setting::get('contacts.phone') }}"
-                       class="flex items-center gap-1 font-semibold text-brand-accent hover:underline transition-colors whitespace-nowrap text-xs lg:text-sm font-heading">
+                       class="flex items-center gap-1 text-brand-accent hover:underline transition-colors whitespace-nowrap text-xs lg:text-sm font-heading">
                     <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                     </svg>
