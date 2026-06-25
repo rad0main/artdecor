@@ -1,11 +1,11 @@
 @php
     $builder = app(\App\Services\PageBuilderService::class);
     $rawContent = $this->record->content ?? [];
-    // Normalize old data key to settings
-    $content = array_map(fn($b) => $builder->normalizeBlock($b), $rawContent);
-
-    // DEBUG: track which blocks are available
-    $blockTypes = array_map(fn($b) => $b['type'] ?? '?', $content ?? []);
+    // Normalize old data key to settings, filter out invalid items
+    $content = array_values(array_filter(
+        array_map(fn($b) => $builder->normalizeBlock($b), $rawContent),
+        fn($b) => is_array($b) && isset($b['type'])
+    ));
 
     // Prepare widget metadata for JS (avoids @json parsing issues with complex closures)
     $widgetsJson = $builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => collect($items)->mapWithKeys(fn($w) => [
@@ -16,8 +16,6 @@
         ]
     ])->toArray())->toArray();
 @endphp
-
-{{-- DEBUG: blocks in content: {{ implode(', ', $blockTypes) }} (count: {{ count($content) }}) --}}
 
 <x-filament-panels::page>
     <style>
@@ -76,9 +74,10 @@
         </div>
 
         {{-- Blocks --}}
-        <div class="space-y-0" wire:ignore>
+        <div class="space-y-0">
         @foreach($content as $index => $block)
             <div class="ve-widget"
+                 wire:key="block-{{ $index }}"
                  @click="select({{ $index }})"
                  :class="selectedIndex === {{ $index }} ? 'selected' : ''"
                  data-index="{{ $index }}"
@@ -96,14 +95,7 @@
                 </div>
 
                 <div style="pointer-events: none; user-select: none;">
-                    @php
-                        try {
-                            $renderedBlock = $builder->renderBlock($block);
-                        } catch (\Throwable $e) {
-                            $renderedBlock = '<div class="p-4 text-red-500 border border-red-300 rounded">Ошибка рендеринга ' . e($block['type'] ?? '?') . ': ' . e($e->getMessage()) . '</div>';
-                        }
-                    @endphp
-                    {!! $renderedBlock !!}
+                    {!! $builder->renderBlock($block) !!}
                 </div>
             </div>
         @endforeach
