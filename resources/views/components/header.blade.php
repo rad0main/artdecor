@@ -1,4 +1,4 @@
-<header class="w-full bg-white border-b border-gray-200">
+<header class="w-full bg-white border-b border-gray-200 sticky top-0 z-50">
     {{-- Верхняя панель: телефон | email | часы --}}
     <div class="border-b border-gray-200">
         <div class="max-w-page mx-auto px-4">
@@ -31,7 +31,7 @@
     {{-- Логотип по центру --}}
     <div class="flex justify-center py-3 lg:py-4 border-b border-gray-200">
         <a href="{{ route('home') }}" class="block">
-            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="78" height="78" class="h-12 lg:h-[78px] w-auto">
+            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="100" height="100" class="h-16 lg:h-[100px] w-auto">
         </a>
     </div>
 
