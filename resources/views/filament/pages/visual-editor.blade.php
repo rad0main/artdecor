@@ -37,7 +37,7 @@
         .ve-modal { display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; }
         .ve-modal.open { display: flex; }
         .ve-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
-        .ve-modal-content { position: relative; background: white; border-radius: 0.75rem; max-width: 48rem; width: 90%; max-height: 85vh; overflow-y: auto; padding: 1.5rem; }
+        .ve-modal-content { position: relative; background: white; border-radius: 0.75rem; max-width: 56rem; width: 95%; max-height: 85vh; overflow-y: auto; padding: 1.5rem; }
         .ve-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid #e5e7eb; }
         .ve-modal-header h3 { font-size: 1.125rem; font-weight: 600; }
 
@@ -137,14 +137,15 @@
                     <div class="ve-settings-field">
                         <label x-text="field.label"></label>
 
+                        {{-- Standard fields --}}
                         <input x-show="field.type === 'text' || field.type === 'url'"
-                               type="text" x-model="formData[field.key]" :placeholder="field.placeholder ?? ''">
+                               type="text" x-model="formData[field.key]" :placeholder="field.placeholder ?? ''" :maxlength="field.maxlength ?? ''">
 
                         <textarea x-show="field.type === 'textarea' || field.type === 'html'"
-                                  x-model="formData[field.key]" rows="4"></textarea>
+                                  x-model="formData[field.key]" rows="4" :maxlength="field.maxlength ?? ''"></textarea>
 
                         <input x-show="field.type === 'number'"
-                               type="number" x-model="formData[field.key]">
+                               type="number" x-model="formData[field.key]" style="width: 80px">
 
                         <select x-show="field.type === 'select'" x-model="formData[field.key]">
                             <template x-for="(opt, val) in field.options" :key="val">
@@ -159,6 +160,33 @@
                             <input type="checkbox" x-model="formData[field.key]" class="rounded">
                             <span x-text="field.help ?? ''" class="text-sm text-gray-500 dark:text-gray-400"></span>
                         </label>
+
+                        {{-- Repeater (array of sub-items) --}}
+                        <div x-show="field.type === 'repeater'">
+                            <template x-for="(item, i) in (formData[field.key] || [])" :key="i">
+                                <div class="border border-gray-200 dark:border-gray-600 rounded-md p-3 mb-3 relative">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <template x-for="(sub, si) in (field.fields || [])" :key="si">
+                                            <div>
+                                                <label class="text-xs text-gray-500 dark:text-gray-400 mb-1" x-text="sub.label"></label>
+                                                <input x-show="sub.type === 'text' || sub.type === 'url' || sub.type === 'number'"
+                                                       type="text" x-model="formData[field.key][i][sub.key]" :maxlength="sub.maxlength ?? ''"
+                                                       class="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:text-white"
+                                                       :style="sub.width ? 'width:'+sub.width : ''">
+                                                <textarea x-show="sub.type === 'textarea'"
+                                                          x-model="formData[field.key][i][sub.key]" rows="2"
+                                                          class="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:text-white"
+                                                          :maxlength="sub.maxlength ?? ''"></textarea>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <button type="button" class="absolute top-1 right-1 text-red-500 text-xs"
+                                            @click="removeRepeaterItem(field.key, i)" title="Удалить">✕</button>
+                                </div>
+                            </template>
+                            <button type="button" class="px-3 py-1.5 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
+                                    @click="addRepeaterItem(field.key, field.fields || [])">+ Добавить слайд</button>
+                        </div>
                     </div>
                 </template>
                 <p x-show="fields.length === 0" class="text-gray-500 text-center py-4">Нет настраиваемых полей</p>
@@ -242,8 +270,27 @@
                     Object.keys(this.defaults).forEach(key => {
                         this.formData[key] = (currentSettings[key] !== undefined) ? currentSettings[key] : this.defaults[key];
                     });
+                    // Ensure repeater fields exist
+                    this.fields.forEach(f => {
+                        if (f.type === 'repeater' && !this.formData[f.key]) {
+                            this.formData[f.key] = JSON.parse(JSON.stringify(this.defaults[f.key] || []));
+                        }
+                    });
 
                     this.open = true;
+                },
+
+                addRepeaterItem(key, subFields) {
+                    if (!this.formData[key]) this.formData[key] = [];
+                    const item = {};
+                    subFields.forEach(sf => { item[sf.key] = ''; });
+                    this.formData[key].push(item);
+                },
+
+                removeRepeaterItem(key, index) {
+                    if (this.formData[key]) {
+                        this.formData[key].splice(index, 1);
+                    }
                 },
 
                 save() {

@@ -7,6 +7,7 @@ namespace App\PageBuilder\Widgets;
 use App\PageBuilder\BaseWidget;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Contracts\View\View;
 
@@ -20,35 +21,37 @@ class PromoSliderWidget extends BaseWidget
     public static function defaults(): array
     {
         return [
-            'title' => '',
-            'text' => '',
             'slides' => [
-                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания'],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => ''],
             ],
         ];
     }
 
     /**
      * Fields for the inline visual editor settings modal.
-     * The Repeater (slides) cannot be rendered inline, so we expose
-     * simple fields that affect rendering. For full slide management
-     * (add/remove images), use the admin page form.
+     * Uses 'repeater' type — the visual editor must support it.
      */
     public static function config(): array
     {
         return [
-            ['key' => 'title', 'label' => 'Глобальный заголовок', 'type' => 'text'],
-            ['key' => 'text', 'label' => 'Глобальный текст', 'type' => 'textarea'],
+            [
+                'key' => 'slides',
+                'label' => 'Слайды',
+                'type' => 'repeater',
+                'fields' => [
+                    ['key' => 'order', 'label' => '№', 'type' => 'number', 'width' => '60px'],
+                    ['key' => 'image', 'label' => 'Изображение (URL)', 'type' => 'url'],
+                    ['key' => 'title', 'label' => 'Заголовок (до 30)', 'type' => 'text', 'maxlength' => 30],
+                    ['key' => 'text', 'label' => 'Текст (до 100)', 'type' => 'textarea', 'maxlength' => 100],
+                    ['key' => 'meta', 'label' => 'Мета-теги', 'type' => 'text'],
+                ],
+            ],
         ];
     }
 
     public static function schema(): array
     {
         return [
-            TextInput::make('title')
-                ->label('Глобальный заголовок (опционально)'),
-            TextInput::make('text')
-                ->label('Глобальный текст (опционально)'),
             Repeater::make('slides')
                 ->label('Слайды')
                 ->schema([
@@ -66,6 +69,8 @@ class PromoSliderWidget extends BaseWidget
                         ->label('Текст (до 100 симв.)')
                         ->maxLength(100)
                         ->required(),
+                    TextInput::make('meta')
+                        ->label('Мета-теги изображения'),
                 ])
                 ->collapsible()
                 ->collapsed(false)
