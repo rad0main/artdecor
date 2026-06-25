@@ -48,6 +48,20 @@
         .dark .ve-settings-field input, .dark .ve-settings-field textarea, .dark .ve-settings-field select { background: #374151; border-color: #4b5563; color: white; }
         .dark .ve-modal-content { background: #1f2937; color: white; }
         .dark .ve-modal-header { border-color: #374151; }
+
+        /* Tailwind arbitrary height classes used by page builder blocks (missing in admin CSS) */
+        .h-\[300px\] { height: 300px; }
+        .h-\[400px\] { height: 400px; }
+        .h-\[500px\] { height: 500px; }
+        .h-\[700px\] { height: 700px; }
+        .h-screen { height: 100vh; }
+        @media (min-width: 640px) {
+            .sm\:h-\[300px\] { height: 300px; }
+            .sm\:h-\[500px\] { height: 500px; }
+            .sm\:h-\[700px\] { height: 700px; }
+        }
+        /* Ensure preview container has minimum height even if widget CSS is missing */
+        .ve-widget .ve-block-preview { min-height: 60px; }
     </style>
 
     {{-- Editor root (single x-data scope for toolbar + blocks) --}}
@@ -94,7 +108,7 @@
                     <button type="button" class="ve-btn danger" @click.stop="remove({{ $index }})" title="Удалить">✕</button>
                 </div>
 
-                <div style="pointer-events: none; user-select: none;">
+                <div class="ve-block-preview" style="pointer-events: none; user-select: none;">
                     {!! $builder->renderBlock($block) !!}
                 </div>
             </div>
