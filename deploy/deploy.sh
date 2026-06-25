@@ -30,6 +30,10 @@ else
 fi
 npm run build --silent
 
+# ─── Filament assets ─────────────────────────────────────────
+echo "▶ Публикация Filament ассетов..."
+php artisan filament:install --quiet 2>/dev/null || true
+
 # ─── Laravel initialization ──────────────────────────────────
 echo "▶ Инициализация Laravel..."
 
