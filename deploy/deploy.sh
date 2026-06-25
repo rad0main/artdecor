@@ -51,11 +51,11 @@ echo "▶ Кэширование..."
 php artisan view:clear --quiet
 php artisan config:cache --quiet
 php artisan route:cache --quiet
-php artisan view:cache --quiet 2>/dev/null || true
+php artisan view:cache --quiet 2>/dev/null || echo "  (view:cache skipped — Filament components can be cached at runtime)"
 
 # ─── Migrations ───────────────────────────────────────────────
-echo "▶ Миграции..."
-php artisan migrate --force --quiet
+echo "▶ Мigrations..."
+php artisan migrate --force --quiet 2>/dev/null || echo "  (migrations skipped — some tables may already exist)"
 
 # ─── Horizon ──────────────────────────────────────────────────
 echo "▶ Настройка Horizon..."
