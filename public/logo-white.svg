@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <defs>
+    <linearGradient id="wg" x1="0" y1="0" x2="0" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DDDDDD"/>
+    </linearGradient>
+  </defs>
+  <!-- Mark -->
+  <g transform="translate(6,6)">
+    <rect x="0" y="0" width="48" height="48" rx="6" fill="url(#wg)" opacity="0.15"/>
+    <rect x="2" y="2" width="44" height="44" rx="5" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.6"/>
+    <line x1="6" y1="10" x2="22" y2="42" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+    <line x1="28" y1="6" x2="40" y2="34" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
+    <circle cx="32" cy="14" r="2.5" fill="#FFFFFF" opacity="0.7"/>
+  </g>
+  <!-- Text -->
+  <g transform="translate(62, 14)">
+    <text x="0" y="0" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">Art</text>
+    <text x="62" y="0" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="300" fill="#FFFFFF" opacity="0.8" letter-spacing="-0.5">Decor</text>
+    <text x="0" y="18" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="400" fill="#AAAAAA" letter-spacing="3">ХУДОЖЕСТВЕННАЯ МАСТЕРСКАЯ</text>
+  </g>
+</svg>

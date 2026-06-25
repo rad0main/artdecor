@@ -45,8 +45,8 @@
         </nav>
 
         {{-- Логотип --}}
-        <a href="{{ route('home') }}" class="text-2xl lg:text-3xl font-heading font-bold text-[var(--k-color-secondary)] no-underline tracking-tight">
-            ArtDecor
+        <a href="{{ route('home') }}" class="flex-shrink-0 no-underline">
+            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="180" height="54" class="h-10 lg:h-[54px] w-auto">
         </a>
 
         {{-- Правое меню --}}

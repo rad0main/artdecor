@@ -3,7 +3,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {{-- Логотип + описание --}}
             <div>
-                <a href="{{ route('home') }}" class="text-2xl font-heading font-bold text-white no-underline">ArtDecor</a>
+                <a href="{{ route('home') }}" class="no-underline block">
+                    <img src="{{ asset('logo-white.svg') }}" alt="ArtDecor" width="160" height="48" class="h-10 w-auto hover:opacity-80 transition-opacity">
+                </a>
                 <p class="text-sm mt-3 leading-relaxed">Производство и продажа стеклянных изделий в Москве. Скинали, панно, двери, перегородки.</p>
             </div>
 
