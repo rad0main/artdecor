@@ -66,7 +66,7 @@ class CatalogImage extends Model implements HasMedia
 
     public function colors(): BelongsToMany
     {
-        return $this->belongsToMany(CatalogColor::class, 'catalog_image_color');
+        return $this->belongsToMany(CatalogColor::class, 'catalog_image_color', 'image_id', 'color_id');
     }
 
     // ─── Scopes ─────────────────────────────────────────────────

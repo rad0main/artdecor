@@ -22,6 +22,6 @@ class CatalogColor extends Model
 
     public function images(): BelongsToMany
     {
-        return $this->belongsToMany(CatalogImage::class, 'catalog_image_color');
+        return $this->belongsToMany(CatalogImage::class, 'catalog_image_color', 'color_id', 'image_id');
     }
 }
