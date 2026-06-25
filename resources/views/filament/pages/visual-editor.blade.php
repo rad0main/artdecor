@@ -47,29 +47,31 @@
         .dark .ve-modal-header { border-color: #374151; }
     </style>
 
-    {{-- Toolbar --}}
-    <div class="ve-toolbar" x-data="toolbar()">
-        <span class="text-white font-semibold mr-2">Визуальный редактор</span>
-        <select x-ref="typeSelect" x-model="selectedType"
-                class="rounded border-gray-300 text-sm dark:bg-gray-700 dark:text-white">
-            <option value="">— Добавить блок —</option>
-            @foreach($builder->getWidgetsGrouped() as $category => $widgets)
-                <optgroup label="{{ $category }}">
-                    @foreach($widgets as $w)
-                        <option value="{{ $w['name'] }}">{{ $w['title'] }}</option>
-                    @endforeach
-                </optgroup>
-            @endforeach
-        </select>
-        <button type="button" @click="addBlock()"
-                class="px-3 py-1.5 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">+ Добавить</button>
-        <span class="text-gray-300 text-sm ml-auto">Блоков: <span x-text="blockCount">{{ count($content) }}</span></span>
-        <a href="{{ $this->record->slug ? url('/page/' . $this->record->slug) : '#' }}" target="_blank"
-           class="px-3 py-1.5 bg-gray-600 text-white rounded text-sm hover:bg-gray-500">Просмотр</a>
-    </div>
+    {{-- Editor root (single x-data scope for toolbar + blocks) --}}
+    <div x-data="editor()">
+        {{-- Toolbar --}}
+        <div class="ve-toolbar">
+            <span class="text-white font-semibold mr-2">Визуальный редактор</span>
+            <select x-ref="typeSelect" x-model="selectedType"
+                    class="rounded border-gray-300 text-sm dark:bg-gray-700 dark:text-white">
+                <option value="">— Добавить блок —</option>
+                @foreach($builder->getWidgetsGrouped() as $category => $widgets)
+                    <optgroup label="{{ $category }}">
+                        @foreach($widgets as $w)
+                            <option value="{{ $w['name'] }}">{{ $w['title'] }}</option>
+                        @endforeach
+                    </optgroup>
+                @endforeach
+            </select>
+            <button type="button" @click="addBlock()"
+                    class="px-3 py-1.5 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">+ Добавить</button>
+            <span class="text-gray-300 text-sm ml-auto">Блоков: <span x-text="blockCount">{{ count($content) }}</span></span>
+            <a href="{{ $this->record->slug ? url('/page/' . $this->record->slug) : '#' }}" target="_blank"
+               class="px-3 py-1.5 bg-gray-600 text-white rounded text-sm hover:bg-gray-500">Просмотр</a>
+        </div>
 
-    {{-- Blocks --}}
-    <div x-data="editor()" class="space-y-0" wire:ignore>
+        {{-- Blocks --}}
+        <div class="space-y-0" wire:ignore>
         @foreach($content as $index => $block)
             <div class="ve-widget"
                  @click="select({{ $index }})"
@@ -100,6 +102,7 @@
                 <p class="mt-2">Выберите блок в панели сверху и нажмите «Добавить»</p>
             </div>
         @endif
+        </div>
     </div>
 
     {{-- Settings Modal --}}
@@ -167,18 +170,15 @@
                 catch(e) { return {}; }
             }
 
-            Alpine.data('toolbar', () => ({
+            Alpine.data('editor', () => ({
+                selectedIndex: null,
                 selectedType: '',
+                blockCount: {{ count($content) }},
                 addBlock() {
                     if (!this.selectedType) return;
                     @this.call('addBlock', this.selectedType);
                     this.selectedType = '';
-                }
-            }));
-
-            Alpine.data('editor', () => ({
-                selectedIndex: null,
-                blockCount: {{ count($content) }},
+                },
                 select(index) {
                     this.selectedIndex = this.selectedIndex === index ? null : index;
                 },
