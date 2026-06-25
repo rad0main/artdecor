@@ -141,29 +141,27 @@
         </div>
     </div>
 
+    {{-- Widget metadata as JSON (safe, no HTML escaping issues) --}}
+    <script id="ve-widgets-data" type="application/json">@json($builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => $items->mapWithKeys(fn($w) => [
+        $w['name'] => [
+            'title' => $w['title'],
+            'defaults' => $w['defaults'],
+            'fields' => $w['config'],
+        ]
+    ])->toArray())->toArray())</script>
+
     @push('scripts')
     <script>
         document.addEventListener('alpine:init', () => {
-            // Build widget metadata from PHP — fields indexed by widget type
-            const widgetFields = {
-                @foreach($builder->getWidgetsGrouped() as $category => $widgets)
-                    @foreach($widgets as $w)
-                        @php $safeDefaults = json_encode($w['defaults']); $safeConfig = json_encode($w['config']); @endphp
-                        "{{ $w['name'] }}": {
-                            title: {{ json_encode($w['title']) }},
-                            defaults: {!! $safeDefaults !!},
-                            fields: {!! $safeConfig !!}
-                        },
-                    @endforeach
-                @endforeach
-            };
+            // Load widget metadata from JSON script tag
+            const widgetFields = JSON.parse(document.getElementById('ve-widgets-data').textContent);
 
             // Helper: parse settings from base64 data-settings attribute
             function parseSettings(el) {
                 const raw = el?.dataset?.settings;
                 if (!raw) return {};
                 try { return JSON.parse(atob(raw)); }
-                catch(e) { console.warn('VE: settings parse error', e); return {}; }
+                catch(e) { return {}; }
             }
 
             Alpine.data('toolbar', () => ({
@@ -208,33 +206,22 @@
                 },
 
                 edit(index, type) {
-                    console.log('VE: edit', index, type);
                     const wf = widgetFields[type];
-                    if (!wf) {
-                        console.error('VE: unknown widget type', type);
-                        alert('Неизвестный тип блока: ' + type);
-                        return;
-                    }
+                    if (!wf) { alert('Неизвестный тип блока: ' + type); return; }
 
                     this.blockIndex = index;
-                    this.blockTitle = wf.title;
+                    this.blockTitle = wf.title || type;
                     this.defaults = wf.defaults || {};
                     this.fields = wf.fields || [];
 
-                    console.log('VE: fields', this.fields.length, this.fields);
-
-                    // Read current settings from data-settings attribute
                     const el = document.querySelector(`[data-index="${index}"]`);
                     const currentSettings = parseSettings(el);
-                    console.log('VE: settings', currentSettings);
 
-                    // Merge: use current if exists, otherwise default
                     this.formData = {};
                     Object.keys(this.defaults).forEach(key => {
                         this.formData[key] = (currentSettings[key] !== undefined) ? currentSettings[key] : this.defaults[key];
                     });
 
-                    console.log('VE: formData', this.formData);
                     this.open = true;
                 },
 
