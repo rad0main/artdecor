@@ -10,8 +10,13 @@ use Illuminate\View\View;
 
 class WorkController extends Controller
 {
+    use PageFallback;
+
     public function index(): View
     {
+        $pb = $this->renderFromPageBuilder('nashi_raboti');
+        if ($pb) return $pb;
+
         $categories = WorkCategory::orderBy('name')
             ->get(['id', 'name', 'slug']);
 

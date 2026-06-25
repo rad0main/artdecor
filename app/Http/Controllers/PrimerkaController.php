@@ -10,8 +10,13 @@ use Illuminate\View\View;
 
 class PrimerkaController extends Controller
 {
+    use PageFallback;
+
     public function index(): View
     {
+        $pb = $this->renderFromPageBuilder('primerka');
+        if ($pb) return $pb;
+
         $categories = CatalogCategory::orderBy('sort_order')
             ->get(['id', 'name', 'slug']);
 

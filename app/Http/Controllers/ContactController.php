@@ -9,8 +9,13 @@ use Illuminate\View\View;
 
 class ContactController extends Controller
 {
+    use PageFallback;
+
     public function index(): View
     {
+        $pb = $this->renderFromPageBuilder('contacts');
+        if ($pb) return $pb;
+
         $phone = Setting::get('contacts.phone');
         $email = Setting::get('contacts.email');
         $address = Setting::get('contacts.address');

@@ -12,8 +12,13 @@ use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
+    use PageFallback;
+
     public function index(): View
     {
+        $pb = $this->renderFromPageBuilder('izobrazheniya');
+        if ($pb) return $pb;
+
         $categories = Cache::remember('catalog_categories_list', 3600, fn () =>
             CatalogCategory::orderBy('sort_order')->get(['id', 'name', 'slug'])
         );
