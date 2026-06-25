@@ -4,6 +4,9 @@
     // Normalize old data key to settings
     $content = array_map(fn($b) => $builder->normalizeBlock($b), $rawContent);
 
+    // DEBUG: track which blocks are available
+    $blockTypes = array_map(fn($b) => $b['type'] ?? '?', $content ?? []);
+
     // Prepare widget metadata for JS (avoids @json parsing issues with complex closures)
     $widgetsJson = $builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => collect($items)->mapWithKeys(fn($w) => [
         $w['name'] => [
@@ -13,6 +16,8 @@
         ]
     ])->toArray())->toArray();
 @endphp
+
+{{-- DEBUG: blocks in content: {{ implode(', ', $blockTypes) }} (count: {{ count($content) }}) --}}
 
 <x-filament-panels::page>
     <style>
@@ -91,7 +96,14 @@
                 </div>
 
                 <div style="pointer-events: none; user-select: none;">
-                    {!! $builder->renderBlock($block) !!}
+                    @php
+                        try {
+                            $renderedBlock = $builder->renderBlock($block);
+                        } catch (\Throwable $e) {
+                            $renderedBlock = '<div class="p-4 text-red-500 border border-red-300 rounded">Ошибка рендеринга ' . e($block['type'] ?? '?') . ': ' . e($e->getMessage()) . '</div>';
+                        }
+                    @endphp
+                    {!! $renderedBlock !!}
                 </div>
             </div>
         @endforeach
