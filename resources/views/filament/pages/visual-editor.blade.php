@@ -5,7 +5,7 @@
     $content = array_map(fn($b) => $builder->normalizeBlock($b), $rawContent);
 
     // Prepare widget metadata for JS (avoids @json parsing issues with complex closures)
-    $widgetsJson = $builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => $items->mapWithKeys(fn($w) => [
+    $widgetsJson = $builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => collect($items)->mapWithKeys(fn($w) => [
         $w['name'] => [
             'title' => $w['title'],
             'defaults' => $w['defaults'],
