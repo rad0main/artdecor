@@ -67,8 +67,7 @@
                  :class="selectedIndex === {{ $index }} ? 'selected' : ''"
                  data-index="{{ $index }}"
                  data-type="{{ $block['type'] }}"
-                 data-settings="{{ base64_encode(json_encode($block['settings'] ?? [])) }}"
-                 data-settings-json="{{ htmlspecialchars(json_encode($block['settings'] ?? []), ENT_QUOTES, 'UTF-8') }}">
+                 data-settings="{{ base64_encode(json_encode($block['settings'] ?? [])) }}">
 
                 <div class="ve-block-label">{{ $builder->getWidgetTitle($block['type']) ?? $block['type'] }}</div>
 
@@ -159,12 +158,12 @@
                 @endforeach
             };
 
-            // Helper: parse JSON from data-settings-json attribute
+            // Helper: parse settings from base64 data-settings attribute
             function parseSettings(el) {
-                const raw = el?.dataset?.settingsJson;
+                const raw = el?.dataset?.settings;
                 if (!raw) return {};
-                try { return JSON.parse(raw); }
-                catch(e) { return {}; }
+                try { return JSON.parse(atob(raw)); }
+                catch(e) { console.warn('VE: settings parse error', e); return {}; }
             }
 
             Alpine.data('toolbar', () => ({

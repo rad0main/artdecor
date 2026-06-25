@@ -27,6 +27,15 @@ class GalleryWidget extends BaseWidget
         ];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'columns', 'label' => 'Колонок', 'type' => 'select', 'options' => [1 => '1', 2 => '2', 3 => '3', 4 => '4']],
+            ['key' => 'gap', 'label' => 'Отступ', 'type' => 'select', 'options' => ['sm' => 'Малый', 'md' => 'Средний', 'lg' => 'Большой']],
+            ['key' => 'lightbox', 'label' => 'Lightbox', 'type' => 'boolean', 'help' => 'Открывать в модалке'],
+        ];
+    }
+
     public static function schema(): array
     {
         return [

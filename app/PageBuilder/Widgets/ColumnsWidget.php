@@ -27,6 +27,13 @@ class ColumnsWidget extends BaseWidget
         ];
     }
 
+    public static function config(): array
+    {
+        return [
+            ['key' => 'columns_count', 'label' => 'Количество колонок', 'type' => 'select', 'options' => [2 => '2', 3 => '3', 4 => '4']],
+        ];
+    }
+
     public static function schema(): array
     {
         return [
