@@ -4,7 +4,7 @@
             {{-- Логотип + описание --}}
             <div>
                 <a href="{{ route('home') }}" class="no-underline block">
-                    <img src="{{ asset('logo-white.svg') }}" alt="ArtDecor" width="160" height="48" class="h-10 w-auto hover:opacity-80 transition-opacity">
+                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="130" height="130" class="h-16 w-auto brightness-0 invert opacity-80 hover:opacity-100 transition-opacity">
                 </a>
                 <p class="text-sm mt-3 leading-relaxed">Производство и продажа стеклянных изделий в Москве. Скинали, панно, двери, перегородки.</p>
             </div>

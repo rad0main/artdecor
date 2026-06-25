@@ -46,7 +46,7 @@
 
         {{-- Логотип --}}
         <a href="{{ route('home') }}" class="flex-shrink-0 no-underline">
-            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="180" height="54" class="h-10 lg:h-[54px] w-auto">
+            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="78" height="78" class="h-10 lg:h-[78px] w-auto">
         </a>
 
         {{-- Правое меню --}}
