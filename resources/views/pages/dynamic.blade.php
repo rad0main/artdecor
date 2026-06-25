@@ -3,7 +3,7 @@
         @include('components.header')
     </x-slot>
 
-    <main>
+    <main class="page-content">
         {!! $content !!}
     </main>
 

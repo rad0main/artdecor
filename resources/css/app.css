@@ -361,14 +361,14 @@
 .stars { display: inline-flex; gap: 2px; color: #FFC107; }
 .stars svg { width: 18px; height: 18px; fill: currentColor; }
 
-/* Main Content Area */
-main {
-    max-width: calc(100% - 25vw);   /* 1/8 left + 1/8 right = 25% total margins */
+/* Page content area — only for frontend pages with .page-content */
+.page-content {
+    max-width: calc(100% - 25vw);
     margin: 0 auto;
     width: 100%;
 }
 @media (max-width: 768px) {
-    main {
+    .page-content {
         max-width: 100%;
         padding-left: 16px;
         padding-right: 16px;
