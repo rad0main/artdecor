@@ -98,6 +98,29 @@ class PageBuilderService
         return $html;
     }
 
+    /**
+     * Render a single block (for visual editor preview).
+     */
+    public function renderBlock(array $block): string
+    {
+        $type = $block['type'] ?? '';
+        $settings = $block['settings'] ?? [];
+        $class = $this->getWidgetClass($type);
+
+        if (! $class) {
+            return '<div class="p-4 text-red-500">Неизвестный блок: ' . $type . '</div>';
+        }
+
+        $widget = app($class);
+        $rendered = $widget->render($settings);
+
+        if ($rendered instanceof \Illuminate\Contracts\View\View) {
+            return $rendered->render();
+        }
+
+        return $rendered;
+    }
+
     /** Render nested widgets inside a container */
     protected function renderChildren(array $children): string
     {

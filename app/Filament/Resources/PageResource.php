@@ -102,9 +102,15 @@ class PageResource extends Resource
             ->defaultSort('updated_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('visual-editor')
+                    ->label('Визуальный редактор')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Page $record) => Pages\VisualEditor::getUrl(['record' => $record]))
+                    ->openUrlInNewTab()
+                    ->color('warning'),
                 Tables\Actions\Action::make('view')
                     ->label('Просмотр')
-                    ->icon('heroicon-o-eye')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
                     ->url(fn (Page $record) => $record->slug ? url("/page/{$record->slug}") : '#')
                     ->openUrlInNewTab(),
             ])
@@ -121,6 +127,7 @@ class PageResource extends Resource
             'index' => Pages\ListPages::route('/'),
             'create' => Pages\CreatePage::route('/create'),
             'edit' => Pages\EditPage::route('/{record}/edit'),
+            'visual-editor' => Pages\VisualEditor::route('/{record}/visual-editor'),
         ];
     }
 }

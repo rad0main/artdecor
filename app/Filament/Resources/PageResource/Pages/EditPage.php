@@ -15,9 +15,15 @@ class EditPage extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('visual-editor')
+                ->label('Визуальный редактор')
+                ->icon('heroicon-o-eye')
+                ->url(fn () => Pages\VisualEditor::getUrl(['record' => $this->record]))
+                ->openUrlInNewTab()
+                ->color('warning'),
             Actions\Action::make('view')
                 ->label('Просмотр на сайте')
-                ->icon('heroicon-o-eye')
+                ->icon('heroicon-o-arrow-top-right-on-square')
                 ->url(fn () => $this->record->slug ? url("/page/{$this->record->slug}") : '#')
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
