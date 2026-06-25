@@ -16,7 +16,7 @@ class CatalogController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $perPage = 12;
+        $perPage = min((int) $request->get('limit', 12), 100);
 
         $images = CatalogImage::active()
             ->with(['category', 'colors', 'media'])

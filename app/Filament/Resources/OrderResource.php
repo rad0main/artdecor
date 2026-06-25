@@ -33,9 +33,16 @@ class OrderResource extends Resource
                 ->label('Сообщение')
                 ->rows(3),
 
-            Forms\Components\TextInput::make('source')
+            Forms\Components\Select::make('source')
                 ->label('Источник')
-                ->badge(),
+                ->options([
+                    'catalog' => 'Каталог',
+                    'primerka' => 'Примерка',
+                    'callback' => 'Звонок',
+                    'question' => 'Вопрос',
+                ])
+                ->native(false)
+                ->disabled(),
 
             Forms\Components\Textarea::make('article_ids')
                 ->label('Артикулы')

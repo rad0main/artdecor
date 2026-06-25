@@ -27,10 +27,16 @@ class UserResource extends Resource
                 ->required()
                 ->maxLength(255),
 
+            Forms\Components\TextInput::make('login')
+                ->label('Логин')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->maxLength(50),
+
             Forms\Components\TextInput::make('email')
                 ->label('Email')
-                ->required()
                 ->email()
+                ->nullable()
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
 
@@ -62,6 +68,10 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Имя')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('login')
+                    ->label('Логин')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('email')

@@ -25,13 +25,13 @@ class CatalogController extends Controller
         return view('pages.catalog', compact('categories', 'colors'));
     }
 
-    public function show(string $category, ?string $color = null, ?string $slug = null): View
+    public function show(string $category, ?string $color = null, ?string $imageId = null): View
     {
         $cat = CatalogCategory::where('slug', $category)->firstOrFail();
 
         $image = null;
-        if ($slug) {
-            $image = CatalogImage::where('id', $slug)
+        if ($imageId) {
+            $image = CatalogImage::where('id', $imageId)
                 ->where('category_id', $cat->id)
                 ->firstOrFail();
         }

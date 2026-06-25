@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/izobrazheniya', [CatalogController::class, 'index'])->name('catalog');
-Route::get('/izobrazheniya/{category}/{color?}/{slug?}', [CatalogController::class, 'show'])->name('catalog.show');
+Route::get('/izobrazheniya/{category}/{color?}/{imageId?}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/primerka', [PrimerkaController::class, 'index'])->name('primerka');
 Route::get('/nashi_raboti', [WorkController::class, 'index'])->name('works');
 Route::get('/uslugi', [ServiceController::class, 'index'])->name('services');

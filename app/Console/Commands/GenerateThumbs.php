@@ -37,8 +37,14 @@ class GenerateThumbs extends Command
             foreach ($items as $item) {
                 $media = $item->getFirstMedia($collection);
                 if ($media) {
-                    $media->markAsConversionGenerated('thumb', true);
-                    $media->markAsConversionGenerated('preview', true);
+                    // Mark conversions as not generated so Spatie regenerates them on next access
+                    $media->getGeneratedConversions()?->add('thumb', false);
+                    $media->getGeneratedConversions()?->add('preview', false);
+                    $media->save();
+
+                    // Manually trigger conversion queue via temporary URL access
+                    $media->getFullUrl('thumb');
+                    $media->getFullUrl('preview');
                 }
                 $bar->advance();
             }

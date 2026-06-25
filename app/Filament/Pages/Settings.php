@@ -16,6 +16,18 @@ class Settings extends Page
     protected static ?string $navigationGroup = 'Настройки';
     protected static string $view = 'filament.pages.settings';
 
+    /** Map form field names to database setting keys */
+    private const KEY_MAP = [
+        'phone'               => 'contacts.phone',
+        'email'               => 'contacts.email',
+        'address'             => 'contacts.address',
+        'work_hours'          => 'contacts.work_hours',
+        'yandex_metrika_id'   => 'integrations.yandex_metrika_id',
+        'jivosite_id'         => 'integrations.jivosite_id',
+        'default_title'       => 'seo.default_title',
+        'default_description' => 'seo.default_description',
+    ];
+
     public ?array $data = [];
 
     public function mount(): void
@@ -78,7 +90,8 @@ class Settings extends Page
 
     public function save(): void
     {
-        foreach ($this->form->getState() as $key => $value) {
+        foreach ($this->form->getState() as $field => $value) {
+            $key = self::KEY_MAP[$field] ?? $field;
             Setting::set($key, $value);
         }
 
