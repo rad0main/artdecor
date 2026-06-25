@@ -19,7 +19,7 @@ jobs:
           script: |
             cd /var/www/artdecor
             git pull origin main
+            chmod +x artisan deploy/deploy.sh
             ./deploy/deploy.sh
             sudo cp deploy/nginx.conf /etc/nginx/sites-available/artdecor
             sudo nginx -t && sudo systemctl reload nginx
-            php artisan migrate --force

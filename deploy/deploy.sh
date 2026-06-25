@@ -44,9 +44,10 @@ php artisan storage:link --force --quiet 2>/dev/null || true
 
 # ─── Cache ────────────────────────────────────────────────────
 echo "▶ Кэширование..."
+php artisan view:clear --quiet
 php artisan config:cache --quiet
 php artisan route:cache --quiet
-php artisan view:cache --quiet
+php artisan view:cache --quiet 2>/dev/null || true
 
 # ─── Migrations ───────────────────────────────────────────────
 echo "▶ Миграции..."
