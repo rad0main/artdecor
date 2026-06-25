@@ -171,6 +171,7 @@ class PageBuilderService
         $service = new static();
 
         $service->register(\App\PageBuilder\Widgets\HeroWidget::class);
+        $service->register(\App\PageBuilder\Widgets\PromoSliderWidget::class);
         $service->register(\App\PageBuilder\Widgets\TextWidget::class);
         $service->register(\App\PageBuilder\Widgets\ImageWidget::class);
         $service->register(\App\PageBuilder\Widgets\GalleryWidget::class);
