@@ -3,6 +3,15 @@
     $rawContent = $this->record->content ?? [];
     // Normalize old data key to settings
     $content = array_map(fn($b) => $builder->normalizeBlock($b), $rawContent);
+
+    // Prepare widget metadata for JS (avoids @json parsing issues with complex closures)
+    $widgetsJson = $builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => $items->mapWithKeys(fn($w) => [
+        $w['name'] => [
+            'title' => $w['title'],
+            'defaults' => $w['defaults'],
+            'fields' => $w['config'],
+        ]
+    ])->toArray())->toArray();
 @endphp
 
 <x-filament-panels::page>
@@ -142,13 +151,7 @@
     </div>
 
     {{-- Widget metadata as JSON (safe, no HTML escaping issues) --}}
-    <script id="ve-widgets-data" type="application/json">@json($builder->getWidgetsGrouped()->mapWithKeys(fn($items, $cat) => $items->mapWithKeys(fn($w) => [
-        $w['name'] => [
-            'title' => $w['title'],
-            'defaults' => $w['defaults'],
-            'fields' => $w['config'],
-        ]
-    ])->toArray())->toArray())</script>
+    <script id="ve-widgets-data" type="application/json">@json($widgetsJson)</script>
 
     @push('scripts')
     <script>
