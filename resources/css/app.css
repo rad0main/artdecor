@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════
-   Design Tokens — основаны на DESIGN1.md и canvas-дизайне
+   Design Tokens — адаптация photosteklo.ru
    Primary: #E1323D  |  Secondary: #242E38
    Fonts: Montserrat (heading) + PT Sans (body)
    ═══════════════════════════════════════════════════════════ */
@@ -71,19 +71,24 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 12px 24px;
+        padding: 14px 32px;
         border-radius: var(--k-radius-lg);
         font-weight: 700;
-        font-size: 14px;
+        font-size: 15px;
         color: white;
         background-color: var(--k-color-primary);
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.2s ease;
         border: none;
         cursor: pointer;
         text-decoration: none;
+        line-height: 1.2;
     }
     .btn-primary:hover {
         background-color: var(--k-color-primary-hover);
+        transform: translateY(-1px);
+    }
+    .btn-primary:active {
+        transform: translateY(0);
     }
 
     /* Secondary button */
@@ -91,19 +96,20 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 12px 24px;
+        padding: 14px 32px;
         border-radius: var(--k-radius-lg);
         font-weight: 700;
-        font-size: 14px;
+        font-size: 15px;
         color: white;
         background-color: var(--k-color-secondary);
-        transition: opacity 0.3s ease;
+        transition: opacity 0.3s ease, transform 0.2s ease;
         border: none;
         cursor: pointer;
         text-decoration: none;
     }
     .btn-secondary:hover {
         opacity: 0.9;
+        transform: translateY(-1px);
     }
 
     /* Card */
@@ -112,10 +118,50 @@
         border-radius: var(--k-radius-lg);
         overflow: hidden;
         box-shadow: var(--k-shadow-sm);
-        transition: box-shadow 0.3s ease;
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
     }
     .card:hover {
         box-shadow: var(--k-shadow-md);
+        transform: translateY(-2px);
+    }
+
+    /* Production card (продукция) */
+    .production-card {
+        display: block;
+        border-radius: var(--k-radius-lg);
+        overflow: hidden;
+        background: white;
+        box-shadow: var(--k-shadow-sm);
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
+        text-decoration: none;
+        color: inherit;
+    }
+    .production-card:hover {
+        box-shadow: var(--k-shadow-lg);
+        transform: translateY(-4px);
+    }
+    .production-card__image {
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        position: relative;
+    }
+    .production-card__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .production-card:hover .production-card__image img {
+        transform: scale(1.08);
+    }
+    .production-card__title {
+        padding: 16px 20px;
+        font-size: 14px;
+        font-weight: 700;
+        font-family: var(--k-font-family-heading);
+        color: var(--k-color-text-primary);
+        text-align: center;
+        border-top: 1px solid var(--k-color-border);
     }
 
     /* Work card overlay */
@@ -133,6 +179,83 @@
     }
     .work-card:hover .overlay {
         opacity: 1;
+    }
+
+    /* Feature icon cards */
+    .feature-card {
+        text-align: center;
+        padding: 32px 24px;
+    }
+    .feature-card__icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--k-color-primary);
+    }
+    .feature-card__icon svg {
+        width: 100%;
+        height: 100%;
+    }
+    .feature-card__title {
+        font-family: var(--k-font-family-heading);
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: var(--k-color-text-primary);
+    }
+    .feature-card__desc {
+        font-size: 14px;
+        color: var(--k-color-text-secondary);
+        line-height: 1.6;
+    }
+
+    /* Section heading */
+    .section-heading {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+    .section-heading h2 {
+        font-family: var(--k-font-family-heading);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--k-color-text-primary);
+        position: relative;
+        padding-bottom: 16px;
+    }
+    .section-heading h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: var(--k-color-primary);
+        border-radius: 2px;
+    }
+
+    /* Slider navigation */
+    .slider-arrow {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        color: var(--k-color-primary);
+    }
+    .slider-arrow:hover {
+        background: var(--k-color-primary);
+        color: white;
+        transform: scale(1.1);
     }
 
     /* Custom scrollbar */
@@ -171,4 +294,20 @@ img[data-src] {
 }
 img[data-src].loaded {
     filter: blur(0);
+}
+
+/* Fade-up animation for sections */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.6s ease forwards;
 }

@@ -281,10 +281,30 @@ document.addEventListener('alpine:init', () => {
 
         init() {
             if (this.slides.length > 1) {
-                this.interval = setInterval(() => {
-                    this.current = (this.current + 1) % this.slides.length;
-                }, 5000);
+                this.startAutoplay();
             }
+        },
+
+        startAutoplay() {
+            this.stopAutoplay();
+            this.interval = setInterval(() => {
+                this.next();
+            }, 5000);
+        },
+
+        stopAutoplay() {
+            if (this.interval) {
+                clearInterval(this.interval);
+                this.interval = null;
+            }
+        },
+
+        next() {
+            this.current = (this.current + 1) % this.slides.length;
+        },
+
+        prev() {
+            this.current = (this.current - 1 + this.slides.length) % this.slides.length;
         },
     }));
 
