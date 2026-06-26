@@ -1,9 +1,10 @@
 <header class="w-full bg-white sticky top-0 z-50 transition-shadow duration-300"
         x-data="headerScroll()"
-        :class="scrolled ? 'shadow-md header--compact' : 'header--full'">
-    {{-- Верхняя строка --}}
-    <div class="top-bar-wrap transition-all duration-300 ease-in-out overflow-hidden"
-         :class="scrolled ? 'max-h-0 opacity-0 py-0' : 'max-h-20 opacity-100'">
+        :class="scrolled ? 'shadow-md' : ''">
+    {{-- Всё, что скрывается при скролле (топ-бар + линии + большой логотип) — GPU-ускоренный transform --}}
+    <div class="transition-transform duration-300 ease-in-out will-change-transform"
+         :class="scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'">
+        {{-- Верхняя строка --}}
         <div class="max-w-page mx-auto px-4">
             <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
                 <div class="flex items-center gap-2 sm:gap-3">
@@ -42,18 +43,12 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- Линия + логотип + линия --}}
-    <div class="transition-all duration-300 ease-in-out" :class="scrolled ? '-mt-px' : ''">
-        <div class="border-t border-gray-200 transition-opacity duration-200"
-             :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
-
-        <div class="relative transition-all duration-300" :class="scrolled ? 'h-0 -mt-px' : 'h-[80px] lg:h-[100px]'">
+        {{-- Линии + большой логотип --}}
+        <div class="border-t border-gray-200"></div>
+        <div class="relative h-[80px] lg:h-[100px]">
             <div class="max-w-page mx-auto px-4 h-full">
-                {{-- Большой логотип --}}
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
-                     :class="scrolled ? 'opacity-0 scale-50 pointer-events-none' : 'opacity-100 scale-100'">
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                     <div class="bg-white px-4 py-1">
                         <a href="{{ route('home') }}">
                             <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
@@ -62,14 +57,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="border-t border-gray-200 transition-opacity duration-200"
-             :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
+        <div class="border-t border-gray-200"></div>
     </div>
 
-    {{-- Навигация + мини-логотип --}}
+    {{-- Навигация + мини-логотип (всегда видна, 95px при скролле) --}}
     <div class="max-w-page mx-auto px-4 transition-all duration-300">
-        <div class="flex items-center justify-between h-12 lg:h-14">
+        <div class="flex items-center justify-between"
+             :class="scrolled ? 'h-[95px]' : 'h-12 lg:h-14'">
             {{-- Левое меню --}}
             <nav class="hidden lg:flex items-center flex-shrink-0">
                 <ul class="flex items-center gap-0.5">
@@ -101,11 +95,11 @@
                 </ul>
             </nav>
 
-            {{-- Мини-логотип --}}
-            <div class="transition-all duration-300 flex-shrink-0 flex items-center justify-center mx-1"
-                 :class="scrolled ? 'opacity-100 w-16 lg:w-[80px]' : 'opacity-0 w-0 overflow-hidden'">
-                <a href="{{ route('home') }}" class="block flex-shrink-0">
-                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="80" height="80" class="h-10 lg:h-[80px] w-auto">
+            {{-- Мини-логотип по центру --}}
+            <div class="flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                 :class="scrolled ? 'w-[80px] opacity-100' : 'w-0 opacity-0 overflow-hidden'">
+                <a href="{{ route('home') }}" class="flex items-center justify-center flex-shrink-0">
+                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="80" height="80" class="h-[70px] lg:h-[80px] w-auto">
                 </a>
             </div>
 
