@@ -417,6 +417,13 @@ header {
     position: relative;
 }
 
+/* Transform GPU acceleration */
+.transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
 /* Header hero overlap fix */
 .hero-section {
     margin-top: -60px;

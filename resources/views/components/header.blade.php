@@ -1,15 +1,15 @@
-<header class="w-full bg-white sticky top-0 z-30 overflow-hidden"
+<header class="w-full bg-white sticky top-0 z-30 overflow-hidden will-change-transform"
         x-data="headerScroll()"
         :class="scrolled ? 'shadow-md' : ''">
 
     {{-- Верхняя секция: GPU-accelerated slide-up --}}
     <div x-ref="topSection"
-         class="transition-all duration-300 ease-in-out will-change-transform overflow-hidden"
-         :class="scrolled ? 'max-h-0 opacity-0' : 'max-h-[200px] opacity-100'">
+         class="transform-gpu transition-all duration-300 ease-out pointer-events-none"
+         :class="scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'">
 
         {{-- Топ-бар --}}
         <div class="max-w-page mx-auto px-4">
-            <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
+            <div class="flex items-center justify-between h-10 lg:h-10 text-xs pointer-events-auto">
                 <div class="flex items-center gap-2 sm:gap-3">
                     <button type="button" class="text-xs text-[var(--k-color-primary)] hover:underline whitespace-nowrap font-heading"
                             x-data @click.prevent="$dispatch('open-modal', 'callback')">Заказать обратный звонок</button>
@@ -23,7 +23,7 @@
                         <a href="https://t.me/artdecor" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/telegram.svg') }}" alt="Telegram" width="20" height="20" class="w-5 h-5"></a>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-5 text-xs">
+                <div class="flex items-center gap-3 sm:gap-5 text-xs pointer-events-auto">
                     <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}" class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]">{{ \App\Models\Setting::get('contacts.email') }}</a>
                     <div class="text-[var(--k-color-text-secondary)] whitespace-nowrap"><span class="font-semibold text-[var(--k-color-text-primary)]">Пн-Вс:</span> {{ \App\Models\Setting::get('contacts.work_hours') }}</div>
                 </div>
@@ -33,10 +33,12 @@
         {{-- Большой логотип --}}
         <div class="relative h-[80px] lg:h-[100px]">
             <div class="max-w-page mx-auto px-4 h-full">
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40">
-                    <div class="bg-white px-4 py-1 rounded">
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transform-gpu transition-transform duration-300 ease-out"
+                     :class="scrolled ? 'scale-75' : 'scale-100'">
+                    <div class="bg-white px-4 py-1 rounded transform-gpu">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
+                            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto transition-all duration-300 ease-out"
+                                 :class="scrolled ? 'h-[80px] lg:h-[100px]' : 'h-[110px] lg:h-[150px]'">
                         </a>
                     </div>
                 </div>
@@ -44,14 +46,13 @@
         </div>
 
         {{-- Горизонтальная граница (скрывается вместе с верхом) --}}
-        <div class="border-t border-gray-200"></div>
+        <div class="border-t border-gray-200 pointer-events-auto"></div>
     </div>
 
-    {{-- Нижняя строка: навигация + мини-логотип --}}
+{{-- Нижняя строка: навигация + мини-логотип --}}
     <div class="relative max-w-page mx-auto px-4">
-        <div class="transition-all duration-300 ease-in-out"
-             :class="scrolled ? 'h-12 lg:h-14' : 'h-[95px] lg:h-[95px]'">
-            <div class="flex items-center justify-between h-full">
+        <div class="h-12 lg:h-14 transform-gpu transition-all duration-300 ease-out">
+            <div class="flex items-center justify-between h-full pointer-events-auto">
                 {{-- Левое меню --}}
                 <nav class="hidden lg:flex items-center">
                     <ul class="flex items-center gap-0.5">
@@ -78,10 +79,10 @@
                 </nav>
 
                 {{-- Мини-логотип по центру --}}
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-40"
-                     :class="scrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'">
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform-gpu transition-all duration-300 ease-out z-40"
+                     :class="scrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="90" height="90" class="h-[70px] lg:h-[85px] w-auto">
+                        <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="90" height="90" class="h-[70px] lg:h-[85px] w-auto transition-all duration-300">
                     </a>
                 </div>
 
