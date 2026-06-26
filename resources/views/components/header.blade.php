@@ -1,13 +1,11 @@
-<header class="w-full bg-white sticky top-0 z-30 overflow-hidden will-change-transform"
+<header class="w-full bg-white sticky top-0 z-30 overflow-hidden will-change-transform transition-[height] duration-300 ease-out"
         x-data="headerScroll()"
-        :class="scrolled ? 'shadow-md' : ''">
+        :class="scrolled ? 'shadow-md h-[96px]' : ''">
 
-    {{-- Верхняя секция: GPU-accelerated slide-up --}}
-    <div x-ref="topSection"
-         class="transform-gpu transition-all duration-300 ease-out pointer-events-none"
-         :class="scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'">
-
-        {{-- Топ-бар --}}
+    {{-- Верхняя секция: плавный скрывающийся блок (только топ-бар) --}}
+    <div x-ref="topBar"
+         class="overflow-hidden transition-[height] duration-300 ease-out"
+         :class="scrolled ? 'h-0 opacity-0' : 'h-10'">
         <div class="max-w-page mx-auto px-4">
             <div class="flex items-center justify-between h-10 lg:h-10 text-xs pointer-events-auto">
                 <div class="flex items-center gap-2 sm:gap-3">
@@ -29,29 +27,30 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        {{-- Большой логотип --}}
-        <div class="relative h-[80px] lg:h-[100px]">
-            <div class="max-w-page mx-auto px-4 h-full">
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transform-gpu transition-transform duration-300 ease-out"
-                     :class="scrolled ? 'scale-75' : 'scale-100'">
-                    <div class="bg-white px-4 py-1 rounded transform-gpu">
-                        <a href="{{ route('home') }}">
-                            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto transition-all duration-300 ease-out"
-                                 :class="scrolled ? 'h-[80px] lg:h-[100px]' : 'h-[110px] lg:h-[150px]'">
-                        </a>
-                    </div>
+    {{-- Горизонтальная граница --}}
+    <div class="border-t border-gray-200" :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
+
+    {{-- Большой логотип (остается, но масштабируется) --}}
+    <div class="relative h-[80px] lg:h-[100px]">
+        <div class="max-w-page mx-auto px-4 h-full">
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transform-gpu transition-transform duration-300 ease-out"
+                 :class="scrolled ? 'scale-75' : 'scale-100'">
+                <div class="bg-white px-4 py-1 rounded transform-gpu">
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150"
+                             class="h-[110px] lg:h-[150px] w-auto transition-all duration-300 ease-out"
+                             :class="scrolled ? 'h-[80px] lg:h-[100px]' : 'h-[110px] lg:h-[150px]'">
+                    </a>
                 </div>
             </div>
         </div>
-
-        {{-- Горизонтальная граница (скрывается вместе с верхом) --}}
-        <div class="border-t border-gray-200 pointer-events-auto"></div>
     </div>
 
-{{-- Нижняя строка: навигация + мини-логотип --}}
+    {{-- Нижняя строка: навигация + мини-логотип --}}
     <div class="relative max-w-page mx-auto px-4">
-        <div class="h-12 lg:h-14 transform-gpu transition-all duration-300 ease-out">
+        <div class="transform-gpu transition-all duration-300 ease-out" :class="scrolled ? 'h-[96px]' : ''">
             <div class="flex items-center justify-between h-full pointer-events-auto">
                 {{-- Левое меню --}}
                 <nav class="hidden lg:flex items-center">
