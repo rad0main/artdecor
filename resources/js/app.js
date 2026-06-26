@@ -11,6 +11,18 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
 
 document.addEventListener('alpine:init', () => {
 
+    // ─── Header Scroll Animation ──────────────────────────
+    Alpine.data('headerScroll', () => ({
+        scrolled: false,
+        init() {
+            this.checkScroll();
+            window.addEventListener('scroll', () => this.checkScroll(), { passive: true });
+        },
+        checkScroll() {
+            this.scrolled = window.scrollY > 80;
+        },
+    }));
+
     // ─── Hero Slider ────────────────────────────────────────
     Alpine.data('slider', (slides) => ({
         slides: slides || [],

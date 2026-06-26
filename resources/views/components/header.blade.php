@@ -1,54 +1,63 @@
-<header class="w-full bg-white sticky top-0 z-50">
-    {{-- Верхняя строка --}}
-    <div class="max-w-page mx-auto px-4">
-        <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
-            {{-- Левая часть --}}
+<header class="w-full bg-white sticky top-0 z-50"
+        x-data="headerScroll()"
+        :class="scrolled ? 'shadow-md' : ''">
+    {{-- Верхняя строка — скрывается при скролле --}}
+    <div x-show="!scrolled" x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-100 max-h-20"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-end="opacity-0 max-h-0 overflow-hidden">
+        <div class="max-w-page mx-auto px-4">
+            <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
+                {{-- Левая часть --}}
                 <div class="flex items-center gap-2 sm:gap-3">
                     <button type="button"
                             class="text-xs text-[var(--k-color-primary)] hover:underline transition-colors whitespace-nowrap font-heading"
-                        x-data @click.prevent="$dispatch('open-modal', 'callback')">
-                    Заказать обратный звонок
-                </button>
-                <a href="tel:{{ \App\Models\Setting::get('contacts.phone') }}"
+                            x-data @click.prevent="$dispatch('open-modal', 'callback')">
+                        Заказать обратный звонок
+                    </button>
+                    <a href="tel:{{ \App\Models\Setting::get('contacts.phone') }}"
                        class="flex items-center gap-1 text-brand-accent hover:underline transition-colors whitespace-nowrap text-xs lg:text-sm font-heading">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                    {{ \App\Models\Setting::get('contacts.phone') }}
-                </a>
-                <div class="hidden sm:flex items-center gap-1.5">
-                    <a href="https://vk.com/artdecor_photoglass" target="_blank" rel="noopener" class="hover:opacity-70 transition-opacity" aria-label="VK">
-                        <img src="{{ asset('images/icons/vk.svg') }}" alt="VK" width="20" height="20" class="w-5 h-5">
+                        <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        {{ \App\Models\Setting::get('contacts.phone') }}
                     </a>
-                    <a href="https://instagram.com/artdekor.photosteklo" target="_blank" rel="noopener" class="hover:opacity-70 transition-opacity" aria-label="Instagram">
-                        <img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram" width="20" height="20" class="w-5 h-5">
-                    </a>
-                    <a href="https://t.me/artdecor" target="_blank" rel="noopener" class="hover:opacity-70 transition-opacity" aria-label="Telegram">
-                        <img src="{{ asset('images/icons/telegram.svg') }}" alt="Telegram" width="20" height="20" class="w-5 h-5">
-                    </a>
+                    <div class="hidden sm:flex items-center gap-1.5">
+                        <a href="https://vk.com/artdecor_photoglass" target="_blank" rel="noopener" class="hover:opacity-70 transition-opacity" aria-label="VK">
+                            <img src="{{ asset('images/icons/vk.svg') }}" alt="VK" width="20" height="20" class="w-5 h-5">
+                        </a>
+                        <a href="https://instagram.com/artdekor.photosteklo" target="_blank" rel="noopener" class="hover:opacity-70 transition-opacity" aria-label="Instagram">
+                            <img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram" width="20" height="20" class="w-5 h-5">
+                        </a>
+                        <a href="https://t.me/artdecor" target="_blank" rel="noopener" class="hover:opacity-70 transition-opacity" aria-label="Telegram">
+                            <img src="{{ asset('images/icons/telegram.svg') }}" alt="Telegram" width="20" height="20" class="w-5 h-5">
+                        </a>
+                    </div>
                 </div>
-            </div>
-            {{-- Правая часть --}}
-            <div class="flex items-center gap-3 sm:gap-5 text-xs">
-                <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}"
-                   class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)] transition-colors">
-                    {{ \App\Models\Setting::get('contacts.email') }}
-                </a>
-                <div class="text-[var(--k-color-text-secondary)] whitespace-nowrap">
-                    <span class="font-semibold text-[var(--k-color-text-primary)]">Пн-Вс:</span> {{ \App\Models\Setting::get('contacts.work_hours') }}
+                {{-- Правая часть --}}
+                <div class="flex items-center gap-3 sm:gap-5 text-xs">
+                    <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}"
+                       class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)] transition-colors">
+                        {{ \App\Models\Setting::get('contacts.email') }}
+                    </a>
+                    <div class="text-[var(--k-color-text-secondary)] whitespace-nowrap">
+                        <span class="font-semibold text-[var(--k-color-text-primary)]">Пн-Вс:</span> {{ \App\Models\Setting::get('contacts.work_hours') }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     {{-- Полные разделительные линии (скрываются под логотипом) --}}
-    <div class="border-t border-gray-200"></div>
+    <div class="border-t border-gray-200" x-show="!scrolled" x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-end="opacity-0"></div>
 
-    {{-- Строка логотипа — абсолютное позиционирование для наложения на линии --}}
-    <div class="relative">
+    {{-- Строка логотипа — при скролле логотип уменьшается и переходит в навигацию --}}
+    <div class="relative transition-all duration-300" :class="scrolled ? 'h-0 overflow-visible' : ''">
         <div class="max-w-page mx-auto px-4">
-            {{-- Логотип по центру, перекрывает обе линии --}}
-            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            {{-- Логотип по центру (большой) --}}
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
+                 :class="scrolled ? 'opacity-0 pointer-events-none scale-75 -translate-y-full' : 'opacity-100'">
                 <div class="bg-white px-4 py-1">
                     <a href="{{ route('home') }}">
                         <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
@@ -56,18 +65,19 @@
                 </div>
             </div>
             {{-- Невидимый заполнитель для высоты логотипа --}}
-            <div class="h-[80px] lg:h-[100px]"></div>
+            <div class="transition-all duration-300" :class="scrolled ? 'h-0' : 'h-[80px] lg:h-[100px]'"></div>
         </div>
     </div>
 
     {{-- Нижняя линия --}}
-    <div class="border-t border-gray-200"></div>
+    <div class="border-t border-gray-200" x-show="!scrolled" x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-end="opacity-0"></div>
 
-    {{-- Нижняя строка: навигация --}}
-    <div class="max-w-page mx-auto px-4">
-        <div class="flex items-center justify-between h-10 lg:h-10">
+    {{-- Нижняя строка: навигация с мини-логотипом при скролле --}}
+    <div class="max-w-page mx-auto px-4 transition-all duration-300">
+        <div class="flex items-center justify-between h-12 lg:h-14" :class="scrolled ? 'h-14 lg:h-16' : ''">
             {{-- Левая группа --}}
-            <nav class="hidden lg:flex items-center">
+            <nav class="hidden lg:flex items-center flex-shrink-0">
                 <ul class="flex items-center gap-0.5">
                     <li><a href="{{ route('home') }}" class="header-nav-link-light active">Главная</a></li>
                     <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
@@ -99,8 +109,16 @@
                 </ul>
             </nav>
 
+            {{-- Мини-логотип (появляется при скролле между левым и правым меню) --}}
+            <div class="transition-all duration-300 flex-shrink-0 mx-2"
+                 :class="scrolled ? 'opacity-100 scale-100 w-auto' : 'opacity-0 scale-50 w-0 overflow-hidden'">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="50" height="50" class="h-8 lg:h-[50px] w-auto">
+                </a>
+            </div>
+
             {{-- Правая группа --}}
-            <nav class="hidden lg:flex items-center">
+            <nav class="hidden lg:flex items-center flex-shrink-0">
                 <ul class="flex items-center gap-0.5">
                     <li><a href="{{ route('contacts') }}" class="header-nav-link-light">Контакты</a></li>
                     <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
