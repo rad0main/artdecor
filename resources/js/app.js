@@ -15,11 +15,11 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('headerScroll', () => ({
         scrolled: false,
         init() {
-            this.checkScroll();
-            window.addEventListener('scroll', () => this.checkScroll(), { passive: true });
-        },
-        checkScroll() {
             this.scrolled = window.scrollY > 80;
+            window.addEventListener('scroll', () => {
+                const s = window.scrollY > 80;
+                if (s !== this.scrolled) this.scrolled = s;
+            }, { passive: true });
         },
     }));
 

@@ -1,14 +1,11 @@
-<header class="w-full bg-white sticky top-0 z-50"
+<header class="w-full bg-white sticky top-0 z-50 transition-shadow duration-300"
         x-data="headerScroll()"
-        :class="scrolled ? 'shadow-md' : ''">
-    {{-- Верхняя строка — скрывается при скролле --}}
-    <div x-show="!scrolled" x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-100 max-h-20"
-         x-transition:leave="transition ease-in duration-300"
-         x-transition:leave-end="opacity-0 max-h-0 overflow-hidden">
+        :class="scrolled ? 'shadow-md header--compact' : 'header--full'">
+    {{-- Верхняя строка --}}
+    <div class="top-bar-wrap transition-all duration-300 ease-in-out overflow-hidden"
+         :class="scrolled ? 'max-h-0 opacity-0 py-0' : 'max-h-20 opacity-100'">
         <div class="max-w-page mx-auto px-4">
             <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
-                {{-- Левая часть --}}
                 <div class="flex items-center gap-2 sm:gap-3">
                     <button type="button"
                             class="text-xs text-[var(--k-color-primary)] hover:underline transition-colors whitespace-nowrap font-heading"
@@ -34,7 +31,6 @@
                         </a>
                     </div>
                 </div>
-                {{-- Правая часть --}}
                 <div class="flex items-center gap-3 sm:gap-5 text-xs">
                     <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}"
                        class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)] transition-colors">
@@ -48,35 +44,33 @@
         </div>
     </div>
 
-    {{-- Полные разделительные линии (скрываются под логотипом) --}}
-    <div class="border-t border-gray-200" x-show="!scrolled" x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-end="opacity-0"></div>
+    {{-- Линия + логотип + линия --}}
+    <div class="transition-all duration-300 ease-in-out" :class="scrolled ? '-mt-px' : ''">
+        <div class="border-t border-gray-200 transition-opacity duration-200"
+             :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
 
-    {{-- Строка логотипа — при скролле логотип уменьшается и переходит в навигацию --}}
-    <div class="relative transition-all duration-300" :class="scrolled ? 'h-0 overflow-visible' : ''">
-        <div class="max-w-page mx-auto px-4">
-            {{-- Логотип по центру (большой) --}}
-            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
-                 :class="scrolled ? 'opacity-0 pointer-events-none scale-75 -translate-y-full' : 'opacity-100'">
-                <div class="bg-white px-4 py-1">
-                    <a href="{{ route('home') }}">
-                        <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
-                    </a>
+        <div class="relative transition-all duration-300" :class="scrolled ? 'h-0 -mt-px' : 'h-[80px] lg:h-[100px]'">
+            <div class="max-w-page mx-auto px-4 h-full">
+                {{-- Большой логотип --}}
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
+                     :class="scrolled ? 'opacity-0 scale-50 pointer-events-none' : 'opacity-100 scale-100'">
+                    <div class="bg-white px-4 py-1">
+                        <a href="{{ route('home') }}">
+                            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
+                        </a>
+                    </div>
                 </div>
             </div>
-            {{-- Невидимый заполнитель для высоты логотипа --}}
-            <div class="transition-all duration-300" :class="scrolled ? 'h-0' : 'h-[80px] lg:h-[100px]'"></div>
         </div>
+
+        <div class="border-t border-gray-200 transition-opacity duration-200"
+             :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
     </div>
 
-    {{-- Нижняя линия --}}
-    <div class="border-t border-gray-200" x-show="!scrolled" x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-end="opacity-0"></div>
-
-    {{-- Нижняя строка: навигация с мини-логотипом при скролле --}}
+    {{-- Навигация + мини-логотип --}}
     <div class="max-w-page mx-auto px-4 transition-all duration-300">
-        <div class="flex items-center justify-between h-12 lg:h-14" :class="scrolled ? 'h-14 lg:h-16' : ''">
-            {{-- Левая группа --}}
+        <div class="flex items-center justify-between h-12 lg:h-14">
+            {{-- Левое меню --}}
             <nav class="hidden lg:flex items-center flex-shrink-0">
                 <ul class="flex items-center gap-0.5">
                     <li><a href="{{ route('home') }}" class="header-nav-link-light active">Главная</a></li>
@@ -84,8 +78,7 @@
                         <a href="#" class="header-nav-link-light flex items-center gap-1">
                             О компании <span class="text-xs">▾</span>
                         </a>
-                        <ul x-show="open" x-cloak
-                            class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[160px] z-50"
+                        <ul x-show="open" x-cloak class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[160px] z-50"
                             @mouseenter="open = true" @mouseleave="open = false">
                             <li><a href="{{ route('contacts') }}" class="dropdown-link">Контакты</a></li>
                             <li><a href="{{ route('works') }}" class="dropdown-link">Отзывы</a></li>
@@ -98,8 +91,7 @@
                         <a href="{{ route('catalog') }}" class="header-nav-link-light flex items-center gap-1">
                             Каталог изображений <span class="text-xs">▾</span>
                         </a>
-                        <ul x-show="open" x-cloak
-                            class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[180px] z-50"
+                        <ul x-show="open" x-cloak class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[180px] z-50"
                             @mouseenter="open = true" @mouseleave="open = false">
                             <li><a href="#" class="dropdown-link">Однотонные скинали</a></li>
                             <li><a href="#" class="dropdown-link">Скинали с рисунком</a></li>
@@ -109,15 +101,15 @@
                 </ul>
             </nav>
 
-            {{-- Мини-логотип (появляется при скролле между левым и правым меню) --}}
-            <div class="transition-all duration-300 flex-shrink-0 mx-2"
-                 :class="scrolled ? 'opacity-100 scale-100 w-auto' : 'opacity-0 scale-50 w-0 overflow-hidden'">
-                <a href="{{ route('home') }}">
-                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="50" height="50" class="h-8 lg:h-[50px] w-auto">
+            {{-- Мини-логотип --}}
+            <div class="transition-all duration-300 flex-shrink-0 flex items-center justify-center mx-1"
+                 :class="scrolled ? 'opacity-100 w-16 lg:w-[80px]' : 'opacity-0 w-0 overflow-hidden'">
+                <a href="{{ route('home') }}" class="block flex-shrink-0">
+                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="80" height="80" class="h-10 lg:h-[80px] w-auto">
                 </a>
             </div>
 
-            {{-- Правая группа --}}
+            {{-- Правое меню --}}
             <nav class="hidden lg:flex items-center flex-shrink-0">
                 <ul class="flex items-center gap-0.5">
                     <li><a href="{{ route('contacts') }}" class="header-nav-link-light">Контакты</a></li>
@@ -125,8 +117,7 @@
                         <a href="{{ route('services') }}" class="header-nav-link-light flex items-center gap-1">
                             Услуги <span class="text-xs">▾</span>
                         </a>
-                        <ul x-show="open" x-cloak
-                            class="absolute top-full right-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[200px] z-50"
+                        <ul x-show="open" x-cloak class="absolute top-full right-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[200px] z-50"
                             @mouseenter="open = true" @mouseleave="open = false">
                             <li><a href="{{ route('services') }}#skinali" class="dropdown-link">Скинали</a></li>
                             <li><a href="{{ route('services') }}#skinali-s-podsvetkoj" class="dropdown-link">Скинали с подсветкой</a></li>
@@ -143,7 +134,6 @@
                 </ul>
             </nav>
 
-            {{-- Мобильная кнопка --}}
             <button class="lg:hidden text-[var(--k-color-text-primary)] ml-auto" x-data @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Меню">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
