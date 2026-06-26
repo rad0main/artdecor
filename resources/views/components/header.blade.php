@@ -1,11 +1,11 @@
-<header class="w-full bg-white sticky top-0 z-30"
+<header class="w-full bg-white sticky top-0 z-30 overflow-hidden"
         x-data="headerScroll()"
         :class="scrolled ? 'shadow-md' : ''">
 
     {{-- Верхняя секция: GPU-accelerated slide-up --}}
     <div x-ref="topSection"
-         class="transition-transform duration-300 ease-in-out will-change-transform"
-         :class="scrolled ? '-translate-y-full' : 'translate-y-0'">
+         class="transition-all duration-300 ease-in-out will-change-transform overflow-hidden"
+         :class="scrolled ? 'max-h-0 opacity-0' : 'max-h-[200px] opacity-100'">
 
         {{-- Топ-бар --}}
         <div class="max-w-page mx-auto px-4">
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        {{-- Большой логотип (с высоким z-index чтобы перекрывал границы) --}}
+        {{-- Большой логотип --}}
         <div class="relative h-[80px] lg:h-[100px]">
             <div class="max-w-page mx-auto px-4 h-full">
                 <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40">
@@ -42,15 +42,15 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- Горизонтальные линии сайта --}}
-    <div class="border-t border-gray-200"></div>
+        {{-- Горизонтальная граница (скрывается вместе с верхом) --}}
+        <div class="border-t border-gray-200"></div>
+    </div>
 
     {{-- Нижняя строка: навигация + мини-логотип --}}
     <div class="relative max-w-page mx-auto px-4">
         <div class="transition-all duration-300 ease-in-out"
-             :class="scrolled ? 'h-[95px] lg:h-[95px]' : 'h-12 lg:h-14'">
+             :class="scrolled ? 'h-12 lg:h-14' : 'h-[95px] lg:h-[95px]'">
             <div class="flex items-center justify-between h-full">
                 {{-- Левое меню --}}
                 <nav class="hidden lg:flex items-center">
