@@ -15,11 +15,16 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('headerScroll', () => ({
         scrolled: false,
         init() {
-            this.scrolled = window.scrollY > 80;
+            this.check(window.scrollY);
             window.addEventListener('scroll', () => {
-                const s = window.scrollY > 80;
+                const y = window.scrollY;
+                // Hysteresis: toggle on at 120px, off at 60px (prevents rapid toggling)
+                const s = y > 120 ? true : (y < 60 ? false : this.scrolled);
                 if (s !== this.scrolled) this.scrolled = s;
             }, { passive: true });
+        },
+        check(y) {
+            this.scrolled = y > 120;
         },
     }));
 

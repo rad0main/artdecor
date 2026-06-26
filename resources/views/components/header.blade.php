@@ -3,7 +3,7 @@
         :class="scrolled ? 'shadow-md' : ''">
     {{-- Верхняя часть — схлопывается при скролле --}}
     <div class="overflow-hidden transition-all duration-300 ease-in-out"
-         :class="scrolled ? 'max-h-0 opacity-0' : 'max-h-[200px] opacity-100'">
+         :class="scrolled ? 'max-h-0 opacity-0' : 'max-h-[300px] opacity-100'">
         {{-- Топ-бар --}}
         <div class="max-w-page mx-auto px-4">
             <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
@@ -51,7 +51,7 @@
         <div class="relative flex items-center justify-center h-[80px] lg:h-[100px]">
             <div class="bg-white px-4 py-1">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[80px] lg:h-[110px] w-auto">
+                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
                 </a>
             </div>
         </div>
