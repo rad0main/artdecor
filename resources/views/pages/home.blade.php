@@ -5,14 +5,17 @@
 
     <main>
         {{-- ═══ 1. Hero-слайдер ═══ --}}
-        <section class="relative bg-[var(--k-color-secondary)] overflow-hidden"
+        <section class="relative bg-[var(--k-color-secondary)] overflow-hidden hero-section"
                  x-data="slider({{ json_encode($slides) }})" x-init="init()">
-            <div class="relative h-[380px] md:h-[480px] lg:h-[560px]">
+            <div class="relative h-[440px] md:h-[540px] lg:h-[620px]">
                 <template x-for="(slide, index) in slides" :key="slide.id">
                     <div x-show="current === index"
                          x-transition:enter="transition-opacity duration-700"
                          x-transition:enter-start="opacity-0"
                          x-transition:enter-end="opacity-100"
+                         x-transition:leave="transition-opacity duration-700"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
                          class="absolute inset-0">
                         <img :src="slide.image" :alt="slide.title" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black/40"></div>

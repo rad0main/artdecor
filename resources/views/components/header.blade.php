@@ -1,53 +1,51 @@
-<header class="w-full bg-white sticky top-0 z-50"
+<header class="w-full bg-white sticky top-0 z-30"
         x-data="headerScroll()"
         :class="scrolled ? 'shadow-md' : ''">
 
-    {{-- Верхняя секция: схлопывается при скролле --}}
-    <div class="overflow-hidden transition-all duration-300 ease-in-out"
-         :class="scrolled ? 'max-h-0' : 'max-h-[250px]'">
-        {{-- Внутренний контент — только opacity + translateY, без max-height --}}
-        <div class="transition-all duration-300 ease-in-out"
-             :class="scrolled ? 'opacity-0 -translate-y-8' : 'opacity-100 translate-y-0'">
+    {{-- Верхняя секция: GPU-accelerated slide-up --}}
+    <div x-ref="topSection"
+         class="transition-transform duration-300 ease-in-out will-change-transform"
+         :class="scrolled ? '-translate-y-full' : 'translate-y-0'">
 
-            {{-- Топ-бар --}}
-            <div class="max-w-page mx-auto px-4">
-                <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
-                    <div class="flex items-center gap-2 sm:gap-3">
-                        <button type="button" class="text-xs text-[var(--k-color-primary)] hover:underline whitespace-nowrap font-heading"
-                                x-data @click.prevent="$dispatch('open-modal', 'callback')">Заказать обратный звонок</button>
-                        <a href="tel:{{ \App\Models\Setting::get('contacts.phone') }}" class="flex items-center gap-1 text-brand-accent hover:underline whitespace-nowrap text-xs lg:text-sm font-heading">
-                            <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            {{ \App\Models\Setting::get('contacts.phone') }}
+        {{-- Топ-бар --}}
+        <div class="max-w-page mx-auto px-4">
+            <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button type="button" class="text-xs text-[var(--k-color-primary)] hover:underline whitespace-nowrap font-heading"
+                            x-data @click.prevent="$dispatch('open-modal', 'callback')">Заказать обратный звонок</button>
+                    <a href="tel:{{ \App\Models\Setting::get('contacts.phone') }}" class="flex items-center gap-1 text-brand-accent hover:underline whitespace-nowrap text-xs lg:text-sm font-heading">
+                        <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        {{ \App\Models\Setting::get('contacts.phone') }}
+                    </a>
+                    <div class="hidden sm:flex items-center gap-1.5">
+                        <a href="https://vk.com/artdecor_photoglass" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/vk.svg') }}" alt="VK" width="20" height="20" class="w-5 h-5"></a>
+                        <a href="https://instagram.com/artdekor.photosteklo" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram" width="20" height="20" class="w-5 h-5"></a>
+                        <a href="https://t.me/artdecor" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/telegram.svg') }}" alt="Telegram" width="20" height="20" class="w-5 h-5"></a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 sm:gap-5 text-xs">
+                    <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}" class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]">{{ \App\Models\Setting::get('contacts.email') }}</a>
+                    <div class="text-[var(--k-color-text-secondary)] whitespace-nowrap"><span class="font-semibold text-[var(--k-color-text-primary)]">Пн-Вс:</span> {{ \App\Models\Setting::get('contacts.work_hours') }}</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Большой логотип (с высоким z-index чтобы перекрывал границы) --}}
+        <div class="relative h-[80px] lg:h-[100px]">
+            <div class="max-w-page mx-auto px-4 h-full">
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40">
+                    <div class="bg-white px-4 py-1 rounded">
+                        <a href="{{ route('home') }}">
+                            <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
                         </a>
-                        <div class="hidden sm:flex items-center gap-1.5">
-                            <a href="https://vk.com/artdecor_photoglass" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/vk.svg') }}" alt="VK" width="20" height="20" class="w-5 h-5"></a>
-                            <a href="https://instagram.com/artdekor.photosteklo" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram" width="20" height="20" class="w-5 h-5"></a>
-                            <a href="https://t.me/artdecor" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/telegram.svg') }}" alt="Telegram" width="20" height="20" class="w-5 h-5"></a>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 sm:gap-5 text-xs">
-                        <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}" class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]">{{ \App\Models\Setting::get('contacts.email') }}</a>
-                        <div class="text-[var(--k-color-text-secondary)] whitespace-nowrap"><span class="font-semibold text-[var(--k-color-text-primary)]">Пн-Вс:</span> {{ \App\Models\Setting::get('contacts.work_hours') }}</div>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-200"></div>
-
-            {{-- Большой логотип (absolute, чтобы перекрывал линии) --}}
-            <div class="relative h-[80px] lg:h-[100px]">
-                <div class="max-w-page mx-auto px-4 h-full">
-                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                        <div class="bg-white px-4 py-1">
-                            <a href="{{ route('home') }}">
-                                <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150" class="h-[110px] lg:h-[150px] w-auto">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-200"></div>
         </div>
     </div>
+
+    {{-- Горизонтальные линии сайта --}}
+    <div class="border-t border-gray-200"></div>
 
     {{-- Нижняя строка: навигация + мини-логотип --}}
     <div class="relative max-w-page mx-auto px-4">
@@ -79,8 +77,8 @@
                     </ul>
                 </nav>
 
-                {{-- Мини-логотип по центру (абсолютно, для идеального центрирования) --}}
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
+                {{-- Мини-логотип по центру --}}
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-40"
                      :class="scrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'">
                     <a href="{{ route('home') }}">
                         <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="90" height="90" class="h-[70px] lg:h-[85px] w-auto">
