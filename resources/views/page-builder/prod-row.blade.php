@@ -1,6 +1,7 @@
 @php
     $items = $items ?? [];
     $heading = $heading ?? '';
+    $barOpacity = ($bar_opacity ?? 40) / 100; // convert 0-100 → 0.0-1.0
 @endphp
 
 <section class="py-12 md:py-16 bg-white">
@@ -41,8 +42,8 @@
                     @endif
 
                     {{-- Белая полупрозрачная полоса поверх изображения (1/4 снизу) --}}
-                    <div class="absolute bottom-0 left-0 right-0 bg-white/40 flex items-center justify-center px-3"
-                         style="height: 25%; min-height: 50px;">
+                    <div class="absolute bottom-0 left-0 right-0 flex items-center justify-center px-3"
+                         style="height: 25%; min-height: 50px; background-color: rgba(255, 255, 255, {{ $barOpacity }});">
                         <h2 class="text-base md:text-lg lg:text-xl font-heading text-[var(--k-color-text-primary)] text-center leading-tight truncate max-w-full">
                             {{ $title }}
                         </h2>

@@ -21,6 +21,7 @@ class ProdRowWidget extends BaseWidget
     {
         return [
             'heading' => 'Наша продукция',
+            'bar_opacity' => 40,
             'items' => [
                 ['image' => '/images/mainprod/triplex.jpg', 'title' => 'Триплекс', 'link' => '#'],
                 ['image' => '/images/mainprod/holst.png', 'title' => 'Холст', 'link' => '#'],
@@ -41,6 +42,7 @@ class ProdRowWidget extends BaseWidget
     {
         return [
             ['key' => 'heading', 'label' => 'Заголовок секции', 'type' => 'text'],
+            ['key' => 'bar_opacity', 'label' => 'Прозрачность полосы (0–100%)', 'type' => 'number', 'min' => 0, 'max' => 100],
             [
                 'key' => 'items',
                 'label' => 'Блоки (11 шт., 12-я ячейка пустая)',
@@ -60,6 +62,14 @@ class ProdRowWidget extends BaseWidget
         return [
             TextInput::make('heading')
                 ->label('Заголовок секции (необязательно)'),
+            \Filament\Forms\Components\TextInput::make('bar_opacity')
+                ->label('Прозрачность полосы (%)')
+                ->numeric()
+                ->minValue(0)
+                ->maxValue(100)
+                ->default(40)
+                ->suffix('%')
+                ->helperText('0 = полностью прозрачная, 100 = полностью белая'),
             Repeater::make('items')
                 ->label('Блоки (11 шт., схема 4×3 без ячейки 11)')
                 ->schema([
