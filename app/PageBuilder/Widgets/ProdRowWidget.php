@@ -22,17 +22,17 @@ class ProdRowWidget extends BaseWidget
         return [
             'heading' => 'Наша продукция',
             'items' => [
-                ['image' => '/images/mainprod/триплекс.jpg', 'title' => 'Триплекс', 'link' => '#'],
-                ['image' => '/images/mainprod/holst1.jpeg', 'title' => 'Холст', 'link' => '#'],
-                ['image' => '/images/mainprod/z1.jpeg', 'title' => 'Стеклянные панно', 'link' => '#'],
-                ['image' => '/images/mainprod/душ124.jpeg', 'title' => 'Душевые перегородки', 'link' => '#'],
-                ['image' => '/images/mainprod/кпкппк-scaled.jpg', 'title' => 'Кухонные фартуки', 'link' => '#'],
-                ['image' => '/images/mainprod/огл-scaled.jpg', 'title' => 'Огнеупорное стекло', 'link' => '#'],
-                ['image' => '/images/mainprod/плоадлгш-scaled.jpg', 'title' => 'Декоративные панно', 'link' => '#'],
-                ['image' => '/images/mainprod/уекпепе-scaled.jpg', 'title' => 'Стеклянные двери', 'link' => '#'],
-                ['image' => '/images/mainprod/5jxOC9W6yGZ6oQrHEmfK-WtIbOrfoslaLYKjdWwovQRU7ZSfWGqIPVqTmWGleYawHaUVPtnUUNhjJ5-0aFEcLPdr.jpg', 'title' => 'Фотопечать на стекле', 'link' => '#'],
-                ['image' => '/images/mainprod/Bez-imeni-2-2.png', 'title' => 'Цифровая печать', 'link' => '#'],
-                ['image' => '/images/mainprod/image 6.1 (1).jpg', 'title' => 'Скинали с рисунком', 'link' => '#'],
+                ['image' => '/images/mainprod/triplex.jpg', 'title' => 'Триплекс', 'link' => '#'],
+                ['image' => '/images/mainprod/holst.png', 'title' => 'Холст', 'link' => '#'],
+                ['image' => '/images/mainprod/panno_stekl.jpeg', 'title' => 'Стеклянные панно', 'link' => '#'],
+                ['image' => '/images/mainprod/dush.jpg', 'title' => 'Душевые перегородки', 'link' => '#'],
+                ['image' => '/images/mainprod/kuhnya.jpeg', 'title' => 'Кухонные фартуки', 'link' => '#'],
+                ['image' => '/images/mainprod/ognest.jpeg', 'title' => 'Огнеупорное стекло', 'link' => '#'],
+                ['image' => '/images/mainprod/decor.jpg', 'title' => 'Декоративные панно', 'link' => '#'],
+                ['image' => '/images/mainprod/dveri.jpg', 'title' => 'Стеклянные двери', 'link' => '#'],
+                ['image' => '/images/mainprod/fotopechat.jpg', 'title' => 'Фотопечать на стекле', 'link' => '#'],
+                ['image' => '/images/mainprod/cifra.jpg', 'title' => 'Цифровая печать', 'link' => '#'],
+                ['image' => '/images/mainprod/skinali.jpg', 'title' => 'Скинали с рисунком', 'link' => '#'],
             ],
         ];
     }

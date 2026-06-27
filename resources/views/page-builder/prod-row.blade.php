@@ -16,6 +16,10 @@
             @foreach($items as $i => $item)
                 @php
                     $imgUrl = $item['image'] ?? '';
+                    // URL-encode filename only (spaces, parens → %20, %28, %29)
+                    $parts = explode('/', $imgUrl);
+                    $filename = array_pop($parts);
+                    $encodedUrl = implode('/', $parts) . '/' . rawurlencode($filename);
                     $title = $item['title'] ?? '';
                     $link = $item['link'] ?? '#';
                 @endphp
@@ -26,7 +30,7 @@
 
                     {{-- Изображение на весь блок (100%) --}}
                     @if($imgUrl)
-                        <img src="{{ $imgUrl }}"
+                        <img src="{{ $encodedUrl }}"
                              alt="{{ $title }}"
                              loading="lazy"
                              class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
