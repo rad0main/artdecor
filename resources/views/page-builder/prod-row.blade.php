@@ -21,28 +21,27 @@
                 @endphp
 
                 <a href="{{ $link }}"
-                   class="group relative block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 bg-[var(--k-color-bg-surface)]"
+                   class="group relative block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
                    style="aspect-ratio: 370 / 250; max-width: 370px; width: 100%; margin: 0 auto;">
 
-                    {{-- Изображение (3/4 высоты) --}}
-                    <div class="absolute top-0 left-0 right-0 overflow-hidden"
-                         style="height: 75%;">
-                        @if($imgUrl)
-                            <img src="{{ $imgUrl }}"
-                                 alt="{{ $title }}"
-                                 loading="lazy"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-[var(--k-color-text-muted)] text-sm bg-gray-100">
-                                Нет изображения
-                            </div>
-                        @endif
-                    </div>
+                    {{-- Изображение на весь блок --}}
+                    @if($imgUrl)
+                        <img src="{{ $imgUrl }}"
+                             alt="{{ $title }}"
+                             loading="lazy"
+                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    @else
+                        <div class="absolute inset-0 flex items-center justify-center text-[var(--k-color-text-muted)] text-sm bg-gray-100">
+                            Нет изображения
+                        </div>
+                    @endif
 
-                    {{-- Белая полупрозрачная полоса (1/4 снизу) --}}
-                    <div class="absolute bottom-0 left-0 right-0 bg-white/40 backdrop-blur-[2px] flex items-center px-4"
-                         style="height: 25%; min-height: 50px;">
-                        <h2 class="text-sm md:text-base font-heading font-bold text-[var(--k-color-text-primary)] leading-tight truncate max-w-full">
+                    {{-- Полупрозрачный градиент снизу для читаемости текста --}}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+
+                    {{-- Текст по центру блока --}}
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <h2 class="text-sm md:text-base lg:text-lg font-heading text-white text-center leading-tight px-3 max-w-full">
                             {{ $title }}
                         </h2>
                     </div>

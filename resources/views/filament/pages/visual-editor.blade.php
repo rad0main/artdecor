@@ -165,6 +165,17 @@
                         <div x-show="field.type === 'repeater'">
                             <template x-for="(item, i) in (formData[field.key] || [])" :key="i">
                                 <div class="border border-gray-200 dark:border-gray-600 rounded-md p-3 mb-3 relative">
+                                    <div class="flex items-center gap-1 mb-2">
+                                        <span class="text-xs text-gray-400 font-mono" x-text="'#' + (i + 1)"></span>
+                                        <div class="ml-auto flex gap-1">
+                                            <button type="button" class="text-xs text-gray-500 hover:text-blue-600 disabled:opacity-30"
+                                                    @click="moveRepeaterItem(field.key, i, -1)" :disabled="i === 0" title="Вверх">↑</button>
+                                            <button type="button" class="text-xs text-gray-500 hover:text-blue-600 disabled:opacity-30"
+                                                    @click="moveRepeaterItem(field.key, i, 1)" :disabled="i === (formData[field.key] || []).length - 1" title="Вниз">↓</button>
+                                            <button type="button" class="text-xs text-red-500 hover:text-red-700"
+                                                    @click="removeRepeaterItem(field.key, i)" title="Удалить">✕</button>
+                                        </div>
+                                    </div>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         <template x-for="(sub, si) in (field.fields || [])" :key="si">
                                             <div>
@@ -180,8 +191,6 @@
                                             </div>
                                         </template>
                                     </div>
-                                    <button type="button" class="absolute top-1 right-1 text-red-500 text-xs"
-                                            @click="removeRepeaterItem(field.key, i)" title="Удалить">✕</button>
                                 </div>
                             </template>
                             <button type="button" class="px-3 py-1.5 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
@@ -291,6 +300,16 @@
                     if (this.formData[key]) {
                         this.formData[key].splice(index, 1);
                     }
+                },
+
+                moveRepeaterItem(key, index, direction) {
+                    const arr = this.formData[key];
+                    if (!arr) return;
+                    const target = index + direction;
+                    if (target < 0 || target >= arr.length) return;
+                    [arr[index], arr[target]] = [arr[target], arr[index]];
+                    // Trigger Alpine reactivity by reassigning
+                    this.formData[key] = [...arr];
                 },
 
                 save() {
