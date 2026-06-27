@@ -147,6 +147,16 @@
                         <input x-show="field.type === 'number'"
                                type="number" x-model="formData[field.key]" style="width: 80px">
 
+                        {{-- Range slider with percentage display --}}
+                        <div x-show="field.type === 'range'" class="flex items-center gap-3">
+                            <input type="range" :min="field.min ?? 0" :max="field.max ?? 100"
+                                   x-model="formData[field.key]" class="flex-1 h-2 accent-blue-500">
+                            <input type="number" x-model="formData[field.key]"
+                                   :min="field.min ?? 0" :max="field.max ?? 100"
+                                   class="w-16 text-center border rounded px-1 py-0.5 text-sm">
+                            <span class="text-xs text-gray-500">%</span>
+                        </div>
+
                         <select x-show="field.type === 'select'" x-model="formData[field.key]">
                             <template x-for="(opt, val) in field.options" :key="val">
                                 <option :value="val" x-text="opt"></option>
