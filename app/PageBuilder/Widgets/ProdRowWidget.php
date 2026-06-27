@@ -30,6 +30,9 @@ class ProdRowWidget extends BaseWidget
                 ['image' => '/images/mainprod/огл-scaled.jpg', 'title' => 'Огнеупорное стекло', 'link' => '#'],
                 ['image' => '/images/mainprod/плоадлгш-scaled.jpg', 'title' => 'Декоративные панно', 'link' => '#'],
                 ['image' => '/images/mainprod/уекпепе-scaled.jpg', 'title' => 'Стеклянные двери', 'link' => '#'],
+                ['image' => '/images/mainprod/5jxOC9W6yGZ6oQrHEmfK-WtIbOrfoslaLYKjdWwovQRU7ZSfWGqIPVqTmWGleYawHaUVPtnUUNhjJ5-0aFEcLPdr.jpg', 'title' => 'Фотопечать на стекле', 'link' => '#'],
+                ['image' => '/images/mainprod/Bez-imeni-2-2.png', 'title' => 'Цифровая печать', 'link' => '#'],
+                ['image' => '/images/mainprod/image 6.1 (1).jpg', 'title' => 'Скинали с рисунком', 'link' => '#'],
             ],
         ];
     }
@@ -40,7 +43,7 @@ class ProdRowWidget extends BaseWidget
             ['key' => 'heading', 'label' => 'Заголовок секции', 'type' => 'text'],
             [
                 'key' => 'items',
-                'label' => 'Блоки (8 шт., 9-я ячейка пустая)',
+                'label' => 'Блоки (11 шт., 12-я ячейка пустая)',
                 'type' => 'repeater',
                 'fields' => [
                     ['key' => 'image', 'label' => 'Изображение (370×250px)', 'type' => 'url'],
@@ -58,7 +61,7 @@ class ProdRowWidget extends BaseWidget
             TextInput::make('heading')
                 ->label('Заголовок секции (необязательно)'),
             Repeater::make('items')
-                ->label('Блоки (8 шт., схема 3×3 без центральной ячейки)')
+                ->label('Блоки (11 шт., схема 4×3 без ячейки 11)')
                 ->schema([
                     FileUpload::make('image')
                         ->label('Изображение (370×250px)')
@@ -77,9 +80,9 @@ class ProdRowWidget extends BaseWidget
                 ->collapsible()
                 ->collapsed(false)
                 ->reorderable()
-                ->minItems(8)
-                ->maxItems(8)
-                ->defaultItems(8)
+                ->minItems(11)
+                ->maxItems(11)
+                ->defaultItems(11)
                 ->addActionLabel('+ Добавить блок'),
         ];
     }
