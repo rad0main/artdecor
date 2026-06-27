@@ -94,12 +94,12 @@
 
     {{-- ═══ ЛОГОТИП (по центру, перекрывает обе строки) ═══ --}}
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300 ease-out"
-         :class="scrolled ? 'scale-[0.671]' : 'scale-100'">
+         :class="scrolled ? 'scale-[0.723]' : 'scale-100'">
         <div class="bg-white px-4 py-1.5 rounded shadow-sm">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="140" height="140"
-                     class="transition-all duration-300 ease-out w-auto h-[140px]"
-                     :class="scrolled ? 'h-[94px]' : 'h-[140px]'">
+                <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="130" height="130"
+                     class="transition-all duration-300 ease-out w-auto h-[130px]"
+                     :class="scrolled ? 'h-[94px]' : 'h-[130px]'">
             </a>
         </div>
     </div>
