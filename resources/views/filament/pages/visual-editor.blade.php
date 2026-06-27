@@ -156,7 +156,7 @@
                             <input type="number" x-model="formData[field.key]"
                                    :min="field.min ?? 0" :max="field.max ?? 100"
                                    class="text-center border rounded px-1 py-0.5 text-sm"
-                                   style="width: 50px;">
+                                   style="width: 100px;">
                             <span class="text-xs text-gray-500">%</span>
                         </div>
 
