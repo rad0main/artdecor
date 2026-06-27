@@ -131,7 +131,8 @@
     {{-- ═══ ЛОГОТИП (по центру, перекрывает обе строки) ═══ --}}
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300 ease-out"
          :class="scrolled ? 'scale-[0.758]' : 'scale-100'">
-        <div class="bg-white px-4 py-1.5 rounded shadow-sm">
+        <div class="bg-white px-4 rounded shadow-sm"
+             :class="scrolled ? 'py-0' : 'py-1'">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="124" height="124"
                      class="transition-all duration-300 ease-out w-auto h-[124px]"
