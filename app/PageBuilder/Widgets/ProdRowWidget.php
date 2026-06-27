@@ -19,18 +19,18 @@ class ProdRowWidget extends BaseWidget
 
     public static function defaults(): array
     {
-        $items = [];
-        for ($i = 1; $i <= 9; $i++) {
-            if ($i === 8) continue;
-            $items[] = [
-                'image' => '',
-                'title' => 'Блок ' . $i,
-                'link' => '#',
-            ];
-        }
         return [
-            'heading' => '',
-            'items' => $items,
+            'heading' => 'Наша продукция',
+            'items' => [
+                ['image' => '/images/mainprod/триплекс.jpg', 'title' => 'Триплекс', 'link' => '#'],
+                ['image' => '/images/mainprod/holst1.jpeg', 'title' => 'Холст', 'link' => '#'],
+                ['image' => '/images/mainprod/z1.jpeg', 'title' => 'Стеклянные панно', 'link' => '#'],
+                ['image' => '/images/mainprod/душ124.jpeg', 'title' => 'Душевые перегородки', 'link' => '#'],
+                ['image' => '/images/mainprod/кпкппк-scaled.jpg', 'title' => 'Кухонные фартуки', 'link' => '#'],
+                ['image' => '/images/mainprod/огл-scaled.jpg', 'title' => 'Огнеупорное стекло', 'link' => '#'],
+                ['image' => '/images/mainprod/плоадлгш-scaled.jpg', 'title' => 'Декоративные панно', 'link' => '#'],
+                ['image' => '/images/mainprod/уекпепе-scaled.jpg', 'title' => 'Стеклянные двери', 'link' => '#'],
+            ],
         ];
     }
 
@@ -47,6 +47,7 @@ class ProdRowWidget extends BaseWidget
                     ['key' => 'title', 'label' => 'Заголовок (до 60)', 'type' => 'text', 'maxlength' => 60],
                     ['key' => 'link', 'label' => 'Ссылка', 'type' => 'url'],
                 ],
+                'reorderable' => true,
             ],
         ];
     }
@@ -75,6 +76,7 @@ class ProdRowWidget extends BaseWidget
                 ])
                 ->collapsible()
                 ->collapsed(false)
+                ->reorderable()
                 ->minItems(8)
                 ->maxItems(8)
                 ->defaultItems(8)
