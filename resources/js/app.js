@@ -15,7 +15,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('headerScroll', () => ({
         scrolled: false,
         ticking: false,
-        mobileMenuOpen: false,
+        mobileOpen: false,
         init() {
             this.scrolled = window.scrollY > 80;
             this.onScroll = () => {

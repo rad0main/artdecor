@@ -1,14 +1,12 @@
 <header class="w-full bg-white sticky top-0 z-40 transition-all duration-300 ease-out overflow-hidden"
         x-data="headerScroll()"
-        :class="{
-            'shadow-md h-[94px]': scrolled,
-            'h-[134px]': !scrolled,
-            '!overflow-visible': mobileMenuOpen
-        }">
+        :class="scrolled ? 'h-[94px] shadow-md' : 'h-[134px]'"
+        x-ref="header">
 
     {{-- ═══ ВЕРХНЯЯ СТРОКА (скрывается при скролле) ═══ --}}
-    <div class="absolute top-0 left-0 right-0 z-20 transition-transform duration-300 ease-out will-change-transform"
-         :class="scrolled ? '-translate-y-full' : 'translate-y-0'">
+    <div class="absolute top-0 left-0 right-0 z-10 transition-transform duration-300 ease-out will-change-transform"
+         :class="scrolled ? '-translate-y-full' : 'translate-y-0'"
+         x-ref="topRow">
         <div class="max-w-page mx-auto px-4">
             <div class="flex items-center justify-between h-10 text-xs">
                 {{-- Левая часть: кнопка звонка, телефон, соцсети --}}
@@ -36,7 +34,7 @@
     </div>
 
     {{-- ═══ НИЖНЯЯ СТРОКА (навигация, всегда видна) ═══ --}}
-    <div class="absolute bottom-0 left-0 right-0 z-10 h-[94px]">
+    <div class="absolute bottom-0 left-0 right-0 h-[94px] z-10">
         <div class="max-w-page mx-auto px-4 h-full">
             <div class="flex items-center justify-between h-full">
                 {{-- Левая навигация --}}
@@ -87,7 +85,7 @@
                 </nav>
 
                 {{-- Мобильная кнопка --}}
-                <button class="lg:hidden text-[var(--k-color-text-primary)] ml-auto" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Меню">
+                <button class="lg:hidden text-[var(--k-color-text-primary)] ml-auto" @click="mobileOpen = !mobileOpen" aria-label="Меню">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
@@ -95,20 +93,30 @@
     </div>
 
     {{-- ═══ ЛОГОТИП (по центру, перекрывает обе строки) ═══ --}}
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-300 ease-out"
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300 ease-out"
          :class="scrolled ? 'scale-[0.627]' : 'scale-100'">
         <div class="bg-white px-4 py-1.5 rounded shadow-sm">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150"
-                     class="transition-all duration-300 ease-out w-auto h-[150px] lg:h-[150px]"
+                     class="transition-all duration-300 ease-out w-auto h-[150px]"
                      :class="scrolled ? 'h-[94px]' : 'h-[150px]'">
             </a>
         </div>
     </div>
 
     {{-- ═══ МОБИЛЬНОЕ МЕНЮ ═══ --}}
-    <div x-show="mobileMenuOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" @click.outside="mobileMenuOpen = false" class="absolute top-full left-0 right-0 lg:hidden border-b border-gray-200 bg-white shadow-md z-50">
-        <div class="px-4 py-4 space-y-1 text-sm">
+    <div x-show="mobileOpen"
+         x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         @click.outside="mobileOpen = false"
+         class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 border-b border-gray-200 pt-20 pb-4 px-4"
+         style="display:none">
+        <div class="space-y-1 text-sm max-w-page mx-auto">
             <a href="{{ route('home') }}" class="block text-[var(--k-color-text-primary)] font-semibold py-2 border-b border-gray-100">Главная</a>
             <div x-data="{ open: false }"><button @click="open = !open" class="flex items-center justify-between w-full text-left text-[var(--k-color-text-primary)] font-semibold py-2 border-b border-gray-100">О компании <span class="text-xs transition-transform" :class="open && 'rotate-180'">▾</span></button>
                 <div x-show="open" x-collapse class="pl-4"><a href="{{ route('contacts') }}" class="block text-[var(--k-color-text-secondary)] py-2">Контакты</a><a href="{{ route('works') }}" class="block text-[var(--k-color-text-secondary)] py-2">Отзывы</a><a href="#" class="block text-[var(--k-color-text-secondary)] py-2">Видео</a><a href="{{ route('services') }}" class="block text-[var(--k-color-text-secondary)] py-2">О нас</a></div>
