@@ -15,13 +15,13 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('headerScroll', () => ({
         scrolled: false,
         ticking: false,
+        mobileMenuOpen: false,
         init() {
             this.scrolled = window.scrollY > 80;
             this.onScroll = () => {
                 if (!this.ticking) {
                     window.requestAnimationFrame(() => {
                         const y = window.scrollY;
-                        // Stable threshold with hysteresis to prevent rapid toggling
                         if (y > 100 && !this.scrolled) {
                             this.scrolled = true;
                         } else if (y < 30 && this.scrolled) {
