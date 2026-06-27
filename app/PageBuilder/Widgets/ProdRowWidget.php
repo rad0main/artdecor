@@ -42,7 +42,7 @@ class ProdRowWidget extends BaseWidget
     {
         return [
             ['key' => 'heading', 'label' => 'Заголовок секции', 'type' => 'text'],
-            ['key' => 'bar_opacity', 'label' => 'Прозрачность полосы (0–100%)', 'type' => 'range', 'min' => 0, 'max' => 100],
+            ['key' => 'bar_opacity', 'label' => 'Прозрачность затенения (0–100%)', 'type' => 'range', 'min' => 0, 'max' => 100],
             [
                 'key' => 'items',
                 'label' => 'Блоки (11 шт., 12-я ячейка пустая)',
@@ -63,7 +63,7 @@ class ProdRowWidget extends BaseWidget
             TextInput::make('heading')
                 ->label('Заголовок секции (необязательно)'),
             \Filament\Forms\Components\TextInput::make('bar_opacity')
-                ->label('Прозрачность полосы (%)')
+                ->label('Прозрачность затенения (%)')
                 ->numeric()
                 ->minValue(0)
                 ->maxValue(100)
