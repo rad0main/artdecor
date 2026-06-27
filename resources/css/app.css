@@ -427,7 +427,6 @@ header {
 /* Header hero overlap fix */
 .hero-section {
     margin-top: -60px;
-    z-index: 30;
     position: relative;
 }
 @media (min-width: 1024px) {

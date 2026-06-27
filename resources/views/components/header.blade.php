@@ -1,10 +1,9 @@
-<header class="w-full bg-white sticky top-0 z-30 transition-all duration-300 ease-out h-[134px]"
+<header class="w-full bg-white sticky top-0 z-40 transition-all duration-300 ease-out overflow-hidden"
         x-data="headerScroll()"
         :class="{
             'shadow-md h-[94px]': scrolled,
             'h-[134px]': !scrolled,
-            'overflow-visible': mobileMenuOpen,
-            'overflow-hidden': !mobileMenuOpen
+            '!overflow-visible': mobileMenuOpen
         }">
 
     {{-- ═══ ВЕРХНЯЯ СТРОКА (скрывается при скролле) ═══ --}}
