@@ -44,7 +44,7 @@
                 <nav class="hidden lg:flex items-center">
                     <ul class="flex items-center gap-0.5">
                         <li><a href="{{ route('home') }}" class="header-nav-link active">Главная</a></li>
-                        <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                        <li class="relative pb-2" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                             <a href="#" class="header-nav-link flex items-center gap-1">О компании <span class="text-xs">▾</span></a>
                             <ul x-show="open" x-cloak
                                 x-transition:enter="transition ease-out duration-200"
@@ -53,7 +53,7 @@
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 -translate-y-2"
-                                class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[160px]"
+                                class="absolute top-full left-0 mt-1 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[160px]"
                                 @mouseenter="open = true" @mouseleave="open = false">
                                 <li><a href="{{ route('contacts') }}" class="dropdown-link">Контакты</a></li>
                                 <li><a href="{{ route('works') }}" class="dropdown-link">Отзывы</a></li>
@@ -62,7 +62,7 @@
                                 <li><a href="#" class="dropdown-link">Способы оплаты</a></li>
                             </ul>
                         </li>
-                        <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                        <li class="relative pb-2" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                             <a href="{{ route('catalog') }}" class="header-nav-link flex items-center gap-1">Каталог изображений <span class="text-xs">▾</span></a>
                             <ul x-show="open" x-cloak
                                 x-transition:enter="transition ease-out duration-200"
@@ -71,7 +71,7 @@
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 -translate-y-2"
-                                class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[180px]"
+                                class="absolute top-full left-0 mt-1 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[180px]"
                                 @mouseenter="open = true" @mouseleave="open = false">
                                 <li><a href="#" class="dropdown-link">Однотонные скинали</a></li>
                                 <li><a href="#" class="dropdown-link">Скинали с рисунком</a></li>
@@ -85,7 +85,7 @@
                 <nav class="hidden lg:flex items-center">
                     <ul class="flex items-center gap-0.5">
                         <li><a href="{{ route('contacts') }}" class="header-nav-link">Контакты</a></li>
-                        <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                        <li class="relative pb-2" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                             <a href="{{ route('services') }}" class="header-nav-link flex items-center gap-1">Услуги <span class="text-xs">▾</span></a>
                             <ul x-show="open" x-cloak
                                 x-transition:enter="transition ease-out duration-200"
@@ -94,7 +94,7 @@
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 -translate-y-2"
-                                class="absolute top-full right-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[200px]"
+                                class="absolute top-full right-0 mt-1 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[200px]"
                                 @mouseenter="open = true" @mouseleave="open = false">
                                 <li><a href="{{ route('services') }}#skinali" class="dropdown-link">Скинали</a></li>
                                 <li><a href="{{ route('services') }}#skinali-s-podsvetkoj" class="dropdown-link">Скинали с подсветкой</a></li>
@@ -121,12 +121,12 @@
 
     {{-- ═══ ЛОГОТИП (по центру, перекрывает обе строки) ═══ --}}
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300 ease-out"
-         :class="scrolled ? 'scale-[0.723]' : 'scale-100'">
+         :class="scrolled ? 'scale-[0.752]' : 'scale-100'">
         <div class="bg-white px-4 py-1.5 rounded shadow-sm">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="130" height="130"
-                     class="transition-all duration-300 ease-out w-auto h-[130px]"
-                     :class="scrolled ? 'h-[94px]' : 'h-[130px]'">
+                <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="125" height="125"
+                     class="transition-all duration-300 ease-out w-auto h-[125px]"
+                     :class="scrolled ? 'h-[94px]' : 'h-[125px]'">
             </a>
         </div>
     </div>
