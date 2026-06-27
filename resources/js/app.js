@@ -14,17 +14,25 @@ document.addEventListener('alpine:init', () => {
     // ─── Header Scroll Animation ──────────────────────────
     Alpine.data('headerScroll', () => ({
         scrolled: false,
+        ticking: false,
         init() {
-            this.check(window.scrollY);
-            window.addEventListener('scroll', () => {
-                const y = window.scrollY;
-                // Hysteresis: toggle on at 120px, off at 60px (prevents rapid toggling)
-                const s = y > 120 ? true : (y < 60 ? false : this.scrolled);
-                if (s !== this.scrolled) this.scrolled = s;
-            }, { passive: true });
-        },
-        check(y) {
-            this.scrolled = y > 120;
+            this.scrolled = window.scrollY > 80;
+            this.onScroll = () => {
+                if (!this.ticking) {
+                    window.requestAnimationFrame(() => {
+                        const y = window.scrollY;
+                        // Stable threshold with hysteresis to prevent rapid toggling
+                        if (y > 100 && !this.scrolled) {
+                            this.scrolled = true;
+                        } else if (y < 30 && this.scrolled) {
+                            this.scrolled = false;
+                        }
+                        this.ticking = false;
+                    });
+                    this.ticking = true;
+                }
+            };
+            window.addEventListener('scroll', this.onScroll, { passive: true });
         },
     }));
 

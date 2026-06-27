@@ -1,11 +1,80 @@
-<header class="w-full bg-white sticky top-0 z-30 overflow-hidden will-change-transform transition-[height] duration-300 ease-out"
+<header class="w-full bg-white sticky top-0 z-30 overflow-hidden transition-all duration-300 ease-out"
         x-data="headerScroll()"
-        :class="scrolled ? 'shadow-md h-[96px]' : ''">
+        :class="scrolled ? 'shadow-md max-h-[96px]' : 'max-h-[500px]'">
 
-    {{-- Верхняя секция: плавный скрывающийся блок --}}
-    <div x-ref="topBar"
-         class="overflow-hidden transition-[height] duration-300 ease-out"
-         :class="scrolled ? 'h-0 opacity-0 pointer-events-none' : 'h-auto opacity-100'">
+    {{-- ===== НАВИГАЦИЯ (всегда в первых 96px контента) ===== --}}
+    <div class="relative z-20 h-[96px] flex-shrink-0">
+        <div class="max-w-page mx-auto px-4 h-full">
+            <div class="flex items-center justify-between h-full">
+
+                {{-- Левое меню --}}
+                <nav class="hidden lg:flex items-center">
+                    <ul class="flex items-center gap-0.5">
+                        <li><a href="{{ route('home') }}" class="header-nav-link-light active">Главная</a></li>
+                        <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                            <a href="#" class="header-nav-link-light flex items-center gap-1">О компании <span class="text-xs">▾</span></a>
+                            <ul x-show="open" x-cloak class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[160px] z-50" @mouseenter="open = true" @mouseleave="open = false">
+                                <li><a href="{{ route('contacts') }}" class="dropdown-link">Контакты</a></li>
+                                <li><a href="{{ route('works') }}" class="dropdown-link">Отзывы</a></li>
+                                <li><a href="#" class="dropdown-link">Видео</a></li>
+                                <li><a href="{{ route('services') }}" class="dropdown-link">О нас</a></li>
+                                <li><a href="#" class="dropdown-link">Способы оплаты</a></li>
+                            </ul>
+                        </li>
+                        <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                            <a href="{{ route('catalog') }}" class="header-nav-link-light flex items-center gap-1">Каталог изображений <span class="text-xs">▾</span></a>
+                            <ul x-show="open" x-cloak class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[180px] z-50" @mouseenter="open = true" @mouseleave="open = false">
+                                <li><a href="#" class="dropdown-link">Однотонные скинали</a></li>
+                                <li><a href="#" class="dropdown-link">Скинали с рисунком</a></li>
+                                <li><a href="#" class="dropdown-link">3D скинали</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+                {{-- Мини-логотип (появляется при скролле) --}}
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform-gpu transition-all duration-300 ease-out z-10"
+                     :class="scrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'">
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="90" height="90" class="h-[70px] lg:h-[85px] w-auto">
+                    </a>
+                </div>
+
+                {{-- Правое меню --}}
+                <nav class="hidden lg:flex items-center">
+                    <ul class="flex items-center gap-0.5">
+                        <li><a href="{{ route('contacts') }}" class="header-nav-link-light">Контакты</a></li>
+                        <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                            <a href="{{ route('services') }}" class="header-nav-link-light flex items-center gap-1">Услуги <span class="text-xs">▾</span></a>
+                            <ul x-show="open" x-cloak class="absolute top-full right-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[200px] z-50" @mouseenter="open = true" @mouseleave="open = false">
+                                <li><a href="{{ route('services') }}#skinali" class="dropdown-link">Скинали</a></li>
+                                <li><a href="{{ route('services') }}#skinali-s-podsvetkoj" class="dropdown-link">Скинали с подсветкой</a></li>
+                                <li><a href="{{ route('services') }}#panno" class="dropdown-link">Панно из стекла</a></li>
+                                <li><a href="{{ route('services') }}#panno-s-podsvetkoj" class="dropdown-link">Панно с подсветкой</a></li>
+                                <li><a href="{{ route('services') }}#dveri" class="dropdown-link">Двери из стекла</a></li>
+                                <li><a href="{{ route('services') }}#peregorodki" class="dropdown-link">Перегородки</a></li>
+                                <li><a href="{{ route('services') }}#triplex" class="dropdown-link">Триплекс</a></li>
+                                <li><a href="{{ route('services') }}#uf-print" class="dropdown-link">УФ-печать на стекле</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ route('services') }}#price" class="header-nav-link-light">Цены</a></li>
+                        <li><a href="{{ route('works') }}" class="header-nav-link-light">Наши работы</a></li>
+                    </ul>
+                </nav>
+
+                {{-- Мобильная кнопка --}}
+                <button class="lg:hidden text-[var(--k-color-text-primary)] ml-auto" x-data @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Меню">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{-- ===== ВЕРХНЯЯ СЕКЦИЯ (топ-бар + большой логотип, скрывается при скролле) ===== --}}
+    <div class="transition-transform duration-300 ease-out will-change-transform"
+         :class="scrolled ? '-translate-y-full' : 'translate-y-0'">
+
+        {{-- Топ-бар --}}
         <div class="max-w-page mx-auto px-4">
             <div class="flex items-center justify-between h-10 lg:h-10 text-xs">
                 <div class="flex items-center gap-2 sm:gap-3">
@@ -28,15 +97,15 @@
             </div>
         </div>
 
-        {{-- Горизонтальная граница --}}
+        {{-- Граница --}}
         <div class="border-t border-gray-200"></div>
 
-        {{-- Большой логотип --}}
+        {{-- Большой логотип (с перекрытием границ) --}}
         <div class="relative h-[80px] lg:h-[100px]">
             <div class="max-w-page mx-auto px-4 h-full">
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transform-gpu transition-transform duration-300 ease-out"
-                     :class="scrolled ? 'scale-75' : 'scale-100'">
-                    <div class="bg-white px-4 py-1 rounded transform-gpu">
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 transform-gpu transition-transform duration-300 ease-out"
+                     :class="scrolled ? 'scale-[0.6]' : 'scale-100'">
+                    <div class="bg-white px-4 py-2 rounded shadow-sm bg-opacity-95">
                         <a href="{{ route('home') }}">
                             <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="150" height="150"
                                  class="h-[110px] lg:h-[150px] w-auto transition-all duration-300 ease-out"
@@ -45,70 +114,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    {{-- Нижняя строка: навигация --}}
-    <div class="relative max-w-page mx-auto px-4 h-[96px] transform-gpu transition-all duration-300 ease-out">
-        <div class="flex items-center justify-between h-full">
-            {{-- Левое меню --}}
-            <nav class="hidden lg:flex items-center">
-                <ul class="flex items-center gap-0.5">
-                    <li><a href="{{ route('home') }}" class="header-nav-link-light active">Главная</a></li>
-                    <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                        <a href="#" class="header-nav-link-light flex items-center gap-1">О компании <span class="text-xs">▾</span></a>
-                        <ul x-show="open" x-cloak class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[160px] z-50" @mouseenter="open = true" @mouseleave="open = false">
-                            <li><a href="{{ route('contacts') }}" class="dropdown-link">Контакты</a></li>
-                            <li><a href="{{ route('works') }}" class="dropdown-link">Отзывы</a></li>
-                            <li><a href="#" class="dropdown-link">Видео</a></li>
-                            <li><a href="{{ route('services') }}" class="dropdown-link">О нас</a></li>
-                            <li><a href="#" class="dropdown-link">Способы оплаты</a></li>
-                        </ul>
-                    </li>
-                    <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                        <a href="{{ route('catalog') }}" class="header-nav-link-light flex items-center gap-1">Каталог изображений <span class="text-xs">▾</span></a>
-                        <ul x-show="open" x-cloak class="absolute top-full left-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[180px] z-50" @mouseenter="open = true" @mouseleave="open = false">
-                            <li><a href="#" class="dropdown-link">Однотонные скинали</a></li>
-                            <li><a href="#" class="dropdown-link">Скинали с рисунком</a></li>
-                            <li><a href="#" class="dropdown-link">3D скинали</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-
-            {{-- Мини-логотип по центру --}}
-            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform-gpu transition-all duration-300 ease-out" :class="scrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'">
-                <a href="{{ route('home') }}">
-                    <img src="{{ asset('logo.svg') }}" alt="ArtDecor" width="90" height="90" class="h-[70px] lg:h-[85px] w-auto transition-all duration-300">
-                </a>
-            </div>
-
-            {{-- Правое меню --}}
-            <nav class="hidden lg:flex items-center">
-                <ul class="flex items-center gap-0.5">
-                    <li><a href="{{ route('contacts') }}" class="header-nav-link-light">Контакты</a></li>
-                    <li class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                        <a href="{{ route('services') }}" class="header-nav-link-light flex items-center gap-1">Услуги <span class="text-xs">▾</span></a>
-                        <ul x-show="open" x-cloak class="absolute top-full right-0 mt-0 bg-white rounded shadow-lg border border-gray-100 py-1 min-w-[200px] z-50" @mouseenter="open = true" @mouseleave="open = false">
-                            <li><a href="{{ route('services') }}#skinali" class="dropdown-link">Скинали</a></li>
-                            <li><a href="{{ route('services') }}#skinali-s-podsvetkoj" class="dropdown-link">Скинали с подсветкой</a></li>
-                            <li><a href="{{ route('services') }}#panno" class="dropdown-link">Панно из стекла</a></li>
-                            <li><a href="{{ route('services') }}#panno-s-podsvetkoj" class="dropdown-link">Панно с подсветкой</a></li>
-                            <li><a href="{{ route('services') }}#dveri" class="dropdown-link">Двери из стекла</a></li>
-                            <li><a href="{{ route('services') }}#peregorodki" class="dropdown-link">Перегородки</a></li>
-                            <li><a href="{{ route('services') }}#triplex" class="dropdown-link">Триплекс</a></li>
-                            <li><a href="{{ route('services') }}#uf-print" class="dropdown-link">УФ-печать на стекле</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="{{ route('services') }}#price" class="header-nav-link-light">Цены</a></li>
-                    <li><a href="{{ route('works') }}" class="header-nav-link-light">Наши работы</a></li>
-                </ul>
-            </nav>
-
-            {{-- Мобильная кнопка --}}
-            <button class="lg:hidden text-[var(--k-color-text-primary)] ml-auto" x-data @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Меню">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
         </div>
     </div>
 
@@ -122,12 +127,12 @@
             <div x-data="{ open: false }"><button @click="open = !open" class="flex items-center justify-between w-full text-left text-[var(--k-color-text-primary)] font-semibold py-2 border-b border-gray-100">Каталог изображений <span class="text-xs transition-transform" :class="open && 'rotate-180'">▾</span></button>
                 <div x-show="open" x-collapse class="pl-4"><a href="#" class="block text-[var(--k-color-text-secondary)] py-2">Однотонные скинали</a><a href="#" class="block text-[var(--k-color-text-secondary)] py-2">Скинали с рисунком</a><a href="#" class="block text-[var(--k-color-text-secondary)] py-2">3D скинали</a></div>
             </div>
-            <a href="{{ route('contacts') }}" class="block text-[var(--k-color-text-primary)] font-semibold py-2 border-b border-gray-100">Контакты</a>
-            <div x-data="{ open: false }"><button @click="open = !open" class="flex items-center justify-between w-full text-left text-[var(--k-color-text-primary)] font-semibold py-2 border-b border-gray-100">Услуги <span class="text-xs transition-transform" :class="open && 'rotate-180'">▾</span></button>
+            <a href="{{ route('contacts') }}" class="block text-[var(--k-color-text-secondary)] font-semibold py-2 border-b border-gray-100">Контакты</a>
+            <div x-data="{ open: false }"><button @click="open = !open" class="flex items-center justify-between w-full text-left text-[var(--k-color-text-secondary)] font-semibold py-2 border-b border-gray-100">Услуги <span class="text-xs transition-transform" :class="open && 'rotate-180'">▾</span></button>
                 <div x-show="open" x-collapse class="pl-4"><a href="{{ route('services') }}#skinali" class="block text-[var(--k-color-text-secondary)] py-2">Скинали</a><a href="{{ route('services') }}#panno" class="block text-[var(--k-color-text-secondary)] py-2">Панно из стекла</a><a href="{{ route('services') }}#dveri" class="block text-[var(--k-color-text-secondary)] py-2">Двери из стекла</a><a href="{{ route('services') }}#peregorodki" class="block text-[var(--k-color-text-secondary)] py-2">Перегородки</a></div>
             </div>
-            <a href="{{ route('services') }}#price" class="block text-[var(--k-color-text-primary)] font-semibold py-2 border-b border-gray-100">Цены</a>
-            <a href="{{ route('works') }}" class="block text-[var(--k-color-text-primary)] font-semibold py-2">Наши работы</a>
+            <a href="{{ route('services') }}#price" class="block text-[var(--k-color-text-secondary)] font-semibold py-2 border-b border-gray-100">Цены</a>
+            <a href="{{ route('works') }}" class="block text-[var(--k-color-text-secondary)] font-semibold py-2">Наши работы</a>
             <hr class="my-3 border-gray-200">
             <a href="tel:{{ \App\Models\Setting::get('contacts.phone') }}" class="block text-brand-accent font-bold py-1">{{ \App\Models\Setting::get('contacts.phone') }}</a>
             <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}" class="block text-[var(--k-color-text-secondary)] py-1">{{ \App\Models\Setting::get('contacts.email') }}</a>
