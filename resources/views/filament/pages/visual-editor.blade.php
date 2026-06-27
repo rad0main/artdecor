@@ -181,11 +181,11 @@
                                     <div class="flex items-center gap-1 mb-2">
                                         <span class="text-xs text-gray-400 font-mono" x-text="'#' + (i + 1)"></span>
                                         <div class="ml-auto flex gap-1">
-                                            <button type="button" class="text-xs text-gray-500 hover:text-blue-600 disabled:opacity-30"
+                                            <button type="button" class="text-2xl text-gray-500 hover:text-blue-600 disabled:opacity-30 px-2 py-1 leading-none"
                                                     @click="moveRepeaterItem(field.key, i, -1)" :disabled="i === 0" title="Вверх">↑</button>
-                                            <button type="button" class="text-xs text-gray-500 hover:text-blue-600 disabled:opacity-30"
+                                            <button type="button" class="text-2xl text-gray-500 hover:text-blue-600 disabled:opacity-30 px-2 py-1 leading-none"
                                                     @click="moveRepeaterItem(field.key, i, 1)" :disabled="i === (formData[field.key] || []).length - 1" title="Вниз">↓</button>
-                                            <button type="button" class="text-xs text-red-500 hover:text-red-700"
+                                            <button type="button" class="text-xl text-red-500 hover:text-red-700 px-2 py-1"
                                                     @click="removeRepeaterItem(field.key, i)" title="Удалить">✕</button>
                                         </div>
                                     </div>
