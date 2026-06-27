@@ -1,6 +1,6 @@
-<header class="w-full bg-white sticky top-0 z-40 transition-all duration-300 ease-out"
+<header class="w-full bg-white sticky top-0 z-40 transition-all duration-300 ease-out shadow-md"
         x-data="headerScroll()"
-        :class="scrolled ? 'h-[94px] shadow-md' : 'h-[134px]'"
+        :class="scrolled ? 'h-[94px]' : 'h-[134px]'"
         x-ref="header">
 
     {{-- ═══ ВЕРХНЯЯ СТРОКА (скрывается при скролле) ═══ --}}
