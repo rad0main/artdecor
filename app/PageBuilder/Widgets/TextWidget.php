@@ -25,6 +25,7 @@ class TextWidget extends BaseWidget
             'alignment' => 'left',
             'max_width' => 'page',
             'font_size' => 16,
+            'heading_font_size' => 30,
             'text_color' => '#333333',
         ];
     }
@@ -36,7 +37,8 @@ class TextWidget extends BaseWidget
             ['key' => 'content', 'label' => 'Содержимое', 'type' => 'html', 'placeholder' => 'HTML-контент'],
             ['key' => 'alignment', 'label' => 'Выравнивание', 'type' => 'select', 'options' => ['left' => 'Слева', 'center' => 'По центру', 'right' => 'Справа']],
             ['key' => 'max_width', 'label' => 'Ширина', 'type' => 'select', 'options' => ['page' => 'Как у страницы', 'full' => 'На всю ширину', 'narrow' => 'Узкий']],
-            ['key' => 'font_size', 'label' => 'Размер шрифта (px)', 'type' => 'number', 'min' => 10, 'max' => 48],
+            ['key' => 'font_size', 'label' => 'Размер шрифта текста (px)', 'type' => 'number', 'min' => 10, 'max' => 48],
+            ['key' => 'heading_font_size', 'label' => 'Размер заголовка (px)', 'type' => 'number', 'min' => 16, 'max' => 72],
             ['key' => 'text_color', 'label' => 'Цвет текста (hex)', 'type' => 'color'],
         ];
     }
@@ -77,6 +79,13 @@ class TextWidget extends BaseWidget
                 ->minValue(10)
                 ->maxValue(48)
                 ->default(16)
+                ->suffix('px'),
+            \Filament\Forms\Components\TextInput::make('heading_font_size')
+                ->label('Размер заголовка (px)')
+                ->numeric()
+                ->minValue(16)
+                ->maxValue(72)
+                ->default(30)
                 ->suffix('px'),
             \Filament\Forms\Components\ColorPicker::make('text_color')
                 ->label('Цвет текста')

@@ -11,6 +11,7 @@
     };
     $heading = $heading ?? '';
     $fontSize = $font_size ?? 16;
+    $headingFontSize = $heading_font_size ?? 30;
     $textColor = $text_color ?? '#333333';
 @endphp
 
@@ -18,7 +19,7 @@
     <div class="mx-auto {{ $widthClass }} {{ $alignClass }}">
         @if($heading)
             <div class="section-heading mb-8">
-                <h2>{{ $heading }}</h2>
+                <h2 style="font-size: {{ $headingFontSize }}px;">{{ $heading }}</h2>
             </div>
         @endif
         <div class="prose prose-lg max-w-none
