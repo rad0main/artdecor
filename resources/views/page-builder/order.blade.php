@@ -17,38 +17,36 @@
         <div class="section-heading">
             <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
         </div>
-        <p class="mx-auto mt-1 leading-relaxed font-heading"
+        <p class="mx-auto leading-relaxed font-heading"
            style="color: {{ $textColor }}; font-size: {{ $textSize }}px;">
             {{ $text }}
         </p>
 
-        <div x-data="orderForm()" class="mt-6 max-w-2xl mx-auto">
-            <form @submit.prevent="submit" class="space-y-4">
-                {{-- Name + Phone row --}}
-                <div class="flex flex-col sm:flex-row gap-3">
+        <div x-data="orderForm()" class="mt-4 max-w-3xl mx-auto">
+            <form @submit.prevent="submit">
+                {{-- Name + Phone + Submit in one row --}}
+                <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
                     <input type="text" x-model="name" maxlength="30" required
                            placeholder="Имя"
-                           class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--k-color-primary)] focus:ring-2 focus:ring-[var(--k-color-primary)]/20 outline-none transition-all text-sm">
+                           class="flex-1 min-w-0 px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--k-color-primary)] focus:ring-2 focus:ring-[var(--k-color-primary)]/20 outline-none transition-all text-sm">
                     <input type="tel" x-model="phone" maxlength="20" required
                            placeholder="+7 (___) ___-__-__"
                            @input="formatPhone"
-                           class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--k-color-primary)] focus:ring-2 focus:ring-[var(--k-color-primary)]/20 outline-none transition-all text-sm">
+                           class="flex-1 min-w-0 px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--k-color-primary)] focus:ring-2 focus:ring-[var(--k-color-primary)]/20 outline-none transition-all text-sm">
+                    <button type="submit"
+                            :disabled="sending || !agreed"
+                            class="flex-shrink-0 px-6 py-3 rounded-lg font-heading font-semibold text-base transition-all hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                            :style="{ backgroundColor: '{{ $btnBgColor }}', color: '{{ $btnTextColor }}' }">
+                        <span x-show="!sending">{{ $btnText }}</span>
+                        <span x-show="sending" class="inline-flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                            </svg>
+                            Отправка...
+                        </span>
+                    </button>
                 </div>
-
-                {{-- Submit button --}}
-                <button type="submit"
-                        :disabled="sending || !agreed"
-                        class="w-full sm:w-auto px-8 py-3 rounded-lg font-heading font-semibold text-base transition-all hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
-                        :style="{ backgroundColor: '{{ $btnBgColor }}', color: '{{ $btnTextColor }}' }">
-                    <span x-show="!sending">{{ $btnText }}</span>
-                    <span x-show="sending" class="inline-flex items-center gap-2">
-                        <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                        </svg>
-                        Отправка...
-                    </span>
-                </button>
 
                 {{-- Privacy checkbox --}}
                 <div class="flex items-start justify-center gap-2 text-xs text-gray-500 mt-3">
