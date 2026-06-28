@@ -29,68 +29,68 @@
         </p>
     </div>
 
-    {{-- Interactive kitchen — 900px width --}}
+    {{-- Interactive kitchen --}}
     <div x-data="lookApp()" x-init="init()"
          data-colors='{{ json_encode($colorNames) }}'
          data-catalog='{{ json_encode($catalogImages) }}'
          class="relative mx-auto select-none"
-         style="max-width: 900px; width: 100%;">
+         style="max-width: 960px; width: 100%;">
 
-        {{-- Journal container (matches original structure) --}}
-        <div class="relative w-full" style="min-height: 527px;">
-
-            {{-- TOP FACADE --}}
-            <img :src="topImage()" alt="Верхний фасад"
-                 class="block w-full lazy-img"
-                 style="height: 221px; object-fit: cover; object-position: top;">
-
-            {{-- BOTTOM FACADE --}}
-            <img :src="bottomImage()" alt="Нижний фасад"
-                 class="block w-full lazy-img"
-                 style="height: 306px; object-fit: cover; object-position: bottom;">
-
-            {{-- SKINALI overlay — centered, overlaps both top and bottom --}}
-            <div class="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
-                 style="width: 80%; height: 220px; top: calc(50% - 110px);">
-                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-lg shadow-xl"
-                     :style="'background-image: url(' + (selectedImage || '/images/mainprod/skinali.jpg') + ');'">
+        {{-- Main row: left sidebar + kitchen --}}
+        <div class="flex">
+            {{-- LEFT SIDEBAR: colors + catalog button --}}
+            <div class="flex-shrink-0 flex flex-col items-center justify-between py-2"
+                 style="width: 50px; min-height: 527px;">
+                {{-- Top colors --}}
+                <div class="flex flex-col gap-1.5 items-center">
+                    <template x-for="name in colors" :key="'t-' + name">
+                        <button @click="topColor = name"
+                                class="w-4 h-4 rounded-full border-2 transition-all hover:scale-125"
+                                :style="'background-color: ' + hexColor(name) + ';' +
+                                        'border-color: ' + (topColor === name ? 'var(--k-color-primary)' : 'rgba(255,255,255,0.6)') + ';'"
+                                :title="name">
+                        </button>
+                    </template>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-white/10 pointer-events-none rounded-lg"></div>
 
-                {{-- Catalog button overlaid on skinali --}}
+                {{-- Catalog button between top and bottom --}}
                 <button @click="catalogOpen = true"
-                        class="relative z-20 flex items-center gap-2 px-5 py-2.5 bg-[var(--k-color-primary)] text-white rounded-lg hover:brightness-110 transition-all shadow-lg font-heading text-sm">
+                        class="flex items-center justify-center w-9 h-9 rounded-full bg-[var(--k-color-primary)] text-white hover:brightness-110 transition-all shadow-md"
+                        title="Открыть каталог">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
-                    <span>Открыть каталог</span>
                 </button>
+
+                {{-- Bottom colors --}}
+                <div class="flex flex-col gap-1.5 items-center">
+                    <template x-for="name in colors" :key="'b-' + name">
+                        <button @click="bottomColor = name"
+                                class="w-4 h-4 rounded-full border-2 transition-all hover:scale-125"
+                                :style="'background-color: ' + hexColor(name) + ';' +
+                                        'border-color: ' + (bottomColor === name ? 'var(--k-color-primary)' : 'rgba(255,255,255,0.6)') + ';'"
+                                :title="name">
+                        </button>
+                    </template>
+                </div>
             </div>
 
-            {{-- Color palette — TOP (left side, matching original) --}}
-            <div class="absolute z-10 flex flex-col gap-1.5"
-                 style="top: 20px; left: 15px;">
-                <template x-for="name in colors" :key="'t-' + name">
-                    <button @click="topColor = name"
-                            class="w-5 h-5 rounded-full border-2 transition-all hover:scale-125"
-                            :style="'background-color: ' + hexColor(name) + ';' +
-                                    'border-color: ' + (topColor === name ? 'var(--k-color-primary)' : 'rgba(255,255,255,0.6)') + ';'"
-                            :title="name">
-                    </button>
-                </template>
-            </div>
+            {{-- KITCHEN AREA --}}
+            <div class="flex-1 relative">
+                {{-- Top facade --}}
+                <img :src="topImage()" alt="Верхний фасад"
+                     class="block w-full"
+                     style="height: 221px; object-fit: cover; object-position: top;">
 
-            {{-- Color palette — BOTTOM (left side) --}}
-            <div class="absolute z-10 flex flex-col gap-1.5"
-                 style="bottom: 20px; left: 15px;">
-                <template x-for="name in colors" :key="'b-' + name">
-                    <button @click="bottomColor = name"
-                            class="w-5 h-5 rounded-full border-2 transition-all hover:scale-125"
-                            :style="'background-color: ' + hexColor(name) + ';' +
-                                    'border-color: ' + (bottomColor === name ? 'var(--k-color-primary)' : 'rgba(255,255,255,0.6)') + ';'"
-                            :title="name">
-                    </button>
-                </template>
+                {{-- Skinali (backsplash) --}}
+                <div class="w-full bg-cover bg-center bg-no-repeat"
+                     :style="'background-image: url(' + (selectedImage || '/images/mainprod/skinali.jpg') + '); height: 200px;'">
+                </div>
+
+                {{-- Bottom facade --}}
+                <img :src="bottomImage()" alt="Нижний фасад"
+                     class="block w-full"
+                     style="height: 306px; object-fit: cover; object-position: bottom;">
             </div>
         </div>
 
@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    {{-- Catalog popup (matches original popups structure) --}}
+    {{-- Catalog popup --}}
     <div x-show="catalogOpen"
          x-cloak
          @click.outside="catalogOpen = false"
