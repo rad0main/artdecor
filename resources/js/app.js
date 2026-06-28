@@ -382,6 +382,61 @@ document.addEventListener('alpine:init', () => {
         close() { this.open = false; this.currentImage = null; },
     }));
 
+    // ─── Prices Order Modal ────────────────────────────────
+    Alpine.data('pricesOrder', () => ({
+        modalOpen: false,
+        tariffName: '',
+        tariffPrice: '',
+        tariffUnit: '',
+        name: '',
+        phone: '',
+        agreed: true,
+        sending: false,
+        submitted: false,
+        error: '',
+
+        open(name, price, unit) {
+            this.tariffName = name;
+            this.tariffPrice = price;
+            this.tariffUnit = unit;
+            this.name = '';
+            this.phone = '';
+            this.submitted = false;
+            this.error = '';
+            this.modalOpen = true;
+        },
+
+        formatPhone() {
+            let digits = this.phone.replace(/[^\d+]/g, '');
+            if (digits.length > 0 && digits[0] !== '+') {
+                digits = '+' + digits.replace(/\+/g, '');
+            }
+            if (digits.length > 12) digits = digits.slice(0, 12);
+            this.phone = digits;
+        },
+
+        async submit() {
+            if (!this.agreed) return;
+            this.sending = true;
+            this.error = '';
+            try {
+                await axios.post('/api/order', {
+                    name: this.name,
+                    phone: this.phone,
+                    message: 'Тариф: ' + this.tariffName + ' — ' + this.tariffPrice + ' ' + this.tariffUnit,
+                    source: 'order',
+                });
+                this.submitted = true;
+                this.name = '';
+                this.phone = '';
+            } catch (e) {
+                this.error = e.response?.data?.message || 'Ошибка при отправке. Попробуйте позже.';
+            } finally {
+                this.sending = false;
+            }
+        },
+    }));
+
     // ─── Order Form ─────────────────────────────────────────
     Alpine.data('orderForm', () => ({
         name: '',
