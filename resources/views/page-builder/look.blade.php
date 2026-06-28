@@ -29,11 +29,11 @@
 @endphp
 
 <section class="py-12 md:py-16 bg-white">
-    <div class="max-w-page mx-auto px-4 mb-8">
+    <div class="mx-auto px-4 mb-8 text-center" style="max-width: 900px;">
         <div class="section-heading">
             <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
         </div>
-        <p class="text-center max-w-2xl mx-auto mt-1 leading-relaxed font-heading"
+        <p class="mx-auto mt-1 leading-relaxed font-heading"
            style="color: {{ $textColor }}; font-size: {{ $textSize }}px;">
             {{ $text }}
         </p>
