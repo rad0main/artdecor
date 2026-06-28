@@ -169,8 +169,9 @@
                         <input x-show="field.type === 'color'"
                                type="color" x-model="formData[field.key]" class="h-10 p-1">
 
-                        <label x-show="field.type === 'boolean'" class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="formData[field.key]" class="rounded">
+                        <label x-show="field.type === 'boolean'" class="inline-flex items-center gap-2 cursor-pointer select-none py-1">
+                            <input type="checkbox" x-model="formData[field.key]"
+                                   class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
                             <span x-text="field.help ?? ''" class="text-sm text-gray-500 dark:text-gray-400"></span>
                         </label>
 
