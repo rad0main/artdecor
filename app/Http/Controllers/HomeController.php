@@ -16,24 +16,6 @@ class HomeController extends Controller
             ->first();
 
         if ($homepage) {
-            // Force-update promo_slider slides with proper images (in case DB has old/empty slides)
-            $content = $homepage->content;
-            if (is_array($content)) {
-                $defaultSlides = self::getDefaultPromoSlides();
-                $updated = false;
-                foreach ($content as &$block) {
-                    if (($block['type'] ?? '') === 'promo_slider') {
-                        // Completely replace slides with defaults
-                        $block['settings']['slides'] = $defaultSlides;
-                        $updated = true;
-                        break;
-                    }
-                }
-                if ($updated) {
-                    $homepage->content = $content;
-                    $homepage->save();
-                }
-            }
             $content = $homepage->renderContent();
             return view('pages.dynamic', [
                 'page' => $homepage,
@@ -60,21 +42,6 @@ class HomeController extends Controller
             'page' => $homepage,
             'content' => $content,
         ]);
-    }
-
-    /**
-     * Default promo slides with proper images and titles
-     */
-    public static function getDefaultPromoSlides(): array
-    {
-        return [
-            ['image' => '/images/promo/2023-11-25-15-00-49-14-scaled.jpeg', 'title' => 'Скинали с подсветкой', 'text' => 'Световые панели премиум-класса по цене стандарта. Создайте уникальную атмосферу на своей кухне.'],
-            ['image' => '/images/promo/panno1ora.jpg', 'title' => 'Декоративные панно', 'text' => 'Стеклянные панно с УФ-печатью для стен, дверей и перегородок. Более 1000 дизайнов.'],
-            ['image' => '/images/promo/s2.jpeg', 'title' => 'Акция на световые скинали!', 'text' => 'Ограниченная акция — скинали со скидкой 10%! Не упустите возможность создать уют в своем доме.'],
-            ['image' => '/images/promo/lesnitsa.jpg', 'title' => 'Стеклянные лестницы', 'text' => 'Элегантные ограждения и ступени из закалённого стекла. Безопасность и стиль в каждом проекте.'],
-            ['image' => '/images/promo/kart1or.jpg', 'title' => 'Стекло в интерьере', 'text' => 'Преображение пространства с помощью стеклянных элементов. От кухни до гостиной.'],
-            ['image' => '/images/promo/photo_2024-01-10_14-11-52.jpg', 'title' => 'Примерить онлайн', 'text' => 'Воспользуйтесь нашим онлайн-конфигуратором, чтобы подобрать идеальный скинали для вашей кухни.'],
-        ];
     }
 
     /**
