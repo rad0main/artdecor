@@ -23,7 +23,7 @@
                             <a href="https://t.me/artdecor" target="_blank" rel="noopener" class="hover:opacity-70"><img src="{{ asset('images/icons/telegram.svg') }}" alt="Telegram" width="20" height="20" class="w-5 h-5"></a>
                         </div>
                     </div>
-                    <div class="flex items-center gap-3 sm:gap-5 text-xs">
+                    <div class="flex items-center gap-3 sm:gap-5 text-xs lg:text-sm">
                         <a href="mailto:{{ \App\Models\Setting::get('contacts.email') }}" class="text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]">{{ \App\Models\Setting::get('contacts.email') }}</a>
                         <div class="text-[var(--k-color-text-secondary)] whitespace-nowrap"><span class="font-semibold text-[var(--k-color-text-primary)]">Пн-Вс:</span> {{ \App\Models\Setting::get('contacts.work_hours') }}</div>
                     </div>
