@@ -122,7 +122,7 @@ document.addEventListener('alpine:init', () => {
     // ─── TypesSlider (TypesSkinali carousel) ──────────────
     Alpine.data('typesSlider', (slides) => ({
         slides: slides || [],
-        current: 0,
+        current: 2,
 
         init() {},
         next() {
