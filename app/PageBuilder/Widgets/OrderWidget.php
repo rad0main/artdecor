@@ -29,7 +29,6 @@ class OrderWidget extends BaseWidget
             'btn_text' => 'Отправить',
             'btn_bg_color' => '#D32F2F',
             'btn_text_color' => '#FFFFFF',
-            'bg_color' => '#f8f9fa',
             'privacy_text' => 'Согласен с условиями обработки и хранения персональных данных',
         ];
     }
@@ -46,7 +45,6 @@ class OrderWidget extends BaseWidget
             ['key' => 'btn_text', 'label' => 'Текст кнопки', 'type' => 'text'],
             ['key' => 'btn_bg_color', 'label' => 'Цвет кнопки (hex)', 'type' => 'color'],
             ['key' => 'btn_text_color', 'label' => 'Цвет текста кнопки (hex)', 'type' => 'color'],
-            ['key' => 'bg_color', 'label' => 'Цвет фона (hex)', 'type' => 'color'],
         ];
     }
 
@@ -89,9 +87,6 @@ class OrderWidget extends BaseWidget
             ColorPicker::make('btn_text_color')
                 ->label('Цвет текста кнопки')
                 ->default('#FFFFFF'),
-            ColorPicker::make('bg_color')
-                ->label('Цвет фона блока')
-                ->default('#f8f9fa'),
         ];
     }
 

@@ -8,11 +8,10 @@
     $btnText = $btn_text ?? 'Отправить';
     $btnBgColor = $btn_bg_color ?? '#D32F2F';
     $btnTextColor = $btn_text_color ?? '#FFFFFF';
-    $bgColor = $bg_color ?? '#f8f9fa';
     $privacyText = $privacy_text ?? 'Согласен с условиями обработки и хранения персональных данных';
 @endphp
 
-<section class="py-12 md:py-16" style="background-color: {{ $bgColor }};">
+<section class="py-12 md:py-16">
     <div class="mx-auto px-4 text-center" style="max-width: 900px;">
         <div class="section-heading">
             <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
