@@ -151,7 +151,9 @@
                                   x-model="formData[field.key]" rows="4" :maxlength="field.maxlength ?? ''"></textarea>
 
                         <input x-show="field.type === 'number'"
-                               type="number" x-model="formData[field.key]" style="width: 80px">
+                               type="number" x-model="formData[field.key]"
+                               :min="field.min ?? ''" :max="field.max ?? ''" :step="field.step ?? 'any'"
+                               style="width: 100px;">
 
                         {{-- Range slider with percentage display --}}
                         <div x-show="field.type === 'range'" class="flex items-center justify-center gap-2">

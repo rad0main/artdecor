@@ -2,6 +2,8 @@
     $slides = $slides ?? [];
     $hasMultiple = count($slides) > 1;
     $showDots = $show_dots ?? true;
+    $interval = $interval ?? 5.0;
+    $barOpacity = ($bar_opacity ?? 40) / 100;
     // Fallback: use global title/text if no slides have content
     if (empty($slides) || (empty($slides[0]['image']) && empty($slides[0]['title']))) {
         $globalFallback = [['image' => '', 'title' => $title ?? 'Промо', 'text' => $text ?? 'Описание']];
@@ -12,7 +14,7 @@
 @endphp
 
 <section class="relative w-full overflow-hidden bg-[var(--k-color-secondary)]"
-         x-data="slider({{ json_encode($slides) }})" x-init="init()">
+         x-data="slider({{ json_encode($slides) }}, {{ $interval * 1000 }}, {{ $barOpacity }})" x-init="init()">
     <div class="relative h-[300px] sm:h-[420px] md:h-[520px] lg:h-[600px]">
         {{-- Слайды --}}
         <template x-for="(slide, i) in slides" :key="i">
@@ -31,23 +33,22 @@
             </div>
         </template>
 
-        {{-- Полупрозрачная белая полоса (1/5 высоты, режим снизу) --}}
-        <div class="absolute bottom-0 left-0 right-0 bg-white/40 z-10"
-             style="height: 20%; min-height: 70px;">
-            <div class="max-w-page mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-                <template x-for="(slide, i) in slides" :key="'txt-' + i">
-                    <div x-show="current === i"
-                         x-transition:enter="transition-all duration-500 delay-200"
-                         x-transition:enter-start="opacity-0 translate-y-4"
-                         x-transition:enter-end="opacity-100 translate-y-0"
-                         class="w-full">
-                        <h3 class="text-base sm:text-lg md:text-xl lg:text-2xl font-heading font-bold text-[var(--k-color-text-primary)] truncate max-w-[30ch]"
-                            x-text="slide.title"></h3>
-                        <p class="text-xs sm:text-sm md:text-base text-[var(--k-color-text-secondary)] mt-1 leading-snug max-w-[100ch] line-clamp-2"
-                           x-text="slide.text"></p>
-                    </div>
-                </template>
-            </div>
+        {{-- Информационная полоса (снизу) --}}
+        <div class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center px-4 sm:px-6 lg:px-8"
+             style="height: 20%; min-height: 70px;"
+             :style="barStyle(current)">
+            <template x-for="(slide, i) in slides" :key="'txt-' + i">
+                <div x-show="current === i"
+                     x-transition:enter="transition-all duration-500 delay-200"
+                     x-transition:enter-start="opacity-0 translate-y-4"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     class="w-full text-center">
+                    <h3 class="text-base sm:text-lg md:text-xl lg:text-2xl font-heading font-semibold leading-tight"
+                        :style="'color: ' + (slide.text_color || '#333333') + ';'" x-text="slide.title"></h3>
+                    <p class="text-xs sm:text-sm md:text-base mt-1 leading-snug"
+                       :style="'color: ' + (slide.text_color || '#333333') + ';'" x-text="slide.text"></p>
+                </div>
+            </template>
         </div>
 
         {{-- Стрелки навигации --}}

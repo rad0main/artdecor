@@ -22,20 +22,23 @@ class PromoSliderWidget extends BaseWidget
     {
         return [
             'show_dots' => true,
+            'interval' => 5.0,
+            'bar_opacity' => 40,
             'slides' => [
-                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => ''],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => '', 'text_color' => '#333333', 'bar_color' => '#ffffff'],
             ],
         ];
     }
 
     /**
      * Fields for the inline visual editor settings modal.
-     * Uses 'repeater' type — the visual editor must support it.
      */
     public static function config(): array
     {
         return [
             ['key' => 'show_dots', 'label' => 'Точки навигации', 'type' => 'boolean', 'help' => 'Показывать точки под слайдером'],
+            ['key' => 'interval', 'label' => 'Длительность анимации (сек.)', 'type' => 'number', 'min' => 0.5, 'max' => 30, 'step' => 0.1],
+            ['key' => 'bar_opacity', 'label' => 'Прозрачность полосы (0–100%)', 'type' => 'range', 'min' => 0, 'max' => 100],
             [
                 'key' => 'slides',
                 'label' => 'Слайды',
@@ -45,6 +48,8 @@ class PromoSliderWidget extends BaseWidget
                     ['key' => 'title', 'label' => 'Заголовок (до 30)', 'type' => 'text', 'maxlength' => 30],
                     ['key' => 'text', 'label' => 'Текст (до 100)', 'type' => 'textarea', 'maxlength' => 100],
                     ['key' => 'meta', 'label' => 'Мета-теги', 'type' => 'text'],
+                    ['key' => 'text_color', 'label' => 'Цвет текста (hex)', 'type' => 'color'],
+                    ['key' => 'bar_color', 'label' => 'Цвет полосы (hex)', 'type' => 'color'],
                 ],
             ],
         ];
@@ -56,6 +61,22 @@ class PromoSliderWidget extends BaseWidget
             \Filament\Forms\Components\Toggle::make('show_dots')
                 ->label('Точки навигации')
                 ->default(true),
+            \Filament\Forms\Components\TextInput::make('interval')
+                ->label('Длительность анимации (сек.)')
+                ->numeric()
+                ->minValue(0.5)
+                ->maxValue(30)
+                ->step(0.1)
+                ->default(5.0)
+                ->suffix('сек'),
+            \Filament\Forms\Components\TextInput::make('bar_opacity')
+                ->label('Прозрачность полосы (%)')
+                ->numeric()
+                ->minValue(0)
+                ->maxValue(100)
+                ->default(40)
+                ->suffix('%')
+                ->helperText('0 = полностью прозрачная, 100 = полностью белая'),
             Repeater::make('slides')
                 ->label('Слайды')
                 ->schema([
@@ -75,6 +96,12 @@ class PromoSliderWidget extends BaseWidget
                         ->required(),
                     TextInput::make('meta')
                         ->label('Мета-теги изображения'),
+                    \Filament\Forms\Components\ColorPicker::make('text_color')
+                        ->label('Цвет текста')
+                        ->default('#333333'),
+                    \Filament\Forms\Components\ColorPicker::make('bar_color')
+                        ->label('Цвет полосы')
+                        ->default('#ffffff'),
                 ])
                 ->collapsible()
                 ->collapsed(false)

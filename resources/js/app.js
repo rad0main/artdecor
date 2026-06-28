@@ -37,23 +37,71 @@ document.addEventListener('alpine:init', () => {
     }));
 
     // ─── Hero Slider ────────────────────────────────────────
-    Alpine.data('slider', (slides) => ({
+    Alpine.data('slider', (slides, intervalMs = 5000, barOpacity = 0.4) => ({
         slides: slides || [],
         current: 0,
-        interval: null,
+        timerId: null,
 
         init() {
             if (this.slides.length > 1) this.startAutoplay();
         },
         startAutoplay() {
             this.stopAutoplay();
-            this.interval = setInterval(() => this.next(), 5000);
+            this.timerId = setInterval(() => this.next(), intervalMs);
         },
         stopAutoplay() {
-            if (this.interval) { clearInterval(this.interval); this.interval = null; }
+            if (this.timerId) { clearInterval(this.timerId); this.timerId = null; }
         },
-        next() { this.current = (this.current + 1) % this.slides.length; },
-        prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length; },
+        next() {
+            this.current = (this.current + 1) % this.slides.length;
+            this.restartAutoplay();
+        },
+        prev() {
+            this.current = (this.current - 1 + this.slides.length) % this.slides.length;
+            this.restartAutoplay();
+        },
+        restartAutoplay() {
+            if (this.slides.length > 1) {
+                this.stopAutoplay();
+                this.timerId = setInterval(() => this.next(), intervalMs);
+            }
+        },
+        /** Parse hex color (#fff or #ffffff) to RGB array */
+        hexToRgb(hex) {
+            if (!hex) return [255, 255, 255];
+            hex = hex.replace('#', '');
+            if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            const num = parseInt(hex, 16);
+            if (isNaN(num)) return [255, 255, 255];
+            return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+        },
+        /** Build inline style for the info bar */
+        barStyle(index) {
+            const slide = this.slides[index] || {};
+            const rgb = this.hexToRgb(slide.bar_color || '#ffffff');
+            return 'background-color: rgba(' + rgb.join(',') + ',' + barOpacity + ');';
+        },
+        startAutoplay() {
+            this.stopAutoplay();
+            this.timerId = setInterval(() => this.next(), intervalMs);
+        },
+        stopAutoplay() {
+            if (this.timerId) { clearInterval(this.timerId); this.timerId = null; }
+        },
+        next() {
+            this.current = (this.current + 1) % this.slides.length;
+            this.restartAutoplay();
+        },
+        prev() {
+            this.current = (this.current - 1 + this.slides.length) % this.slides.length;
+            this.restartAutoplay();
+        },
+        restartAutoplay() {
+            if (this.slides.length > 1) {
+                this.stopAutoplay();
+                this.timerId = setInterval(() => this.next(), intervalMs);
+            }
+        },
     }));
 
     // ─── Testimonial Slider ─────────────────────────────────
