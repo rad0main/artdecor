@@ -17,12 +17,12 @@
         <div class="section-heading">
             <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
         </div>
-        <p class="mx-auto leading-relaxed font-heading"
+        <p class="mx-auto leading-relaxed font-heading -mt-2"
            style="color: {{ $textColor }}; font-size: {{ $textSize }}px;">
             {{ $text }}
         </p>
 
-        <div x-data="orderForm()" class="mt-4 max-w-3xl mx-auto">
+        <div x-data="orderForm()" class="mt-3 max-w-3xl mx-auto">
             <form @submit.prevent="submit">
                 {{-- Name + Phone + Submit in one row --}}
                 <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
