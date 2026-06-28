@@ -84,20 +84,12 @@
                 </div>
             </div>
 
-            {{-- Catalog button (left side of skinali zone) --}}
-            <button @click="catalogOpen = true"
-                    class="absolute z-[2] left-3 flex items-center justify-center w-10 h-10 rounded-full bg-[var(--k-color-primary)] text-white hover:brightness-110 transition-all shadow-lg"
-                    style="top: 250px;"
-                    title="Открыть каталог">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-
             {{-- TOP FACADE (sits on top of skinali, transparent bottom reveals skinali) --}}
             <div class="relative z-[3] overflow-hidden" style="height: 221px;">
                 <img :src="topImage()" alt="Верхний фасад"
                      class="w-full h-full object-cover object-top">
-                {{-- Color palette on LEFT side --}}
-                <div class="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[160px]">
+                {{-- Color palette on RIGHT side, top --}}
+                <div class="absolute top-2 right-2 flex flex-wrap gap-1 max-w-[160px]">
                     <template x-for="name in colors" :key="'t-' + name">
                         <button @click="topColor = name; $event.stopPropagation()"
                                 class="w-4 h-4 rounded-full border-2 transition-all hover:scale-125"
@@ -112,8 +104,8 @@
             <div class="relative z-[3] overflow-hidden" style="height: 306px;">
                 <img :src="bottomImage()" alt="Нижний фасад"
                      class="w-full h-full object-cover object-bottom">
-                {{-- Color palette on LEFT side --}}
-                <div class="absolute bottom-2 left-2 flex flex-wrap gap-1 max-w-[160px]">
+                {{-- Color palette on RIGHT side, bottom --}}
+                <div class="absolute bottom-2 right-2 flex flex-wrap gap-1 max-w-[160px]">
                     <template x-for="name in colors" :key="'b-' + name">
                         <button @click="bottomColor = name; $event.stopPropagation()"
                                 class="w-4 h-4 rounded-full border-2 transition-all hover:scale-125"
@@ -123,6 +115,14 @@
                     </template>
                 </div>
             </div>
+
+            {{-- Catalog button (above facades, left side of skinali zone) --}}
+            <button @click="catalogOpen = true"
+                    class="absolute z-[4] left-3 flex items-center justify-center w-10 h-10 rounded-full bg-[var(--k-color-primary)] text-white hover:brightness-110 transition-all shadow-lg"
+                    style="top: 250px;"
+                    title="Открыть каталог">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
 
             {{-- CATALOG MODAL (overlays everything) --}}
             <div x-show="catalogOpen"
