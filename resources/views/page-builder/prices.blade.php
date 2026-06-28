@@ -6,8 +6,12 @@
     $nameSize = $name_size ?? 20;
     $priceColor = $price_color ?? '#D32F2F';
     $priceSize = $price_size ?? 28;
+    $unitTextColor = $unit_text_color ?? '#D32F2F';
+    $unitTextSize = $unit_text_size ?? 16;
     $featuresColor = $features_color ?? '#555555';
     $featuresSize = $features_size ?? 14;
+    $btnTextColor = $btn_text_color ?? '#ffffff';
+    $btnTextSize = $btn_text_size ?? 14;
     $prices = $prices ?? [];
 @endphp
 
@@ -34,7 +38,7 @@
                 @endphp
                 <div class="price-card @if($isFeatured) price-card--featured @endif">
                     <div class="price-card__name" style="color: {{ $nameColor }}; font-size: {{ $nameSize }}px;">{{ $price['name'] ?? '' }}</div>
-                    <div class="price-card__price" style="color: {{ $priceColor }}; font-size: {{ $priceSize }}px;">от {{ $price['price'] ?? '' }} <span style="color: {{ $priceColor }};">{{ $price['unit'] ?? '₽/м²' }}</span></div>
+                    <div class="price-card__price" style="color: {{ $priceColor }}; font-size: {{ $priceSize }}px;">от {{ $price['price'] ?? '' }} <span style="color: {{ $unitTextColor }}; font-size: {{ $unitTextSize }}px;">{{ $price['unit'] ?? '₽/м²' }}</span></div>
                     @if(!empty($features))
                         <ul class="price-card__features" style="color: {{ $featuresColor }}; font-size: {{ $featuresSize }}px;">
                             @foreach($features as $feature)
@@ -43,7 +47,8 @@
                         </ul>
                     @endif
                     <button @click="open('{{ $price['name'] }}', '{{ $price['price'] }}', '{{ $price['unit'] }}')"
-                            class="btn-primary w-full text-center cursor-pointer">
+                            class="btn-primary w-full text-center cursor-pointer"
+                            style="color: {{ $btnTextColor }}; font-size: {{ $btnTextSize }}px;">
                         {{ $price['btn_text'] ?? 'Заказать' }}
                     </button>
                 </div>
