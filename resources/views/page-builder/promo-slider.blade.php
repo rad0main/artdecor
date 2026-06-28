@@ -4,6 +4,7 @@
     $showDots = $show_dots ?? true;
     $interval = $interval ?? 5.0;
     $barOpacity = ($bar_opacity ?? 40) / 100;
+    $barHeight = $bar_height ?? 20;
     // Fallback: use global title/text if no slides have content
     if (empty($slides) || (empty($slides[0]['image']) && empty($slides[0]['title']))) {
         $globalFallback = [['image' => '', 'title' => $title ?? 'Промо', 'text' => $text ?? 'Описание']];
@@ -14,7 +15,7 @@
 @endphp
 
 <section class="relative w-full overflow-hidden bg-[var(--k-color-secondary)]"
-         x-data="slider({{ json_encode($slides) }}, {{ $interval * 1000 }}, {{ $barOpacity }})" x-init="init()">
+         x-data="slider({{ json_encode($slides) }}, {{ $interval * 1000 }}, {{ $barOpacity }}, {{ $barHeight }})" x-init="init()">
     <div class="relative h-[300px] sm:h-[420px] md:h-[520px] lg:h-[600px]">
         {{-- Слайды --}}
         <template x-for="(slide, i) in slides" :key="i">
@@ -35,8 +36,7 @@
 
         {{-- Информационная полоса (снизу) --}}
         <div class="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center px-4 sm:px-6 lg:px-8"
-             style="height: 20%; min-height: 70px;"
-             :style="barStyle(current)">
+             :style="'height: ' + barHeight + '%; min-height: 70px; ' + barStyle(current)">
             <template x-for="(slide, i) in slides" :key="'txt-' + i">
                 <div x-show="current === i"
                      x-transition:enter="transition-all duration-500 delay-200"
@@ -55,16 +55,16 @@
         <template x-if="slides.length > 1">
             <div class="hidden md:block">
                 <button @click="prev()"
-                        class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors"
+                        class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
                         aria-label="Назад">
-                    <svg class="w-5 h-5 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
                 <button @click="next()"
-                        class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
                         aria-label="Вперёд">
-                    <svg class="w-5 h-5 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
@@ -73,7 +73,7 @@
 
         {{-- Точки пагинации --}}
         <template x-if="slides.length > 1 && {{ $showDots ? 'true' : 'false' }}">
-            <div class="absolute bottom-[calc(20%+12px)] left-1/2 -translate-x-1/2 z-20 flex gap-2">
+            <div :style="'bottom: calc(' + barHeight + '% + 12px);'" class="absolute left-1/2 -translate-x-1/2 z-20 flex gap-2">
                 <template x-for="(slide, i) in slides" :key="'dot-' + i">
                     <button @click="current = i"
                             :class="current === i ? 'bg-white w-8' : 'bg-white/50 w-3'"

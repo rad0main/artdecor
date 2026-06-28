@@ -24,6 +24,7 @@ class PromoSliderWidget extends BaseWidget
             'show_dots' => true,
             'interval' => 5.0,
             'bar_opacity' => 40,
+            'bar_height' => 20,
             'slides' => [
                 ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => '', 'text_color' => '#333333', 'bar_color' => '#ffffff'],
             ],
@@ -39,6 +40,7 @@ class PromoSliderWidget extends BaseWidget
             ['key' => 'show_dots', 'label' => 'Точки навигации', 'type' => 'boolean', 'help' => 'Показывать точки под слайдером'],
             ['key' => 'interval', 'label' => 'Длительность анимации (сек.)', 'type' => 'number', 'min' => 0.5, 'max' => 30, 'step' => 0.1],
             ['key' => 'bar_opacity', 'label' => 'Прозрачность полосы (0–100%)', 'type' => 'range', 'min' => 0, 'max' => 100],
+            ['key' => 'bar_height', 'label' => 'Высота полосы (0–50%)', 'type' => 'range', 'min' => 5, 'max' => 50],
             [
                 'key' => 'slides',
                 'label' => 'Слайды',
@@ -77,6 +79,13 @@ class PromoSliderWidget extends BaseWidget
                 ->default(40)
                 ->suffix('%')
                 ->helperText('0 = полностью прозрачная, 100 = полностью белая'),
+            \Filament\Forms\Components\TextInput::make('bar_height')
+                ->label('Высота полосы (%)')
+                ->numeric()
+                ->minValue(5)
+                ->maxValue(50)
+                ->default(20)
+                ->suffix('%'),
             Repeater::make('slides')
                 ->label('Слайды')
                 ->schema([

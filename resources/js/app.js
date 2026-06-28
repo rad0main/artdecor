@@ -37,10 +37,11 @@ document.addEventListener('alpine:init', () => {
     }));
 
     // ─── Hero Slider ────────────────────────────────────────
-    Alpine.data('slider', (slides, intervalMs = 5000, barOpacity = 0.4) => ({
+    Alpine.data('slider', (slides, intervalMs = 5000, barOpacity = 0.4, barHeight = 20) => ({
         slides: slides || [],
         current: 0,
         timerId: null,
+        barHeight: barHeight,
 
         init() {
             if (this.slides.length > 1) this.startAutoplay();
