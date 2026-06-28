@@ -36,7 +36,7 @@
             <div class="flex items-center transition-transform duration-500 ease-out will-change-transform"
                  :style="'transform: translateX(calc(20vw - ' + (current * 60) + 'vw));'">
                 <template x-for="(slide, i) in slides" :key="'car-' + i">
-                    <div class="flex-shrink-0 transition-all duration-500 ease-out px-3 relative"
+                    <div class="flex-shrink-0 transition-all duration-500 ease-out px-3"
                          :style="'width: 60vw; opacity: ' + (i === current ? 1 : 0.45) + '; transform: scale(' + (i === current ? 1 : 0.82) + ');'">
                         <div class="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-100"
                              style="aspect-ratio: 16 / 9;">
@@ -45,27 +45,30 @@
                                  class="absolute inset-0 w-full h-full object-cover"
                                  loading="lazy">
                         </div>
-                        {{-- Стрелки между слайдами (только для активного) --}}
-                        <template x-if="slides.length > 1 && i === current">
-                            <div class="hidden md:block">
-                                <button @click="prev()"
-                                        class="absolute -left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
-                                        :class="current === 0 ? 'opacity-30 pointer-events-none' : ''"
-                                        aria-label="Назад">
-                                    <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                                </button>
-                                <button @click="next()"
-                                        class="absolute -right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
-                                        :class="current === slides.length - 1 ? 'opacity-30 pointer-events-none' : ''"
-                                        aria-label="Вперёд">
-                                    <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                                </button>
-                            </div>
-                        </template>
                     </div>
                 </template>
             </div>
 
+            {{-- Стрелки между слайдами (фиксированные на viewport) --}}
+            <template x-if="slides.length > 1">
+                <div class="hidden md:block">
+                    <button @click="prev()"
+                            class="absolute z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
+                            :class="current === 0 ? 'opacity-30 pointer-events-none' : ''"
+                            :style="'top: 50%; left: 20vw; transform: translate(-50%, -50%);'"
+                            aria-label="Назад">
+                        <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button @click="next()"
+                            class="absolute z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
+                            :class="current === slides.length - 1 ? 'opacity-30 pointer-events-none' : ''"
+                            :style="'top: 50%; left: 80vw; transform: translate(-50%, -50%);'"
+                            aria-label="Вперёд">
+                        <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </template>
+        </div>
         {{-- Текст активного слайда --}}
         <div class="max-w-3xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 text-center">
             <template x-for="(slide, i) in slides" :key="'txt-' + i">
