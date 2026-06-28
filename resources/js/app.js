@@ -136,6 +136,37 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    // ─── LookApp (Примерка kitchen interactive) ─────
+    Alpine.data('lookApp', () => ({
+        colors: {},
+        catalog: [],
+        currentFacade: 'black',
+        selectedImage: '/images/mainprod/skinali.jpg',
+        catalogOpen: false,
+
+        init() {
+            this.colors = this.$el.dataset.colors ? JSON.parse(this.$el.dataset.colors) : {};
+            this.catalog = this.$el.dataset.catalog ? JSON.parse(this.$el.dataset.catalog) : [];
+        },
+
+        getColor(name) {
+            return this.colors[name] || '#2c3e50';
+        },
+
+        darken(hex, percent) {
+            const num = parseInt(hex.replace('#', ''), 16);
+            if (isNaN(num)) return '#1a1a1a';
+            const r = Math.max(0, (num >> 16) - percent);
+            const g = Math.max(0, ((num >> 8) & 0x00FF) - percent);
+            const b = Math.max(0, (num & 0x0000FF) - percent);
+            return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+        },
+
+        selectImage(url) {
+            this.selectedImage = url;
+        },
+    }));
+
     // ─── Testimonial Slider ─────────────────────────────────
     Alpine.data('testimonials', (items) => ({
         items: items || [],
