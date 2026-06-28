@@ -22,10 +22,10 @@ class PlusWidget extends BaseWidget
         return [
             'heading' => 'Наши преимущества',
             'items' => [
-                ['icon' => '/images/plus/defpl.svg', 'title' => 'Собственное производство'],
-                ['icon' => '/images/plus/factor.svg', 'title' => 'Высокое качество'],
-                ['icon' => '/images/plus/glass.svg', 'title' => 'Стекло высшего сорта'],
-                ['icon' => '/images/plus/rubl.svg', 'title' => 'Доступные цены'],
+                ['icon' => '/images/plus/defpl.svg', 'title' => 'Собственное производство', 'icon_color' => '#ed2529', 'text_color' => '#333333', 'text_size' => 16, 'bold' => false, 'italic' => false],
+                ['icon' => '/images/plus/factor.svg', 'title' => 'Высокое качество', 'icon_color' => '#ed2529', 'text_color' => '#333333', 'text_size' => 16, 'bold' => false, 'italic' => false],
+                ['icon' => '/images/plus/glass.svg', 'title' => 'Стекло высшего сорта', 'icon_color' => '#ed2529', 'text_color' => '#333333', 'text_size' => 16, 'bold' => false, 'italic' => false],
+                ['icon' => '/images/plus/rubl.svg', 'title' => 'Доступные цены', 'icon_color' => '#ed2529', 'text_color' => '#333333', 'text_size' => 16, 'bold' => false, 'italic' => false],
             ],
         ];
     }
@@ -40,7 +40,12 @@ class PlusWidget extends BaseWidget
                 'type' => 'repeater',
                 'fields' => [
                     ['key' => 'icon', 'label' => 'SVG-иконка (URL)', 'type' => 'url'],
+                    ['key' => 'icon_color', 'label' => 'Цвет иконки (hex)', 'type' => 'color'],
                     ['key' => 'title', 'label' => 'Текст', 'type' => 'text', 'maxlength' => 40],
+                    ['key' => 'text_color', 'label' => 'Цвет текста (hex)', 'type' => 'color'],
+                    ['key' => 'text_size', 'label' => 'Размер шрифта (px)', 'type' => 'number', 'min' => 10, 'max' => 36, 'width' => '80px'],
+                    ['key' => 'bold', 'label' => 'Жирный', 'type' => 'boolean'],
+                    ['key' => 'italic', 'label' => 'Курсив', 'type' => 'boolean'],
                 ],
                 'reorderable' => true,
             ],
@@ -62,10 +67,28 @@ class PlusWidget extends BaseWidget
                         ->required()
                         ->acceptedFileTypes(['image/svg+xml'])
                         ->maxSize(5120),
+                    \Filament\Forms\Components\ColorPicker::make('icon_color')
+                        ->label('Цвет иконки')
+                        ->default('#ed2529'),
                     TextInput::make('title')
                         ->label('Текст (до 40 симв.)')
                         ->required()
                         ->maxLength(40),
+                    \Filament\Forms\Components\ColorPicker::make('text_color')
+                        ->label('Цвет текста')
+                        ->default('#333333'),
+                    TextInput::make('text_size')
+                        ->label('Размер шрифта (px)')
+                        ->numeric()
+                        ->minValue(10)
+                        ->maxValue(36)
+                        ->default(16),
+                    \Filament\Forms\Components\Toggle::make('bold')
+                        ->label('Жирный')
+                        ->default(false),
+                    \Filament\Forms\Components\Toggle::make('italic')
+                        ->label('Курсив')
+                        ->default(false),
                 ])
                 ->collapsible()
                 ->collapsed(false)
