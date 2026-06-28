@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\PageBuilder\BaseWidget;
 use App\PageBuilder\Widgets\ProdRowWidget;
+use App\PageBuilder\Widgets\PlusWidget;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 
@@ -186,6 +187,7 @@ class PageBuilderService
         $service->register(\App\PageBuilder\Widgets\VideoWidget::class);
         $service->register(\App\PageBuilder\Widgets\StatsWidget::class);
         $service->register(\App\PageBuilder\Widgets\ProdRowWidget::class);
+        $service->register(\App\PageBuilder\Widgets\PlusWidget::class);
 
         return $service;
     }
