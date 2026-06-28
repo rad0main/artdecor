@@ -319,10 +319,22 @@
                     Object.keys(this.defaults).forEach(key => {
                         this.formData[key] = (currentSettings[key] !== undefined) ? currentSettings[key] : this.defaults[key];
                     });
-                    // Ensure repeater fields exist
+                    // Ensure repeater fields exist with all sub-field defaults
                     this.fields.forEach(f => {
-                        if (f.type === 'repeater' && !this.formData[f.key]) {
-                            this.formData[f.key] = JSON.parse(JSON.stringify(this.defaults[f.key] || []));
+                        if (f.type === 'repeater') {
+                            if (!this.formData[f.key] || this.formData[f.key].length === 0) {
+                                this.formData[f.key] = JSON.parse(JSON.stringify(this.defaults[f.key] || []));
+                            } else {
+                                // Merge defaults for each item to fill missing sub-fields (e.g. new fields added later)
+                                const defaultItem = (this.defaults[f.key] && this.defaults[f.key].length > 0) ? this.defaults[f.key][0] : {};
+                                this.formData[f.key].forEach(item => {
+                                    Object.keys(defaultItem).forEach(k => {
+                                        if (item[k] === undefined) {
+                                            item[k] = defaultItem[k];
+                                        }
+                                    });
+                                });
+                            }
                         }
                     });
 
