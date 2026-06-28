@@ -20,24 +20,33 @@ class TextWidget extends BaseWidget
     public static function defaults(): array
     {
         return [
+            'heading' => '',
             'content' => '<p>Введите текст</p>',
             'alignment' => 'left',
             'max_width' => 'page',
+            'font_size' => 16,
+            'text_color' => '#333333',
         ];
     }
 
     public static function config(): array
     {
         return [
+            ['key' => 'heading', 'label' => 'Заголовок (необязательно)', 'type' => 'text'],
             ['key' => 'content', 'label' => 'Содержимое', 'type' => 'html', 'placeholder' => 'HTML-контент'],
             ['key' => 'alignment', 'label' => 'Выравнивание', 'type' => 'select', 'options' => ['left' => 'Слева', 'center' => 'По центру', 'right' => 'Справа']],
             ['key' => 'max_width', 'label' => 'Ширина', 'type' => 'select', 'options' => ['page' => 'Как у страницы', 'full' => 'На всю ширину', 'narrow' => 'Узкий']],
+            ['key' => 'font_size', 'label' => 'Размер шрифта (px)', 'type' => 'number', 'min' => 10, 'max' => 48],
+            ['key' => 'text_color', 'label' => 'Цвет текста (hex)', 'type' => 'color'],
         ];
     }
 
     public static function schema(): array
     {
         return [
+            TextInput::make('heading')
+                ->label('Заголовок (необязательно)')
+                ->maxLength(255),
             RichEditor::make('content')
                 ->label('Содержимое')
                 ->required()
@@ -62,6 +71,16 @@ class TextWidget extends BaseWidget
                     'narrow' => 'Узкий',
                 ])
                 ->default('page'),
+            \Filament\Forms\Components\TextInput::make('font_size')
+                ->label('Размер шрифта (px)')
+                ->numeric()
+                ->minValue(10)
+                ->maxValue(48)
+                ->default(16)
+                ->suffix('px'),
+            \Filament\Forms\Components\ColorPicker::make('text_color')
+                ->label('Цвет текста')
+                ->default('#333333'),
         ];
     }
 

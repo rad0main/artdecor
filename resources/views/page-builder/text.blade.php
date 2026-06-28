@@ -9,15 +9,24 @@
         'narrow' => 'max-w-3xl',
         default => 'max-w-page',
     };
+    $heading = $heading ?? '';
+    $fontSize = $font_size ?? 16;
+    $textColor = $text_color ?? '#333333';
 @endphp
 
 <section class="py-12 px-4">
     <div class="mx-auto {{ $widthClass }} {{ $alignClass }}">
+        @if($heading)
+            <div class="section-heading mb-8">
+                <h2>{{ $heading }}</h2>
+            </div>
+        @endif
         <div class="prose prose-lg max-w-none
                     prose-headings:font-heading
                     prose-a:text-[var(--k-color-primary)]
                     prose-a:no-underline hover:prose-a:underline
-                    prose-img:rounded-lg">
+                    prose-img:rounded-lg"
+             style="font-size: {{ $fontSize }}px; color: {{ $textColor }};">
             {!! $content ?? '' !!}
         </div>
     </div>
