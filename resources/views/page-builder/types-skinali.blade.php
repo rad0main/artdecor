@@ -45,17 +45,17 @@
                                  class="absolute inset-0 w-full h-full object-cover"
                                  loading="lazy">
                         </div>
-                        {{-- Стрелки только для активного слайда --}}
+                        {{-- Стрелки между слайдами (только для активного) --}}
                         <template x-if="slides.length > 1 && i === current">
                             <div class="hidden md:block">
                                 <button @click="prev()"
-                                        class="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                        class="absolute -left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
                                         :class="current === 0 ? 'opacity-30 pointer-events-none' : ''"
                                         aria-label="Назад">
                                     <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                                 </button>
                                 <button @click="next()"
-                                        class="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                        class="absolute -right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
                                         :class="current === slides.length - 1 ? 'opacity-30 pointer-events-none' : ''"
                                         aria-label="Вперёд">
                                     <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
