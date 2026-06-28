@@ -16,25 +16,22 @@ class HomeController extends Controller
             ->first();
 
         if ($homepage) {
-            // Update existing promo_slider slides with actual images if they're empty placeholders
+            // Force-update promo_slider slides with proper images (in case DB has old/empty slides)
             $content = $homepage->content;
             if (is_array($content)) {
                 $defaultSlides = self::getDefaultPromoSlides();
+                $updated = false;
                 foreach ($content as &$block) {
                     if (($block['type'] ?? '') === 'promo_slider') {
-                        $needsUpdate = false;
-                        foreach ($block['settings']['slides'] ?? [] as $i => &$slide) {
-                            if (empty($slide['image']) && isset($defaultSlides[$i])) {
-                                $slide['image'] = $defaultSlides[$i]['image'];
-                                $needsUpdate = true;
-                            }
-                        }
-                        if ($needsUpdate) {
-                            $homepage->content = $content;
-                            $homepage->save();
-                        }
+                        // Completely replace slides with defaults
+                        $block['settings']['slides'] = $defaultSlides;
+                        $updated = true;
                         break;
                     }
+                }
+                if ($updated) {
+                    $homepage->content = $content;
+                    $homepage->save();
                 }
             }
             $content = $homepage->renderContent();
