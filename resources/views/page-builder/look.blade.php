@@ -33,7 +33,7 @@
         <div class="section-heading">
             <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
         </div>
-        <p class="text-center max-w-2xl mx-auto mt-2 leading-relaxed font-heading"
+        <p class="text-center max-w-2xl mx-auto mt-1 leading-relaxed font-heading"
            style="color: {{ $textColor }}; font-size: {{ $textSize }}px;">
             {{ $text }}
         </p>
