@@ -138,32 +138,40 @@ document.addEventListener('alpine:init', () => {
 
     // ─── LookApp (Примерка kitchen interactive) ─────
     Alpine.data('lookApp', () => ({
-        colors: {},
+        colors: [],
         catalog: [],
-        currentFacade: 'black',
+        topColor: 'black',
+        bottomColor: 'black',
         selectedImage: '/images/mainprod/skinali.jpg',
         catalogOpen: false,
 
+        colorHex: {
+            red: '#e74c3c', orange: '#f39c12', yellow: '#f1c40f', green: '#27ae60',
+            blue: '#2980b9', darkblue: '#1a3a5c', purple: '#8e44ad', pink: '#e91e9b',
+            brown: '#795548', beige: '#f5e6d3', white: '#f0f0f0', gray: '#95a5a6', black: '#2c3e50'
+        },
+
         init() {
-            this.colors = this.$el.dataset.colors ? JSON.parse(this.$el.dataset.colors) : {};
-            this.catalog = this.$el.dataset.catalog ? JSON.parse(this.$el.dataset.catalog) : [];
+            const el = this.$el;
+            this.colors = el.dataset.colors ? JSON.parse(el.dataset.colors) : [];
+            this.catalog = el.dataset.catalog ? JSON.parse(el.dataset.catalog) : [];
         },
 
-        getColor(name) {
-            return this.colors[name] || '#2c3e50';
+        hexColor(name) {
+            return this.colorHex[name] || '#333';
         },
 
-        darken(hex, percent) {
-            const num = parseInt(hex.replace('#', ''), 16);
-            if (isNaN(num)) return '#1a1a1a';
-            const r = Math.max(0, (num >> 16) - percent);
-            const g = Math.max(0, ((num >> 8) & 0x00FF) - percent);
-            const b = Math.max(0, (num & 0x0000FF) - percent);
-            return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+        topImage() {
+            return '/images/kitchen/kitchen1-' + this.topColor + '.png';
+        },
+
+        bottomImage() {
+            return '/images/kitchen/kitchen2-' + this.bottomColor + '.png';
         },
 
         selectImage(url) {
             this.selectedImage = url;
+            this.catalogOpen = false;
         },
     }));
 
