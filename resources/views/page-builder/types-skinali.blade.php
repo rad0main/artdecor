@@ -34,11 +34,11 @@
         {{-- Карусель на всю ширину с peek --}}
         <div class="relative w-full overflow-visible" style="width: 100vw; margin-left: calc(-50vw + 50%);">
             <div class="flex items-center transition-transform duration-500 ease-out will-change-transform"
-                 :style="'transform: translateX(calc(20vw - ' + (current * 60) + 'vw));'">
+                 :style="'transform: translateX(calc(30vw - ' + (current * 40) + 'vw));'">
                 <template x-for="(slide, i) in slides" :key="'car-' + i">
-                    <div class="flex-shrink-0 transition-all duration-500 ease-out px-3"
-                         style="width: 60vw;"
-                         :style="'width: 60vw; opacity: ' + (i === current ? 1 : 0.45) + '; transform: scale(' + (i === current ? 1 : 0.82) + ');'">
+                    <div class="flex-shrink-0 transition-all duration-500 ease-out px-2"
+                         style="width: 40vw;"
+                         :style="'width: 40vw; opacity: ' + (i === current ? 1 : 0.55) + '; transform: scale(' + (i === current ? 1 : 0.85) + ');'">
                         <div class="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-100"
                              style="aspect-ratio: 16 / 9;">
                             <img :src="slide.image || ''"
