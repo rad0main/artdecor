@@ -139,11 +139,14 @@ document.addEventListener('alpine:init', () => {
     // ─── LookApp (Примерка kitchen interactive) ─────
     Alpine.data('lookApp', () => ({
         colors: [],
-        catalog: [],
+        categories: {},
+        catImages: {},
+        basePath: '',
         topColor: 'black',
         bottomColor: 'black',
         selectedImage: '/images/mainprod/skinali.jpg',
         catalogOpen: false,
+        currentCategory: '',
 
         colorHex: {
             red: '#e74c3c', orange: '#f39c12', yellow: '#f1c40f', green: '#27ae60',
@@ -154,23 +157,29 @@ document.addEventListener('alpine:init', () => {
         init() {
             const el = this.$el;
             this.colors = el.dataset.colors ? JSON.parse(el.dataset.colors) : [];
-            this.catalog = el.dataset.catalog ? JSON.parse(el.dataset.catalog) : [];
+            this.categories = el.dataset.categories ? JSON.parse(el.dataset.categories) : [];
+            this.catImages = el.dataset.images ? JSON.parse(el.dataset.images) : {};
+            this.basePath = el.dataset.basepath || '/images/temp_cat';
+            const keys = Object.keys(this.categories);
+            if (keys.length > 0) this.currentCategory = keys[0];
         },
 
         hexColor(name) {
             return this.colorHex[name] || '#333';
         },
-
         topImage() {
             return '/images/kitchen/kitchen1-' + this.topColor + '.png';
         },
-
         bottomImage() {
             return '/images/kitchen/kitchen2-' + this.bottomColor + '.png';
         },
 
-        selectImage(url) {
-            this.selectedImage = url;
+        filteredImages() {
+            return this.catImages[this.currentCategory] || [];
+        },
+
+        selectImage(img) {
+            this.selectedImage = this.basePath + '/' + this.currentCategory + '/' + img;
             this.catalogOpen = false;
         },
     }));
