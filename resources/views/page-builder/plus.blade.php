@@ -23,7 +23,7 @@
                 <div class="flex flex-col items-center text-center"
                      style="flex: 1 1 {{ $count >= 4 ? '180px' : '200px' }}; max-width: 220px;">
                     {{-- SVG-иконка --}}
-                    <div class="mb-4 flex items-center justify-center {{ $loop->first ? 'w-32 h-32 lg:w-36 lg:h-36' : 'w-24 h-24 lg:w-28 lg:h-28' }}">
+                    <div class="mb-4 flex items-center justify-center w-24 h-24 lg:w-28 lg:h-28">
                         @if($iconUrl)
                             <img src="{{ $iconUrl }}"
                                  alt="{{ $title }}"
