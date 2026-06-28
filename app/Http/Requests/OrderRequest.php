@@ -19,7 +19,7 @@ class OrderRequest extends FormRequest
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20|regex:/^[\+\d\s\-\(\)]+$/',
             'message' => 'nullable|string|max:5000',
-            'source' => 'required|string|in:catalog,primerka,callback,question',
+            'source' => 'required|string|in:catalog,primerka,callback,question,order',
             'article_ids' => 'nullable|array',
             'article_ids.*' => 'string',
             'facade_top_color' => 'nullable|string',

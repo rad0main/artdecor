@@ -9,6 +9,7 @@ use App\PageBuilder\Widgets\ProdRowWidget;
 use App\PageBuilder\Widgets\PlusWidget;
 use App\PageBuilder\Widgets\TypesSkinaliWidget;
 use App\PageBuilder\Widgets\LookWidget;
+use App\PageBuilder\Widgets\OrderWidget;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 
@@ -192,6 +193,7 @@ class PageBuilderService
         $service->register(\App\PageBuilder\Widgets\PlusWidget::class);
         $service->register(\App\PageBuilder\Widgets\TypesSkinaliWidget::class);
         $service->register(\App\PageBuilder\Widgets\LookWidget::class);
+        $service->register(\App\PageBuilder\Widgets\OrderWidget::class);
 
         return $service;
     }

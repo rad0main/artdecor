@@ -381,6 +381,45 @@ document.addEventListener('alpine:init', () => {
         init() { window.addEventListener('open-lightbox', (e) => { this.currentImage = e.detail; this.open = true; }); },
         close() { this.open = false; this.currentImage = null; },
     }));
+
+    // ─── Order Form ─────────────────────────────────────────
+    Alpine.data('orderForm', () => ({
+        name: '',
+        phone: '',
+        agreed: true,
+        sending: false,
+        submitted: false,
+        error: '',
+
+        formatPhone() {
+            let digits = this.phone.replace(/[^\d+]/g, '');
+            if (digits.length > 0 && digits[0] !== '+') {
+                digits = '+' + digits.replace(/\+/g, '');
+            }
+            if (digits.length > 12) digits = digits.slice(0, 12);
+            this.phone = digits;
+        },
+
+        async submit() {
+            if (!this.agreed) return;
+            this.sending = true;
+            this.error = '';
+            try {
+                const { data } = await axios.post('/api/order', {
+                    name: this.name,
+                    phone: this.phone,
+                    source: 'order',
+                });
+                this.submitted = true;
+                this.name = '';
+                this.phone = '';
+            } catch (e) {
+                this.error = e.response?.data?.message || 'Ошибка при отправке. Попробуйте позже.';
+            } finally {
+                this.sending = false;
+            }
+        },
+    }));
 });
 
 Alpine.start();
