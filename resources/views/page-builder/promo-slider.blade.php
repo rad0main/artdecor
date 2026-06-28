@@ -43,10 +43,12 @@
                      x-transition:enter-start="opacity-0 translate-y-4"
                      x-transition:enter-end="opacity-100 translate-y-0"
                      class="w-full text-center">
-                    <h3 class="text-base sm:text-lg md:text-xl lg:text-2xl font-heading font-semibold leading-tight"
-                        :style="'color: ' + (slide.text_color || '#333333') + ';'" x-text="slide.title"></h3>
-                    <p class="text-xs sm:text-sm md:text-base mt-1 leading-snug"
-                       :style="'color: ' + (slide.text_color || '#333333') + ';'" x-text="slide.text"></p>
+                    <h3 class="font-heading leading-tight"
+                        :style="'color: ' + (slide.text_color || '#333333') + '; font-size: ' + titleSize(slide) + 'px; font-weight: ' + isBold(slide) + '; font-style: ' + isItalic(slide) + ';'"
+                        x-text="slide.title"></h3>
+                    <p class="mt-1 leading-snug"
+                       :style="'color: ' + (slide.text_color || '#333333') + '; font-size: ' + Math.max(10, titleSize(slide) - 4) + 'px; font-weight: ' + isBold(slide) + '; font-style: ' + isItalic(slide) + ';'"
+                       x-text="slide.text"></p>
                 </div>
             </template>
         </div>

@@ -67,6 +67,15 @@ document.addEventListener('alpine:init', () => {
                 this.timerId = setInterval(() => this.next(), intervalMs);
             }
         },
+        /** Return font size in px for a slide title */
+        titleSize(slide) {
+            if (slide && slide.font_size) return Math.max(8, Math.min(48, parseFloat(slide.font_size)));
+            return Math.max(12, barHeight * 0.9);
+        },
+        /** Font weight: bold if slide.bold is true */
+        isBold(slide) { return (slide && slide.bold) ? 'bold' : 'normal'; },
+        /** Font style: italic if slide.italic is true */
+        isItalic(slide) { return (slide && slide.italic) ? 'italic' : 'normal'; },
         /** Parse hex color (#fff or #ffffff) to RGB array */
         hexToRgb(hex) {
             if (!hex) return [255, 255, 255];

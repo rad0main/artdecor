@@ -26,7 +26,7 @@ class PromoSliderWidget extends BaseWidget
             'bar_opacity' => 40,
             'bar_height' => 20,
             'slides' => [
-                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => '', 'text_color' => '#333333', 'bar_color' => '#ffffff'],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => '', 'text_color' => '#333333', 'bar_color' => '#ffffff', 'font_size' => 18, 'bold' => false, 'italic' => false],
             ],
         ];
     }
@@ -52,6 +52,9 @@ class PromoSliderWidget extends BaseWidget
                     ['key' => 'meta', 'label' => 'Мета-теги', 'type' => 'text'],
                     ['key' => 'text_color', 'label' => 'Цвет текста (hex)', 'type' => 'color'],
                     ['key' => 'bar_color', 'label' => 'Цвет полосы (hex)', 'type' => 'color'],
+                    ['key' => 'font_size', 'label' => 'Размер шрифта (px)', 'type' => 'number', 'min' => 8, 'max' => 48],
+                    ['key' => 'bold', 'label' => 'Жирный', 'type' => 'boolean'],
+                    ['key' => 'italic', 'label' => 'Курсив', 'type' => 'boolean'],
                 ],
             ],
         ];
@@ -111,6 +114,18 @@ class PromoSliderWidget extends BaseWidget
                     \Filament\Forms\Components\ColorPicker::make('bar_color')
                         ->label('Цвет полосы')
                         ->default('#ffffff'),
+                    \Filament\Forms\Components\TextInput::make('font_size')
+                        ->label('Размер шрифта (px)')
+                        ->numeric()
+                        ->minValue(8)
+                        ->maxValue(48)
+                        ->default(18),
+                    \Filament\Forms\Components\Toggle::make('bold')
+                        ->label('Жирный')
+                        ->default(false),
+                    \Filament\Forms\Components\Toggle::make('italic')
+                        ->label('Курсив')
+                        ->default(false),
                 ])
                 ->collapsible()
                 ->collapsed(false)
