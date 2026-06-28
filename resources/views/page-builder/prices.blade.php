@@ -13,6 +13,7 @@
     $btnTextColor = $btn_text_color ?? '#ffffff';
     $btnTextSize = $btn_text_size ?? 14;
     $prices = $prices ?? [];
+    $isAdmin = request()->is('admin/*');
 @endphp
 
 <section class="py-16 md:py-20 px-4">
@@ -23,7 +24,9 @@
             </div>
         @endif
 
-        <div x-data="pricesOrder()" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start text-center mt-8">
+        {{-- Без Alpine x-data в админке, чтобы модалка заказа не выскакивала при Livewire-рендере --}}
+        <div @if(!$isAdmin) x-data="pricesOrder()" @endif
+             class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start text-center mt-8">
             @foreach($prices as $index => $price)
                 @php
                     $isFeatured = $price['featured'] ?? false;
@@ -46,7 +49,7 @@
                             @endforeach
                         </ul>
                     @endif
-                    <button @click="open('{{ $price['name'] }}', '{{ $price['price'] }}', '{{ $price['unit'] }}')"
+                    <button @if(!$isAdmin) @click="open('{{ $price['name'] }}', '{{ $price['price'] }}', '{{ $price['unit'] }}')" @endif
                             class="btn-primary w-full text-center cursor-pointer"
                             style="color: {{ $btnTextColor }}; font-size: {{ $btnTextSize }}px;">
                         {{ $price['btn_text'] ?? 'Заказать' }}
@@ -55,6 +58,7 @@
             @endforeach
         </div>
 
+        @if(!$isAdmin)
         {{-- Order modal --}}
         <div x-show="modalOpen" x-cloak
              class="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -129,5 +133,6 @@
                 </button>
             </div>
         </div>
+        @endif
     </div>
 </section>
