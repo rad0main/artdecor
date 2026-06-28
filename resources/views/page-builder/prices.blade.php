@@ -23,10 +23,14 @@
             @foreach($prices as $index => $price)
                 @php
                     $isFeatured = $price['featured'] ?? false;
-                    $rawFeatures = $price['features'] ?? '';
-                    // Strip HTML tags if present (backward compat with RichEditor), then split by newlines
-                    $features = array_filter(explode("\n", strip_tags($rawFeatures)));
-                    $features = array_map('trim', $features);
+                    $rawFeatures = $price['features'] ?? [];
+                    if (is_string($rawFeatures)) {
+                        // Strip HTML tags (backward compat with RichEditor), then split by newlines
+                        $features = array_map('trim', array_filter(explode("\n", strip_tags($rawFeatures))));
+                    } else {
+                        // Already an array
+                        $features = array_map('trim', $rawFeatures);
+                    }
                 @endphp
                 <div class="price-card @if($isFeatured) price-card--featured @endif">
                     <div class="price-card__name" style="color: {{ $nameColor }}; font-size: {{ $nameSize }}px;">{{ $price['name'] ?? '' }}</div>
