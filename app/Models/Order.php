@@ -24,6 +24,6 @@ class Order extends Model
         'article_ids' => 'array',
     ];
 
-    public const SOURCES = ['catalog', 'primerka', 'callback', 'question'];
+    public const SOURCES = ['catalog', 'primerka', 'callback', 'question', 'order'];
     public const STATUSES = ['new', 'contacted', 'closed'];
 }

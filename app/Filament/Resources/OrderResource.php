@@ -40,6 +40,7 @@ class OrderResource extends Resource
                     'primerka' => 'Примерка',
                     'callback' => 'Звонок',
                     'question' => 'Вопрос',
+                    'order' => 'Заявка',
                 ])
                 ->native(false)
                 ->disabled(),
@@ -89,6 +90,7 @@ class OrderResource extends Resource
                         'primerka' => 'success',
                         'callback' => 'warning',
                         'question' => 'gray',
+                        'order' => 'primary',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
@@ -96,6 +98,7 @@ class OrderResource extends Resource
                         'primerka' => 'Примерка',
                         'callback' => 'Звонок',
                         'question' => 'Вопрос',
+                        'order' => 'Заявка',
                         default => $state,
                     }),
 
@@ -131,6 +134,7 @@ class OrderResource extends Resource
                         'primerka' => 'Примерка',
                         'callback' => 'Звонок',
                         'question' => 'Вопрос',
+                        'order' => 'Заявка',
                     ])
                     ->native(false),
 
