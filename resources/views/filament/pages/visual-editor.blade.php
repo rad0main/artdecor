@@ -213,6 +213,14 @@
                                                           x-model="formData[field.key][i][sub.key]" rows="2"
                                                           class="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:text-white"
                                                           :maxlength="sub.maxlength ?? ''"></textarea>
+
+                                                <div x-show="sub.type === 'color'" class="flex items-center gap-2">
+                                                    <input type="color" x-model="formData[field.key][i][sub.key]"
+                                                           class="w-8 h-8 p-0.5 rounded cursor-pointer border border-gray-300 dark:border-gray-600 bg-white"
+                                                           style="min-width: 2rem;">
+                                                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400"
+                                                          x-text="formData[field.key][i][sub.key] || '#000000'"></span>
+                                                </div>
                                             </div>
                                         </template>
                                     </div>
