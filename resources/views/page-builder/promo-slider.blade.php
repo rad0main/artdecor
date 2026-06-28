@@ -14,7 +14,7 @@
     }
 @endphp
 
-<section class="relative w-full py-4 md:py-6 bg-white"
+<section class="relative w-full pt-0 pb-4 md:pb-6 bg-white"
          x-data="slider({{ json_encode($slides) }}, {{ $interval * 1000 }}, {{ $barOpacity }}, {{ $barHeight }})" x-init="init()">
     <div class="relative max-w-page mx-auto px-4">
         <div class="relative h-[300px] sm:h-[420px] md:h-[520px] lg:h-[600px] overflow-hidden rounded-xl shadow-lg">
