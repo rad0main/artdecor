@@ -55,14 +55,14 @@
                     <button @click="prev()"
                             class="absolute z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
                             :class="current === 0 ? 'opacity-30 pointer-events-none' : ''"
-                            :style="'top: 50%; left: 20vw; transform: translate(-50%, -50%);'"
+                            :style="'top: 50%; left: 10vw; transform: translate(-50%, -50%);'"
                             aria-label="Назад">
                         <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
                     <button @click="next()"
                             class="absolute z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
                             :class="current === slides.length - 1 ? 'opacity-30 pointer-events-none' : ''"
-                            :style="'top: 50%; left: 80vw; transform: translate(-50%, -50%);'"
+                            :style="'top: 50%; left: 90vw; transform: translate(-50%, -50%);'"
                             aria-label="Вперёд">
                         <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
