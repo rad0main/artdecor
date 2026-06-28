@@ -49,8 +49,8 @@
         <div class="relative w-full" style="min-height: 527px;">
 
             {{-- SKINALI BACKGROUND (behind the facades, shows through transparent areas) --}}
-            <div class="absolute inset-0 z-0 bg-contain bg-center bg-no-repeat"
-                 :style="'background-image: url(' + (selectedImage || '') + '); background-color: #e8e8e8;'">
+            <div class="absolute inset-0 z-0 bg-contain bg-center bg-no-repeat bg-[#e8e8e8]"
+                 :style="'background-image: url(' + (selectedImage || '') + ');'">
             </div>
 
             {{-- Fixture overlay: screws + faucet (on the skinali area, centered at junction) --}}

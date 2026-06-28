@@ -144,7 +144,7 @@ document.addEventListener('alpine:init', () => {
         basePath: '',
         topColor: 'black',
         bottomColor: 'black',
-        selectedImage: '/images/mainprod/skinali.jpg',
+        selectedImage: '',
         catalogOpen: false,
         currentCategory: '',
 
