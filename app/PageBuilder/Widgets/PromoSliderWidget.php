@@ -21,8 +21,9 @@ class PromoSliderWidget extends BaseWidget
     public static function defaults(): array
     {
         return [
+            'show_dots' => true,
             'slides' => [
-                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания'],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => ''],
             ],
         ];
     }
@@ -34,6 +35,7 @@ class PromoSliderWidget extends BaseWidget
     public static function config(): array
     {
         return [
+            ['key' => 'show_dots', 'label' => 'Точки навигации', 'type' => 'boolean', 'help' => 'Показывать точки под слайдером'],
             [
                 'key' => 'slides',
                 'label' => 'Слайды',
@@ -42,6 +44,7 @@ class PromoSliderWidget extends BaseWidget
                     ['key' => 'image', 'label' => 'Изображение (URL)', 'type' => 'url'],
                     ['key' => 'title', 'label' => 'Заголовок (до 30)', 'type' => 'text', 'maxlength' => 30],
                     ['key' => 'text', 'label' => 'Текст (до 100)', 'type' => 'textarea', 'maxlength' => 100],
+                    ['key' => 'meta', 'label' => 'Мета-теги', 'type' => 'text'],
                 ],
             ],
         ];
@@ -50,6 +53,9 @@ class PromoSliderWidget extends BaseWidget
     public static function schema(): array
     {
         return [
+            \Filament\Forms\Components\Toggle::make('show_dots')
+                ->label('Точки навигации')
+                ->default(true),
             Repeater::make('slides')
                 ->label('Слайды')
                 ->schema([
@@ -67,6 +73,8 @@ class PromoSliderWidget extends BaseWidget
                         ->label('Текст (до 100 симв.)')
                         ->maxLength(100)
                         ->required(),
+                    TextInput::make('meta')
+                        ->label('Мета-теги изображения'),
                 ])
                 ->collapsible()
                 ->collapsed(false)

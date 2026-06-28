@@ -1,6 +1,7 @@
 @php
     $slides = $slides ?? [];
     $hasMultiple = count($slides) > 1;
+    $showDots = $show_dots ?? true;
     // Fallback: use global title/text if no slides have content
     if (empty($slides) || (empty($slides[0]['image']) && empty($slides[0]['title']))) {
         $globalFallback = [['image' => '', 'title' => $title ?? 'Промо', 'text' => $text ?? 'Описание']];
@@ -70,7 +71,7 @@
         </template>
 
         {{-- Точки пагинации --}}
-        <template x-if="slides.length > 1">
+        <template x-if="slides.length > 1 && {{ $showDots ? 'true' : 'false' }}">
             <div class="absolute bottom-[calc(20%+12px)] left-1/2 -translate-x-1/2 z-20 flex gap-2">
                 <template x-for="(slide, i) in slides" :key="'dot-' + i">
                     <button @click="current = i"
