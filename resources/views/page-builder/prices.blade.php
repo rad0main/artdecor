@@ -2,18 +2,24 @@
     $heading = $heading ?? 'Наши цены';
     $headingColor = $heading_color ?? '#1a1a2e';
     $headingSize = $heading_size ?? 28;
+    $nameColor = $name_color ?? '#1a1a2e';
+    $nameSize = $name_size ?? 20;
+    $priceColor = $price_color ?? '#D32F2F';
+    $priceSize = $price_size ?? 28;
+    $featuresColor = $features_color ?? '#555555';
+    $featuresSize = $features_size ?? 14;
     $prices = $prices ?? [];
 @endphp
 
 <section class="py-16 md:py-20 px-4">
-    <div class="max-w-page mx-auto">
+    <div class="max-w-page mx-auto text-center">
         @if($heading)
             <div class="section-heading">
                 <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
             </div>
         @endif
 
-        <div x-data="pricesOrder()" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <div x-data="pricesOrder()" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start text-center mt-8">
             @foreach($prices as $index => $price)
                 @php
                     $isFeatured = $price['featured'] ?? false;
@@ -22,12 +28,12 @@
                         : ($price['features'] ?? []);
                 @endphp
                 <div class="price-card @if($isFeatured) price-card--featured @endif">
-                    <div class="price-card__name">{{ $price['name'] ?? '' }}</div>
-                    <div class="price-card__price">от {{ $price['price'] ?? '' }} <span>{{ $price['unit'] ?? '₽/м²' }}</span></div>
+                    <div class="price-card__name" style="color: {{ $nameColor }}; font-size: {{ $nameSize }}px;">{{ $price['name'] ?? '' }}</div>
+                    <div class="price-card__price" style="color: {{ $priceColor }}; font-size: {{ $priceSize }}px;">от {{ $price['price'] ?? '' }} <span style="color: {{ $priceColor }};">{{ $price['unit'] ?? '₽/м²' }}</span></div>
                     @if(!empty($features))
-                        <ul class="price-card__features">
+                        <ul class="price-card__features" style="color: {{ $featuresColor }}; font-size: {{ $featuresSize }}px;">
                             @foreach($features as $feature)
-                                <li>{{ trim($feature) }}</li>
+                                <li style="color: {{ $featuresColor }};">{{ trim($feature) }}</li>
                             @endforeach
                         </ul>
                     @endif
@@ -48,7 +54,7 @@
                 <button @click="modalOpen = false"
                         class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
                 <h3 class="text-lg font-heading font-semibold mb-1">Заказать</h3>
-                <p class="text-sm text-gray-500 mb-4" x-text="'Тариф: ' + tariffName + ' — ' + tariffPrice + ' ' + tariffUnit"></p>
+                <p class="text-sm text-gray-500 mb-4 text-left" x-text="'Тариф: ' + tariffName + ' — ' + tariffPrice + ' ' + tariffUnit"></p>
 
                 <form @submit.prevent="submit" class="flex flex-col gap-3">
                     <input type="text" x-model="name" maxlength="30" required
@@ -63,7 +69,7 @@
                         <input type="checkbox" x-model="agreed"
                                class="mt-0.5 rounded border-gray-300 text-[var(--k-color-primary)] focus:ring-[var(--k-color-primary)] cursor-pointer"
                                checked>
-                        <label class="cursor-pointer leading-relaxed select-none">
+                        <label class="cursor-pointer leading-relaxed select-none text-left">
                             Согласен с <a href="#" @click.prevent="$dispatch('open-privacy')" class="text-[var(--k-color-primary)] underline hover:no-underline">условиями</a> обработки и хранения персональных данных
                         </label>
                     </div>

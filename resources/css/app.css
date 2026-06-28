@@ -164,19 +164,15 @@
     .price-card--featured:hover { transform: scale(1.03) translateY(-3px); }
     .price-card__name {
         font-family: var(--k-font-family-heading);
-        font-size: 18px;
         font-weight: 700;
         margin-bottom: 12px;
-        color: var(--k-color-text-primary);
     }
     .price-card__price {
         font-family: var(--k-font-family-heading);
-        font-size: 28px;
         font-weight: 700;
-        color: var(--k-color-primary);
         margin-bottom: 20px;
     }
-    .price-card__price span { font-size: 14px; font-weight: 400; }
+    .price-card__price span { font-size: 0.6em; font-weight: 400; }
     .price-card__features {
         list-style: none;
         padding: 0;
@@ -185,8 +181,6 @@
     }
     .price-card__features li {
         padding: 6px 0;
-        font-size: 14px;
-        color: var(--k-color-text-secondary);
         display: flex;
         align-items: center;
         gap: 8px;

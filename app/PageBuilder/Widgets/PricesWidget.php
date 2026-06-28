@@ -23,6 +23,12 @@ class PricesWidget extends BaseWidget
             'heading' => 'Наши цены',
             'heading_color' => '#1a1a2e',
             'heading_size' => 28,
+            'name_color' => '#1a1a2e',
+            'name_size' => 20,
+            'price_color' => '#D32F2F',
+            'price_size' => 28,
+            'features_color' => '#555555',
+            'features_size' => 14,
             'prices' => [
                 [
                     'name' => 'Эконом',
@@ -58,6 +64,12 @@ class PricesWidget extends BaseWidget
             ['key' => 'heading', 'label' => 'Заголовок', 'type' => 'text'],
             ['key' => 'heading_color', 'label' => 'Цвет заголовка (hex)', 'type' => 'color'],
             ['key' => 'heading_size', 'label' => 'Размер заголовка (px)', 'type' => 'number', 'min' => 16, 'max' => 52, 'width' => '80px'],
+            ['key' => 'name_color', 'label' => 'Цвет названия тарифа (hex)', 'type' => 'color'],
+            ['key' => 'name_size', 'label' => 'Размер названия тарифа (px)', 'type' => 'number', 'min' => 14, 'max' => 32, 'width' => '80px'],
+            ['key' => 'price_color', 'label' => 'Цвет цены (hex)', 'type' => 'color'],
+            ['key' => 'price_size', 'label' => 'Размер цены (px)', 'type' => 'number', 'min' => 18, 'max' => 48, 'width' => '80px'],
+            ['key' => 'features_color', 'label' => 'Цвет списка (hex)', 'type' => 'color'],
+            ['key' => 'features_size', 'label' => 'Размер списка (px)', 'type' => 'number', 'min' => 10, 'max' => 20, 'width' => '80px'],
         ];
     }
 
@@ -76,6 +88,29 @@ class PricesWidget extends BaseWidget
                 ->maxValue(52)
                 ->default(28)
                 ->suffix('px'),
+
+            \Filament\Forms\Components\Fieldset::make('Оформление карточек')
+                ->schema([
+                    ColorPicker::make('name_color')
+                        ->label('Цвет названия тарифа')
+                        ->default('#1a1a2e'),
+                    TextInput::make('name_size')
+                        ->label('Размер названия (px)')
+                        ->numeric()->minValue(14)->maxValue(32)->default(20)->suffix('px'),
+                    ColorPicker::make('price_color')
+                        ->label('Цвет цены')
+                        ->default('#D32F2F'),
+                    TextInput::make('price_size')
+                        ->label('Размер цены (px)')
+                        ->numeric()->minValue(18)->maxValue(48)->default(28)->suffix('px'),
+                    ColorPicker::make('features_color')
+                        ->label('Цвет списка')
+                        ->default('#555555'),
+                    TextInput::make('features_size')
+                        ->label('Размер списка (px)')
+                        ->numeric()->minValue(10)->maxValue(20)->default(14)->suffix('px'),
+                ])->columns(2),
+
             \Filament\Forms\Components\Repeater::make('prices')
                 ->label('Тарифы')
                 ->schema([
