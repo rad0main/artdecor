@@ -51,7 +51,7 @@
             {{-- SKINALI BACKGROUND (behind the facades, fills the backsplash zone) --}}
             <div class="absolute left-0 right-0 z-0 bg-cover bg-center bg-no-repeat bg-[#e8e8e8]"
                  style="top: 170px; height: 220px;"
-                 :style="'background-image: url(' + (selectedImage || '') + ');'">
+                 :style="'background-image: url(' + (selectedImage || '') + '); top: 170px; height: 220px;'">
             </div>
 
 
