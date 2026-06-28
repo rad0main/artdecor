@@ -1,5 +1,7 @@
 @php
     $heading = $heading ?? 'Примерить скинали онлайн';
+    $headingColor = $heading_color ?? '#1a1a2e';
+    $headingSize = $heading_size ?? 28;
     $text = $text ?? 'Выберите нужный цвет фасадов кухни, нажав на нужный цвет на представленной палитре.';
     $textColor = $text_color ?? '#333333';
     $textSize = $text_size ?? 16;
@@ -29,7 +31,7 @@
 <section class="py-12 md:py-16 bg-white">
     <div class="max-w-page mx-auto px-4 mb-8">
         <div class="section-heading">
-            <h2>{{ $heading }}</h2>
+            <h2 style="color: {{ $headingColor }}; font-size: {{ $headingSize }}px;">{{ $heading }}</h2>
         </div>
         <p class="text-center max-w-2xl mx-auto mt-4 leading-relaxed font-heading"
            style="color: {{ $textColor }}; font-size: {{ $textSize }}px;">
