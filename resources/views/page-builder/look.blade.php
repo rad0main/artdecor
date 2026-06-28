@@ -37,7 +37,7 @@
          style="max-width: 900px; width: 100%;">
 
         {{-- The whole kitchen area --}}
-        <div class="relative w-full">
+        <div class="relative w-full" style="min-height: 527px;">
             {{-- TOP FACADE (221px) --}}
             <div class="relative overflow-hidden" style="width: 100%; height: 221px;">
                 <img :src="topImage()" alt="Верхний фасад"
@@ -53,27 +53,6 @@
                                 :title="name">
                         </button>
                     </template>
-                </div>
-            </div>
-
-            {{-- SKINALI area + catalog button --}}
-            <div class="relative flex" style="min-height: 200px;">
-                {{-- Catalog button (left side) --}}
-                <div class="flex-shrink-0 flex flex-col items-center justify-center"
-                     style="width: 60px; min-height: 200px;">
-                    <button @click="catalogOpen = true"
-                            class="flex flex-col items-center gap-1 px-2 py-4 bg-[var(--k-color-primary)] text-white rounded-lg hover:brightness-110 transition-all shadow-md text-xs font-heading writing-mode-vertical">
-                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                        <span class="mt-1">Каталог</span>
-                    </button>
-                </div>
-
-                {{-- Selected skinali pattern --}}
-                <div class="flex-1 bg-cover bg-center bg-no-repeat relative"
-                     :style="'background-image: url(' + (selectedImage || '/images/mainprod/skinali.jpg') + '); min-height: 200px;'">
-                    <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-white/5 pointer-events-none"></div>
                 </div>
             </div>
 
@@ -93,6 +72,26 @@
                         </button>
                     </template>
                 </div>
+            </div>
+
+            {{-- SKINALI overlay — centered, overlaps both top and bottom --}}
+            <div class="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
+                 style="width: 80%; height: 220px; top: calc(50% - 110px);">
+                {{-- Selected pattern background --}}
+                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-lg shadow-xl"
+                     :style="'background-image: url(' + (selectedImage || '/images/mainprod/skinali.jpg') + ');'">
+                </div>
+                {{-- Glass overlay --}}
+                <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-white/10 pointer-events-none rounded-lg"></div>
+
+                {{-- Catalog button overlaid on skinali --}}
+                <button @click="catalogOpen = true"
+                        class="relative z-20 flex items-center gap-2 px-5 py-2.5 bg-[var(--k-color-primary)] text-white rounded-lg hover:brightness-110 transition-all shadow-lg font-heading text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <span>Открыть каталог</span>
+                </button>
             </div>
         </div>
     </div>
