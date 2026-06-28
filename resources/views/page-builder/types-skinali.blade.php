@@ -4,8 +4,8 @@
     $total = count($slides);
 @endphp
 
-<section class="py-12 md:py-16 bg-white overflow-hidden">
-    {{-- Заголовок (центрирован, но секция на всю ширину) --}}
+<section class="py-12 md:py-16 bg-white">
+    {{-- Заголовок --}}
     <div class="max-w-page mx-auto px-4 mb-8">
         <div class="section-heading">
             <h2>{{ $heading }}</h2>
@@ -24,7 +24,6 @@
                             class="relative text-xs sm:text-sm md:text-base lg:text-lg font-heading whitespace-nowrap px-1 sm:px-2 py-2 transition-colors duration-200 text-center flex-1"
                             :class="current === i ? 'text-[var(--k-color-primary)]' : 'text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]'">
                         <span x-text="slide.subtitle"></span>
-                        {{-- Красная точка --}}
                         <span class="absolute left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full transition-all duration-300"
                               :class="current === i ? 'bg-[var(--k-color-primary)] scale-100 bottom-0' : 'bg-transparent scale-0 bottom-0'"></span>
                     </button>
@@ -32,9 +31,8 @@
             </div>
         </div>
 
-        {{-- Карусель на всю ширину --}}
-        <div class="relative w-full overflow-visible">
-            {{-- Трек --}}
+        {{-- Карусель на всю ширину с peek --}}
+        <div class="relative w-full overflow-visible" style="width: 100vw; margin-left: calc(-50vw + 50%);">
             <div class="flex items-center transition-transform duration-500 ease-out will-change-transform"
                  :style="'transform: translateX(calc(20vw - ' + (current * 60) + 'vw));'">
                 <template x-for="(slide, i) in slides" :key="'car-' + i">
@@ -56,20 +54,16 @@
             <template x-if="slides.length > 1">
                 <div class="hidden md:block">
                     <button @click="prev()"
-                            class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+                            class="absolute left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
                             :class="current === 0 ? 'opacity-30 pointer-events-none' : ''"
                             aria-label="Назад">
-                        <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
+                        <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
                     <button @click="next()"
-                            class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+                            class="absolute right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
                             :class="current === slides.length - 1 ? 'opacity-30 pointer-events-none' : ''"
                             aria-label="Вперёд">
-                        <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
+                        <svg class="w-6 h-6 text-[var(--k-color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </div>
             </template>
