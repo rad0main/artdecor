@@ -45,6 +45,12 @@
         .ve-settings-field label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem; color: #374151; }
         .dark .ve-settings-field label { color: #d1d5db; }
         .ve-settings-field input, .ve-settings-field textarea, .ve-settings-field select { width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; }
+
+        .ve-settings-field input[type="checkbox"] { width: 1rem; height: 1rem; padding: 0; border: 1px solid #d1d5db; border-radius: 0.25rem; cursor: pointer; accent-color: #2563eb; }
+
+        .ve-settings-field input[type="checkbox"]:checked { background-color: #2563eb; border-color: #2563eb; }
+
+        .ve-settings-field input[type="range"] { width: 100%; padding: 0; border: none; }
         .dark .ve-settings-field input, .dark .ve-settings-field textarea, .dark .ve-settings-field select { background: #374151; border-color: #4b5563; color: white; }
         .dark .ve-modal-content { background: #1f2937; color: white; }
         .dark .ve-modal-header { border-color: #374151; }
@@ -135,7 +141,7 @@
             <div class="space-y-4">
                 <template x-for="(field, idx) in fields" :key="idx">
                     <div class="ve-settings-field">
-                        <label x-text="field.label"></label>
+                        <label x-text="field.label" x-show="field.type !== 'boolean'"></label>
 
                         {{-- Standard fields --}}
                         <input x-show="field.type === 'text' || field.type === 'url'"
@@ -169,10 +175,13 @@
                         <input x-show="field.type === 'color'"
                                type="color" x-model="formData[field.key]" class="h-10 p-1">
 
-                        <label x-show="field.type === 'boolean'" class="inline-flex items-center gap-2 cursor-pointer select-none py-1">
+                        <label x-show="field.type === 'boolean'"
+                               class="inline-flex items-center gap-2 cursor-pointer select-none py-1.5 px-0 bg-transparent border-0"
+                               style="width: auto; min-width: 0;">
                             <input type="checkbox" x-model="formData[field.key]"
-                                   class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-                            <span x-text="field.help ?? ''" class="text-sm text-gray-500 dark:text-gray-400"></span>
+                                   class="w-4 h-4 rounded cursor-pointer"
+                                   style="width: 1rem; height: 1rem; padding: 0; min-width: 1rem;">
+                            <span x-text="field.help ?? field.label" class="text-sm text-gray-500 dark:text-gray-400"></span>
                         </label>
 
                         {{-- Repeater (array of sub-items) --}}
