@@ -44,10 +44,10 @@
                      x-transition:enter-end="opacity-100 translate-y-0"
                      class="w-full text-center">
                     <h3 class="font-heading leading-tight"
-                        :style="'color: ' + (slide.text_color || '#333333') + '; font-size: ' + titleSize(slide) + 'px; font-weight: ' + isBold(slide) + '; font-style: ' + isItalic(slide) + ';'"
+                        :style="'color: ' + (slide.text_color || '#333333') + '; font-size: ' + titleSize(slide) + 'px; font-weight: ' + titleWeight(slide) + '; font-style: ' + titleStyle(slide) + ';'"
                         x-text="slide.title"></h3>
                     <p class="mt-1 leading-snug"
-                       :style="'color: ' + (slide.text_color || '#333333') + '; font-size: ' + Math.max(10, titleSize(slide) - 4) + 'px; font-weight: ' + isBold(slide) + '; font-style: ' + isItalic(slide) + ';'"
+                       :style="'color: ' + (slide.text_color || '#333333') + '; font-size: ' + textSize(slide) + 'px; font-weight: ' + textWeight(slide) + '; font-style: ' + textStyle(slide) + ';'"
                        x-text="slide.text"></p>
                 </div>
             </template>

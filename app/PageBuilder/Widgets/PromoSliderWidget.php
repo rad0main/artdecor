@@ -26,7 +26,7 @@ class PromoSliderWidget extends BaseWidget
             'bar_opacity' => 40,
             'bar_height' => 20,
             'slides' => [
-                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => '', 'text_color' => '#333333', 'bar_color' => '#ffffff', 'font_size' => 18, 'bold' => false, 'italic' => false],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => '', 'text_color' => '#333333', 'bar_color' => '#ffffff', 'font_size' => 18, 'title_bold' => false, 'title_italic' => false, 'text_bold' => false, 'text_italic' => false],
             ],
         ];
     }
@@ -52,9 +52,11 @@ class PromoSliderWidget extends BaseWidget
                     ['key' => 'meta', 'label' => 'Мета-теги', 'type' => 'text'],
                     ['key' => 'text_color', 'label' => 'Цвет текста (hex)', 'type' => 'color'],
                     ['key' => 'bar_color', 'label' => 'Цвет полосы (hex)', 'type' => 'color'],
-                    ['key' => 'font_size', 'label' => 'Размер шрифта (px)', 'type' => 'number', 'min' => 8, 'max' => 48],
-                    ['key' => 'bold', 'label' => 'Жирный', 'type' => 'boolean'],
-                    ['key' => 'italic', 'label' => 'Курсив', 'type' => 'boolean'],
+                    ['key' => 'font_size', 'label' => 'Размер шрифта (px)', 'type' => 'number', 'min' => 8, 'max' => 48, 'width' => '80px'],
+                    ['key' => 'title_bold', 'label' => 'Жирный (заголовок)', 'type' => 'boolean'],
+                    ['key' => 'title_italic', 'label' => 'Курсив (заголовок)', 'type' => 'boolean'],
+                    ['key' => 'text_bold', 'label' => 'Жирный (текст)', 'type' => 'boolean'],
+                    ['key' => 'text_italic', 'label' => 'Курсив (текст)', 'type' => 'boolean'],
                 ],
             ],
         ];
@@ -120,12 +122,13 @@ class PromoSliderWidget extends BaseWidget
                         ->minValue(8)
                         ->maxValue(48)
                         ->default(18),
-                    \Filament\Forms\Components\Toggle::make('bold')
-                        ->label('Жирный')
-                        ->default(false),
-                    \Filament\Forms\Components\Toggle::make('italic')
-                        ->label('Курсив')
-                        ->default(false),
+                    \Filament\Forms\Components\Grid::make(2)
+                        ->schema([
+                            \Filament\Forms\Components\Toggle::make('title_bold')->label('Жирный (заголовок)')->default(false),
+                            \Filament\Forms\Components\Toggle::make('title_italic')->label('Курсив (заголовок)')->default(false),
+                            \Filament\Forms\Components\Toggle::make('text_bold')->label('Жирный (текст)')->default(false),
+                            \Filament\Forms\Components\Toggle::make('text_italic')->label('Курсив (текст)')->default(false),
+                        ]),
                 ])
                 ->collapsible()
                 ->collapsed(false)

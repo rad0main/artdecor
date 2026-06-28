@@ -221,6 +221,13 @@
                                                     <span class="text-xs font-mono text-gray-500 dark:text-gray-400"
                                                           x-text="formData[field.key][i][sub.key] || '#000000'"></span>
                                                 </div>
+
+                                                <label x-show="sub.type === 'boolean'"
+                                                       class="inline-flex items-center gap-2 cursor-pointer select-none py-0.5">
+                                                    <input type="checkbox" x-model="formData[field.key][i][sub.key]"
+                                                           class="w-3.5 h-3.5 rounded cursor-pointer"
+                                                           style="width: 0.875rem; height: 0.875rem; padding: 0; min-width: 0.875rem;">
+                                                </label>
                                             </div>
                                         </template>
                                     </div>

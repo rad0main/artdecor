@@ -72,10 +72,15 @@ document.addEventListener('alpine:init', () => {
             if (slide && slide.font_size) return Math.max(8, Math.min(48, parseFloat(slide.font_size)));
             return Math.max(12, barHeight * 0.9);
         },
-        /** Font weight: bold if slide.bold is true */
-        isBold(slide) { return (slide && slide.bold) ? 'bold' : 'normal'; },
-        /** Font style: italic if slide.italic is true */
-        isItalic(slide) { return (slide && slide.italic) ? 'italic' : 'normal'; },
+        textSize(slide) {
+            return Math.max(10, this.titleSize(slide) - 4);
+        },
+        /** Font weight/italic for title */
+        titleWeight(slide) { return (slide && slide.title_bold) ? 'bold' : 'normal'; },
+        titleStyle(slide) { return (slide && slide.title_italic) ? 'italic' : 'normal'; },
+        /** Font weight/italic for text */
+        textWeight(slide) { return (slide && slide.text_bold) ? 'bold' : 'normal'; },
+        textStyle(slide) { return (slide && slide.text_italic) ? 'italic' : 'normal'; },
         /** Parse hex color (#fff or #ffffff) to RGB array */
         hexToRgb(hex) {
             if (!hex) return [255, 255, 255];
