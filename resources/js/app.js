@@ -161,7 +161,18 @@ document.addEventListener('alpine:init', () => {
             this.catImages = el.dataset.images ? JSON.parse(el.dataset.images) : {};
             this.basePath = el.dataset.basepath || '/images/temp_cat';
             const keys = Object.keys(this.categories);
-            if (keys.length > 0) this.currentCategory = keys[0];
+            if (keys.length > 0) {
+                this.currentCategory = keys[0];
+                this.pickRandom();
+            }
+        },
+
+        pickRandom() {
+            const images = this.catImages[this.currentCategory];
+            if (images && images.length > 0) {
+                const randomIdx = Math.floor(Math.random() * images.length);
+                this.selectedImage = this.basePath + '/' + this.currentCategory + '/' + images[randomIdx];
+            }
         },
 
         hexColor(name) {

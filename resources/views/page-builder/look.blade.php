@@ -117,7 +117,7 @@
                 </div>
 
                 {{-- Catalog button on the LEFT side --}}
-                <button @click="openCatalog()"
+                <button @click="catalogOpen = true"
                         class="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-[var(--k-color-primary)] text-white hover:brightness-110 transition-all shadow-lg"
                         title="Открыть каталог">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
