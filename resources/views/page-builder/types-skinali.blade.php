@@ -5,6 +5,7 @@
 @endphp
 
 <section class="py-12 md:py-16 bg-white overflow-hidden">
+    {{-- Заголовок (центрирован, но секция на всю ширину) --}}
     <div class="max-w-page mx-auto px-4 mb-8">
         <div class="section-heading">
             <h2>{{ $heading }}</h2>
@@ -13,29 +14,33 @@
 
     <div x-data="typesSlider({{ json_encode($slides) }})" x-init="init()"
          class="relative select-none">
-        {{-- Подзаголовки с точками --}}
-        <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 px-4">
-            <template x-for="(slide, i) in slides" :key="'sub-' + i">
-                <button @click="goTo(i)"
-                        class="relative text-sm md:text-base lg:text-lg font-heading px-2 py-1 transition-colors duration-200"
-                        :class="current === i ? 'text-[var(--k-color-primary)]' : 'text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]'">
-                    <span x-text="slide.subtitle"></span>
-                    {{-- Красная точка под активным --}}
-                    <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full transition-all duration-300"
-                          :class="current === i ? 'bg-[var(--k-color-primary)] scale-100' : 'bg-transparent scale-0'"></span>
-                </button>
-            </template>
+
+        {{-- Подзаголовки на всю ширину --}}
+        <div class="w-full px-4 sm:px-6 lg:px-8 mb-6">
+            <div class="flex flex-nowrap justify-between gap-2 max-w-full mx-auto"
+                 style="max-width: 1400px;">
+                <template x-for="(slide, i) in slides" :key="'sub-' + i">
+                    <button @click="goTo(i)"
+                            class="relative text-xs sm:text-sm md:text-base lg:text-lg font-heading whitespace-nowrap px-1 sm:px-2 py-2 transition-colors duration-200 text-center flex-1"
+                            :class="current === i ? 'text-[var(--k-color-primary)]' : 'text-[var(--k-color-text-secondary)] hover:text-[var(--k-color-text-primary)]'">
+                        <span x-text="slide.subtitle"></span>
+                        {{-- Красная точка --}}
+                        <span class="absolute left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full transition-all duration-300"
+                              :class="current === i ? 'bg-[var(--k-color-primary)] scale-100 bottom-0' : 'bg-transparent scale-0 bottom-0'"></span>
+                    </button>
+                </template>
+            </div>
         </div>
 
-        {{-- Карусель --}}
+        {{-- Карусель на всю ширину --}}
         <div class="relative w-full overflow-visible">
             {{-- Трек --}}
             <div class="flex items-center transition-transform duration-500 ease-out will-change-transform"
-                 :style="'transform: translateX(calc(10vw - ' + (current * 80) + 'vw));'">
+                 :style="'transform: translateX(calc(20vw - ' + (current * 60) + 'vw));'">
                 <template x-for="(slide, i) in slides" :key="'car-' + i">
-                    <div class="flex-shrink-0 transition-all duration-500 ease-out px-2"
-                         style="width: 80vw;"
-                         :style="'width: 80vw; opacity: ' + (i === current ? 1 : 0.5) + '; transform: scale(' + (i === current ? 1 : 0.85) + ');'">
+                    <div class="flex-shrink-0 transition-all duration-500 ease-out px-3"
+                         style="width: 60vw;"
+                         :style="'width: 60vw; opacity: ' + (i === current ? 1 : 0.45) + '; transform: scale(' + (i === current ? 1 : 0.82) + ');'">
                         <div class="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-100"
                              style="aspect-ratio: 16 / 9;">
                             <img :src="slide.image || ''"
@@ -71,7 +76,7 @@
         </div>
 
         {{-- Текст активного слайда --}}
-        <div class="max-w-3xl mx-auto mt-8 px-4 text-center">
+        <div class="max-w-3xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 text-center">
             <template x-for="(slide, i) in slides" :key="'txt-' + i">
                 <p x-show="current === i"
                    x-transition:enter="transition-opacity duration-300"
