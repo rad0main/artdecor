@@ -22,7 +22,7 @@ class PromoSliderWidget extends BaseWidget
     {
         return [
             'slides' => [
-                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания', 'meta' => ''],
+                ['image' => '', 'title' => 'Заголовок', 'text' => 'Текст описания'],
             ],
         ];
     }
@@ -39,11 +39,9 @@ class PromoSliderWidget extends BaseWidget
                 'label' => 'Слайды',
                 'type' => 'repeater',
                 'fields' => [
-                    ['key' => 'order', 'label' => '№', 'type' => 'number', 'width' => '60px'],
                     ['key' => 'image', 'label' => 'Изображение (URL)', 'type' => 'url'],
                     ['key' => 'title', 'label' => 'Заголовок (до 30)', 'type' => 'text', 'maxlength' => 30],
                     ['key' => 'text', 'label' => 'Текст (до 100)', 'type' => 'textarea', 'maxlength' => 100],
-                    ['key' => 'meta', 'label' => 'Мета-теги', 'type' => 'text'],
                 ],
             ],
         ];
@@ -69,8 +67,6 @@ class PromoSliderWidget extends BaseWidget
                         ->label('Текст (до 100 симв.)')
                         ->maxLength(100)
                         ->required(),
-                    TextInput::make('meta')
-                        ->label('Мета-теги изображения'),
                 ])
                 ->collapsible()
                 ->collapsed(false)
