@@ -7,6 +7,7 @@ namespace App\Services;
 use App\PageBuilder\BaseWidget;
 use App\PageBuilder\Widgets\ProdRowWidget;
 use App\PageBuilder\Widgets\PlusWidget;
+use App\PageBuilder\Widgets\TypesSkinaliWidget;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 
@@ -188,6 +189,7 @@ class PageBuilderService
         $service->register(\App\PageBuilder\Widgets\StatsWidget::class);
         $service->register(\App\PageBuilder\Widgets\ProdRowWidget::class);
         $service->register(\App\PageBuilder\Widgets\PlusWidget::class);
+        $service->register(\App\PageBuilder\Widgets\TypesSkinaliWidget::class);
 
         return $service;
     }

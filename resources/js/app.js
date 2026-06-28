@@ -119,6 +119,23 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    // ─── TypesSlider (TypesSkinali carousel) ──────────────
+    Alpine.data('typesSlider', (slides) => ({
+        slides: slides || [],
+        current: 0,
+
+        init() {},
+        next() {
+            if (this.current < this.slides.length - 1) this.current++;
+        },
+        prev() {
+            if (this.current > 0) this.current--;
+        },
+        goTo(i) {
+            this.current = i;
+        },
+    }));
+
     // ─── Testimonial Slider ─────────────────────────────────
     Alpine.data('testimonials', (items) => ({
         items: items || [],
