@@ -6,7 +6,7 @@ namespace App\PageBuilder\Widgets;
 
 use App\PageBuilder\BaseWidget;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\ColorPicker;
 use Illuminate\Contracts\View\View;
 
@@ -117,8 +117,9 @@ class PricesWidget extends BaseWidget
                     TextInput::make('name')->label('Название')->required(),
                     TextInput::make('price')->label('Цена')->required(),
                     TextInput::make('unit')->label('Единица')->default('₽/м²'),
-                    RichEditor::make('features')
-                        ->label('Что включено (каждый с новой строки)'),
+                    \Filament\Forms\Components\Textarea::make('features')
+                        ->label('Что включено (каждая опция с новой строки)')
+                        ->rows(5),
                     TextInput::make('btn_text')->label('Текст кнопки')->default('Заказать'),
                     \Filament\Forms\Components\Toggle::make('featured')->label('Выделить (рекомендуется)'),
                 ])
